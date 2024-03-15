@@ -53,7 +53,7 @@ class Env
             $line = trim($line);
             if (!str_starts_with($line, '#')) {
                 preg_match("/([^#]+)\=(.*)/", $line, $matches);
-                if (isset($matches[2])) {
+                if (isset($matches[2]) && trim($matches[2]) != '') {
                     self::$_env[trim($matches[1])] = trim($matches[2]);
                 }
             }
