@@ -23,14 +23,14 @@
  *  Website: http://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/12
- *  Time: 01:54:22
+ *  Date: 2024/03/14
+ *  Time: 03:03:46
  */
 
-
-class Utils
+class PageViewer
 {
     private static $instance;
+    private static $_register = [];
 
     public static function getInstance()
     {
@@ -42,5 +42,24 @@ class Utils
             }
         }
         return self::$instance;
+    }
+
+    public static function set($key, $value)
+    {
+
+        if (isset(self::$_register[$key])) {
+            return '';
+        } else {
+            self::$_register[$key] = $value;
+        }
+        return true;
+    }
+
+    public static function get($key)
+    {
+        if (isset(self::$_register[$key])) {
+            return self::$_register[$key];
+        }
+        return NULL;
     }
 }

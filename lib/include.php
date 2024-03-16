@@ -32,6 +32,7 @@ require_once('DB.php');
 require_once('Register.php');
 require_once('Utils.php');
 
+
 /**
  * Define constants
  */
@@ -74,9 +75,14 @@ set_include_path($appPath . PS . get_include_path());
 // ===================================================================================================================================
 require_once('BaseController.php');
 require_once('BaseModel.php');
+require_once('Route.php');
+// echo '<pre>';
+// print_r($_POST);
+// print_r($_SERVER);
+
 // ===================================================================================================================================
-function env($key)
+function env($key, $default = NULL)
 {
     \Env::getInstance();
-    return Env::env($key);
+    return (Env::env($key) ?? $default);
 }

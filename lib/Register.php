@@ -30,7 +30,7 @@
 class Register
 {
     private static $instance;
-    private static $_collection = [];
+    private static $_register = [];
 
     public static function getInstance()
     {
@@ -47,18 +47,18 @@ class Register
     public static function set($key, $value)
     {
 
-        if (isset(self::$_collection[$key])) {
+        if (isset(self::$_register[$key])) {
             return '';
         } else {
-            self::$_collection[$key] = $value;
+            self::$_register[$key] = $value;
         }
         return true;
     }
 
     public static function get($key)
     {
-        if (isset(self::$_collection[$key])) {
-            return self::$_collection[$key];
+        if (isset(self::$_register[$key])) {
+            return self::$_register[$key];
         }
         return NULL;
     }

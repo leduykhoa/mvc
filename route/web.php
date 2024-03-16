@@ -27,7 +27,10 @@
  *  Time: 10:59:15
  */
 
- return [
-    '' => ['Pages@home', 'home'],
-    'posts' => ['Posts@index'],
-];
+// return [
+//     '' => ['Pages@home', 'home'],
+//     'posts' => ['Posts@index'],
+// ];
+
+Route::get('', ['Pages@home', 'home']);
+Route::get('posts', ['Posts@index', 'home']);

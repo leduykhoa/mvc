@@ -100,6 +100,21 @@ define('ADMIN', 'admin');
 define('SUPPLY', 'supply');
 define('MANAGE', 'manage');
 // ===================================================================================================================================
+// get
+// post
+// put
+// patch
+// delete
+// options
+// any
+define('REQUEST_METHOD_GET', 'get');
+define('REQUEST_METHOD_POST', 'post');
+define('REQUEST_METHOD_PUT', 'put');
+define('REQUEST_METHOD_PATCH', 'patch');
+define('REQUEST_METHOD_DELETE', 'delete');
+define('REQUEST_METHOD_OPTIONS', 'options');
+define('REQUEST_METHOD_ANY', 'any');
+// ===================================================================================================================================
 //
 define('DEFAULT_USER_LOGIN_TYPE_ANONYMOUS', 'anonymous');
 define('DEFAULT_USER_LOGIN_TYPE_USER', 'user');
