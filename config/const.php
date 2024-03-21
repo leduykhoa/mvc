@@ -49,6 +49,14 @@ define('ERROR', 'error');
 define('CODE', 'code');
 define('DATA', 'data');
 
+define('HTML', 'html');
+define('JSON', 'json');
+define('XML', 'xml');
+define('css', 'css');
+define('js', 'js');
+define('style', 'style');
+define('javascript', 'javascript');
+
 // ===================================================================================================================================
 //
 define('_DELETE', 'delete');
@@ -132,25 +140,25 @@ define('PERMISSION_UPDATE', 'update');
 define('PERMISSION_DELETE', 'delete');
 // ===================================================================================================================================
 // https://momentjs.com/docs/#/parsing/string-format/
-define('DATE_TIME_FORMAT_ISO',  env('DATE_TIME_FORMAT_ISO', 'YYYY-MM-DDTHH:mm:ss.SSSZ'));
-define('DATE_TIME_FORMAT_FULL',  env('DATE_TIME_FORMAT_FULL', 'YYYY/MM/DD HH:mm:ss'));
-define('DATE_TIME_FORMAT_SHORT',  env('DATE_TIME_FORMAT_SHORT', 'YYYY/MM/DD HH:mm'));
-define('DATE_FORMAT_FULL',  env('DATE_FORMAT_FULL', 'YYYY/MM/DD'));
-define('DATE_FORMAT_SHORT',  env('DATE_FORMAT_SHORT', 'MM/DD'));
-define('TIME_FORMAT_FULL',  env('TIME_FORMAT_FULL', 'HH:mm:ss'));
-define('TIME_FORMAT_SHORT',  env('TIME_FORMAT_SHORT', 'HH:mm'));
+define('DATE_TIME_FORMAT_ISO', 'YYYY-MM-DDTHH:mm:ss.SSSZ');
+define('DATE_TIME_FORMAT_FULL', 'YYYY/MM/DD HH:mm:ss');
+define('DATE_TIME_FORMAT_SHORT', 'YYYY/MM/DD HH:mm');
+define('DATE_FORMAT_FULL', 'YYYY/MM/DD');
+define('DATE_FORMAT_SHORT', 'MM/DD');
+define('TIME_FORMAT_FULL', 'HH:mm:ss');
+define('TIME_FORMAT_SHORT', 'HH:mm');
 // https://xdsoft.net/jqplugins/datetimepicker/
-define('DATE_TIME_PICKER_FORMAT_ISO',  env('DATE_TIME_PICKER_FORMAT_ISO', 'Y-m-dTH:i:sZ'));
-define('DATE_TIME_PICKER_FORMAT_FULL',  env('DATE_TIME_PICKER_FORMAT_FULL', 'Y/m/d H:i:s'));
-define('DATE_TIME_PICKER_FORMAT_SHORT',  env('DATE_TIME_PICKER_FORMAT_SHORT', 'Y/m/d H:i'));
-define('DATE_PICKER_FORMAT_FULL',  env('DATE_PICKER_FORMAT_FULL', 'Y/m/d'));
-define('DATE_PICKER_FORMAT_SHORT',  env('DATE_PICKER_FORMAT_SHORT', 'm/d'));
+define('DATE_TIME_PICKER_FORMAT_ISO', 'Y-m-dTH:i:sZ');
+define('DATE_TIME_PICKER_FORMAT_FULL', 'Y/m/d H:i:s');
+define('DATE_TIME_PICKER_FORMAT_SHORT', 'Y/m/d H:i');
+define('DATE_PICKER_FORMAT_FULL', 'Y/m/d');
+define('DATE_PICKER_FORMAT_SHORT', 'm/d');
 # https://www.php.net/manual/en/datetime.format.php
-define('DATE_TIME_MYSQL_FORMAT_ISO',  env('DATE_TIME_MYSQL_FORMAT_ISO', 'Y-m-d H:iTH:i:sZ'));
-define('DATE_TIME_MYSQL_FORMAT_FULL',  env('DATE_TIME_MYSQL_FORMAT_FULL', 'Y-m-d H:i:s'));
-define('DATE_TIME_MYSQL_FORMAT_SHORT',  env('DATE_TIME_MYSQL_FORMAT_SHORT', 'Y-m-d H:i'));
-define('DATE_MYSQL_FORMAT_FULL',  env('DATE_MYSQL_FORMAT_FULL', 'Y-m-d'));
-define('DATE_MYSQL_FORMAT_SHORT',  env('DATE_MYSQL_FORMAT_SHORT', 'm-d'));
+define('DATE_TIME_MYSQL_FORMAT_ISO',  'Y-m-d H:iTH:i:sZ');
+define('DATE_TIME_MYSQL_FORMAT_FULL', 'Y-m-d H:i:s');
+define('DATE_TIME_MYSQL_FORMAT_SHORT', 'Y-m-d H:i');
+define('DATE_MYSQL_FORMAT_FULL', 'Y-m-d');
+define('DATE_MYSQL_FORMAT_SHORT', 'm-d');
 // ===================================================================================================================================
 //
 define('DEFAULT_PATTERN_EMPTY', '^\\S+$');

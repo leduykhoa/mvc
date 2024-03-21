@@ -29,20 +29,22 @@
 
 class BaseController
 {
-    protected $theme = 'default';
-    protected $folder;
 
-    public function render($file, $data = [])
+    public function render($file, $data = [], $type = HTML)
     {
-        $viewFile = PATH_VIEW . DS  . $this->theme . DS . $this->folder . DS . $file . '.php';
-        if (is_file($viewFile)) {
-            extract($data);
-            ob_start();
-            require_once($viewFile);
-            $content = ob_get_clean();
-            require_once($this->theme . '/layouts/default.php');
-        } else {
-            header('Location: index.php');
+        if ($type == HTML) {
+            $viewFile = PATH_VIEW . DS  . PageViewer::get('theme') . DS . $file;
+            $layout = PATH_VIEW . DS  . PageViewer::get('theme') . DS . PageViewer::get('layout');
+
+            $content = PageViewer::render($viewFile, $data);
+            header('Content-Type: text/html; charset=utf-8');
+            echo PageViewer::render($layout, ['content' => $content]);
+        } elseif ($type == JSON) {
+            header('Content-Type: application/json; charset=utf-8');
+            print_r($data);
+        } elseif ($type == JSON) {
+            header('Content-Type: application/xml; charset=utf-8');
+            die('Update after!');
         }
     }
 }

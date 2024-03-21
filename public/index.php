@@ -27,9 +27,7 @@
  *  Time: 08:45:46
  */
 
-require_once('./../lib/include.php');
 require_once('./../config/const.php');
-require_once('./../config/app.php');
-require_once('web.php');
+require_once('./../lib/include.php');
 
 Route::dispatch();

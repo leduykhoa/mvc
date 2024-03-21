@@ -19,7 +19,7 @@ cp -rf ./config $path/$name/
 cp -rf ./lib $path/$name/
 cp -rf ./m $path/$name/
 cp -rf ./route $path/$name/
-cp -rf ./stubs $path/$name/
+# cp -rf ./stubs $path/$name/
 # cp -rf ./docker-compose.yml $path/$name/
 # cp -rf ./package.json $path/$name/
 # cp -rf ./package-lock.json $path/$name/

@@ -1,8 +1,16 @@
 
 
-## About MVC Simple
+## About PHP MVC Skeleton
 
-This is a web application framework with MVC Simple base on PHP language
+This is a web application framework with PHP MVC Skeleton base on PHP language
+
+
+## About version
+
+ *  Php >= 5.6
+ *  Mysql >= 5.6
+ *  Nodejs >= 12.x
+
 
 ## Author
 *  Lê Duy Khoa

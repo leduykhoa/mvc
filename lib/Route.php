@@ -50,7 +50,7 @@ class Route
         if (!isset(self::$instance)) {
             try {
                 self::$instance = true;
-            } catch (Exception $ex) {
+            } catch (\Exception $ex) {
                 die($ex->getMessage());
             }
         }
@@ -171,8 +171,8 @@ class Route
                     $controller->$action();
                     return;
                 } else {
-                    $pattern = '/(\{([a-zA-Z0-9])+\})/';
-                    $replacement = '([-_a-zA-Z0-9]+)';
+                    // $pattern = '/(\{([a-zA-Z0-9])+\})/';
+                    // $replacement = '([-_a-zA-Z0-9]+)';
                     preg_match('/^\/' . $key . '$/', $_SERVER['REQUEST_URI'], $matches);
                     if ($key != '' && is_array($matches) && count($matches)) {
                         $routerObj = explode('@', $item[0]);
@@ -190,7 +190,11 @@ class Route
         } catch (\Exception $exc) {
             echo $exc->getMessage();
         }
-        echo 'Not found!';
-        return NULL;
+        header('HTTP/1.0 404 Not Found');
+        include_once('PagesController.php');
+        $klass = 'PagesController';
+        $controller = new $klass;
+        $controller->error(404);
+        exit();
     }
 }

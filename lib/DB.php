@@ -30,12 +30,13 @@
 class DB
 {
     private static $instance = NULl;
+
     public static function getInstance()
     {
         if (!isset(self::$instance)) {
             try {
-                $str = 'mysql:host=' . env('DB_HOST') . ';dbname=' . env('DB_DATABASE');
-                self::$instance = new PDO($str, env('DB_USERNAME'), env('DB_PASSWORD'));
+                $str = 'mysql:host=' . __env('DB_HOST') . ';dbname=' . __env('DB_DATABASE');
+                self::$instance = new PDO($str, __env('DB_USERNAME'), __env('DB_PASSWORD'));
                 self::$instance->exec("SET NAMES 'utf8'");
             } catch (PDOException $ex) {
                 die($ex->getMessage());
