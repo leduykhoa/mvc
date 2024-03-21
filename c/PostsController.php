@@ -31,7 +31,6 @@ class PostsController extends BaseController
 {
     public function __construct()
     {
-        $this->folder = 'posts';
     }
 
     public function index()
@@ -39,6 +38,6 @@ class PostsController extends BaseController
         $obj = new BaseModel('blog_posts');
         $posts = $obj->all();
         $data = ['posts' => $posts];
-        $this->render('index', $data);
+        $this->render('posts/index', $data);
     }
 }

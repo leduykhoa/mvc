@@ -30,6 +30,7 @@
 class Register
 {
     private static $instance;
+
     private static $_register = [];
 
     public static function getInstance()
@@ -37,7 +38,8 @@ class Register
         if (!isset(self::$instance)) {
             try {
                 self::$instance = true;
-            } catch (Exception $ex) {
+                self::set('system_time_start', microtime(true));
+            } catch (\Exception $ex) {
                 die($ex->getMessage());
             }
         }
@@ -46,17 +48,19 @@ class Register
 
     public static function set($key, $value)
     {
-
-        if (isset(self::$_register[$key])) {
-            return '';
-        } else {
-            self::$_register[$key] = $value;
-        }
+        self::getInstance();
+        // if (isset(self::$_register[$key])) {
+        //     self::$_register[$key] = $value;
+        // } else {
+        //     self::$_register[$key] = $value;
+        // }
+        self::$_register[$key] = $value;
         return true;
     }
 
     public static function get($key)
     {
+        self::getInstance();
         if (isset(self::$_register[$key])) {
             return self::$_register[$key];
         }

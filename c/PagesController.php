@@ -31,17 +31,23 @@ class PagesController extends BaseController
 {
   public function __construct()
   {
-    $this->folder = 'pages';
   }
 
   public function home()
   {
     $data = [];
-    $this->render('home', $data);
+    $this->render('pages/home', $data);
   }
 
-  public function error()
+  public function error($code = 500)
   {
-    $this->render('error');
+    $data = ['code' => $code];
+    $this->render('error/' . $code, $data);
   }
+
+  // public function error($code)
+  // {
+  //   $data = ['code' => $code];
+  //   $this->render('error', $data);
+  // }
 }

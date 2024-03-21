@@ -23,51 +23,16 @@
  *  Website: http://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/14
- *  Time: 03:03:46
+ *  Date: 2024/03/20
+ *  Time: 09:47:40
  */
-
-class PageViewer
-{
-    private static $instance;
-
-    public const __SESSION = '__page_viewer_';
-
-    public static function getInstance()
-    {
-        if (!isset(self::$instance)) {
-            try {
-                self::$instance = true;
-            } catch (\Exception $ex) {
-                die($ex->getMessage());
-            }
-        }
-        return self::$instance;
-    }
-
-    public static function set($key, $value)
-    {
-        return Register::set(self::__SESSION . $key, $value);
-    }
-
-    public static function get($key)
-    {
-        return Register::get(self::__SESSION . $key);
-    }
-
-    public static function render($template, $data = [])
-    {
-        if (!str_ends_with($template, '.php')) {
-            $template .= '.php';
-        }
-        if (is_file($template)) {
-            extract($data);
-            ob_start();
-            require_once($template);
-            return ob_get_clean();
-        } else {
-            print_r($data);
-            throw new ErrorException('Not found template: [' . $template . ']');
-        }
-    }
+?>
+<?php
+$title = PageViewer::get('page.title');
+if ($title == '') {
+    $title = PageViewer::get('name');
 }
+$title .= PageViewer::get('page.title.separate');
+$title .= PageViewer::get('page.title.suffix');
+?>
+<title><?php echo $title; ?></title>

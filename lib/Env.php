@@ -30,6 +30,7 @@
 class Env
 {
     private static $instance;
+
     private static $_env = [];
 
     public static function getInstance()
@@ -38,7 +39,7 @@ class Env
             try {
                 self::readEnv();
                 self::$instance = true;
-            } catch (Exception $ex) {
+            } catch (\Exception $ex) {
                 die($ex->getMessage());
             }
         }
@@ -60,8 +61,9 @@ class Env
         }
     }
 
-    public static function env($key)
+    public static function __env($key)
     {
+        self::getInstance();
         if (isset(self::$_env[$key])) {
             return self::$_env[$key];
         }

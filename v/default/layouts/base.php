@@ -26,8 +26,6 @@
  *  Date: 2024/03/16
  *  Time: 08:34:14
  */
-
-
 ?>
 <!doctype html>
 <html class="" lang="<?php echo PageViewer::get('language.code'); ?>">

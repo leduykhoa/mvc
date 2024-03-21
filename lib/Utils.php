@@ -37,7 +37,7 @@ class Utils
         if (!isset(self::$instance)) {
             try {
                 self::$instance = true;
-            } catch (Exception $ex) {
+            } catch (\Exception $ex) {
                 die($ex->getMessage());
             }
         }

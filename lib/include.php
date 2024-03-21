@@ -27,10 +27,15 @@
  *  Time: 08:20:18
  */
 
+/**
+ * Include some functions and class
+ */
 require_once('Env.php');
 require_once('DB.php');
 require_once('Register.php');
 require_once('Utils.php');
+require_once('Route.php');
+require_once('PageViewer.php');
 
 
 /**
@@ -73,16 +78,42 @@ $paths[] = PATH_SERVICE;
 $appPath = implode(PS, $paths);
 set_include_path($appPath . PS . get_include_path());
 // ===================================================================================================================================
+require_once('app.php');
 require_once('BaseController.php');
 require_once('BaseModel.php');
-require_once('Route.php');
-// echo '<pre>';
-// print_r($_POST);
-// print_r($_SERVER);
+require_once('web.php');
 
 // ===================================================================================================================================
-function env($key, $default = NULL)
+function __e($key, $default = NULL)
 {
-    \Env::getInstance();
-    return (Env::env($key) ?? $default);
+    echo __($key, $default);
+}
+
+// ===================================================================================================================================
+function __($key, $default = NULL)
+{
+    return $key;
+}
+
+// ===================================================================================================================================
+function __env($key, $default = NULL)
+{
+    return (Env::__env($key) ?? $default);
+}
+
+// ===================================================================================================================================
+function __more($file)
+{
+    $file = str_replace('.', DS, $file);
+    if (!str_ends_with($file, '.php')) {
+        $file .= '.php';
+    }
+    $file = PATH_VIEW . DS . PageViewer::get('theme') . DS .  $file;
+    include($file);
+}
+
+// ===================================================================================================================================
+function view($template, $data)
+{
+    return PageViewer::render($template, $data);
 }
