@@ -3,9 +3,9 @@
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
  *  ...............(¯'•.(¯'•.......((.....((
- *  ................(¯''•(¯'•...((.)..(. ‘ /)
+ *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_¸´(_.)......|
+ *  .....,,,~”¯¯¯''¯(_.'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -20,114 +20,30 @@
  *  Mail: leduykhoa060690@gmail.com
  *  Skype: leduykhoa060690
  *  Mobile: +84973421508
- *  Website: http://web-fast.com
+ *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/03/16
  *  Time: 08:27:46
  */
 ?>
-<style>
-    #notfound .notfound {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%)
-    }
-
-    .notfound {
-        max-width: 520px;
-        width: 100%;
-        line-height: 1.4;
-        text-align: center
-    }
-
-    .notfound .notfound-404 {
-        position: relative;
-        height: 240px
-    }
-
-    .notfound .notfound-404 h1 {
-        font-family: montserrat, sans-serif;
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        -webkit-transform: translate(-50%, -50%);
-        -ms-transform: translate(-50%, -50%);
-        transform: translate(-50%, -50%);
-        font-size: 252px;
-        font-weight: 900;
-        margin: 0;
-        color: #262626;
-        text-transform: uppercase;
-        letter-spacing: -40px;
-        margin-left: -20px
-    }
-
-    .notfound .notfound-404 h1>span {
-        text-shadow: -8px 0 0 #fff
-    }
-
-    .notfound .notfound-404 h3 {
-        font-family: cabin, sans-serif;
-        position: relative;
-        font-size: 16px;
-        font-weight: 700;
-        text-transform: uppercase;
-        color: #262626;
-        margin: 0;
-        letter-spacing: 3px;
-        padding-left: 6px
-    }
-
-    .notfound h2 {
-        font-family: cabin, sans-serif;
-        font-size: 20px;
-        font-weight: 400;
-        text-transform: uppercase;
-        color: #000;
-        margin-top: 0;
-        margin-bottom: 25px
-    }
-
-    @media only screen and (max-width: 767px) {
-        .notfound .notfound-404 {
-            height: 200px
-        }
-
-        .notfound .notfound-404 h1 {
-            font-size: 200px
-        }
-    }
-
-    @media only screen and (max-width: 480px) {
-        .notfound .notfound-404 {
-            height: 162px
-        }
-
-        .notfound .notfound-404 h1 {
-            font-size: 162px;
-            height: 150px;
-            line-height: 162px
-        }
-
-        .notfound h2 {
-            font-size: 16px
-        }
-    }
-</style>
-<div class="container py-2" style="min-height: 90vh">
-    <div id="notfound">
-        <div class="notfound">
-            <div class="notfound-404">
-                <h3><?php __e('Xin lỗi, Server xử lý lỗi') ?></h3>
-                <h1><span>5</span><span>0</span><span>0</span></h1>
+<div class="container py-[66px]" style="min-height: 90vh">
+    <div>
+        <div class="text-center">
+            <div class="">
+                <h3 class="uppercase" style="font-family: montserrat, sans-serif;">
+                    <?php __e('Sorry, Server processing error') ?>
+                </h3>
+                <div class="flex justify-center">
+                    <div class="z-20 text-error ms-[-15px] drop-shadow-error">5</div>
+                    <div class="z-10 text-error ms-[-15px] drop-shadow-error">0</div>
+                    <div class="z-0 text-error ms-[-15px] drop-shadow-error">0</div>
+                </div>
             </div>
-            <h2><?php __e('Yêu cầu hiện tại có thể bị hạn chế. Bạn vui lòng quay trở lại sau') ?></h2>
-
-            <div class="text-center">
+            <h2 class="uppercase" style="font-family: montserrat, sans-serif;">
+                <?php __e('There was a processing error from the server. Please come back later.') ?>
+            </h2>
+            <div class="text-center pt-[66px]">
                 <a class="btn btn-link" href="/">
                     <?php __e('Back to home page') ?>
                 </a>

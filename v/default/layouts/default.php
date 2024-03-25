@@ -3,9 +3,9 @@
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
  *  ...............(¯'•.(¯'•.......((.....((
- *  ................(¯''•(¯'•...((.)..(. ‘ /)
+ *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_¸´(_.)......|
+ *  .....,,,~”¯¯¯''¯(_.'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -20,7 +20,7 @@
  *  Mail: leduykhoa060690@gmail.com
  *  Skype: leduykhoa060690
  *  Mobile: +84973421508
- *  Website: http://web-fast.com
+ *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/03/16
@@ -30,7 +30,7 @@
 
 ?>
 <!doctype html>
-<html class="" lang="<?php echo PageViewer::get('language.code'); ?>">
+<html class="light" lang="<?php echo PageViewer::get('language.code'); ?>">
 
 <head>
     <meta charset="utf-8">
@@ -49,8 +49,11 @@
     <?php @__more('layouts.include.style-end'); ?>
 </head>
 
-<body class="min-h-screen min-w-full <?php echo PageViewer::get('body.class'); ?>">
+<!-- <body class="min-h-screen min-w-full <?php echo PageViewer::get('body.class'); ?> bg-white text-black dark:bg-black dark:text-white"> -->
+<body class="min-h-screen min-w-full <?php echo PageViewer::get('body.class'); ?> bg-white text-black dark:bg-black dark:text-white">
+    <?php @__more('layouts.include.header'); ?>
     <?= @$content ?>
+    <?php @__more('layouts.include.footer'); ?>
     <?php @__more('layouts.include.toolbar-develop'); ?>
     <!--   script   -->
     <?php @__more('layouts.include.script-pre'); ?>

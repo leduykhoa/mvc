@@ -20,7 +20,7 @@
  *  Mail: leduykhoa060690@gmail.com
  *  Skype: leduykhoa060690
  *  Mobile: +84973421508
- *  Website: http://web-fast.com
+ *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/03/16
@@ -28,7 +28,6 @@
  */
 
 ?>
-
 <ul>
   <?php foreach ($posts as $post) : ?>
     <li>

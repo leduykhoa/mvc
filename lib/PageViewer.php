@@ -3,9 +3,9 @@
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
  *  ...............(¯'•.(¯'•.......((.....((
- *  ................(¯''•(¯'•...((.)..(. ‘ /)
+ *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_¸´(_.)......|
+ *  .....,,,~”¯¯¯''¯(_.'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -20,7 +20,7 @@
  *  Mail: leduykhoa060690@gmail.com
  *  Skype: leduykhoa060690
  *  Mobile: +84973421508
- *  Website: http://web-fast.com
+ *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/03/14
@@ -32,6 +32,15 @@ class PageViewer
     private static $instance;
 
     public const __SESSION = '__page_viewer_';
+
+    public function __construct()
+    {
+        try {
+            self::getInstance();
+        } catch (\Exception $ex) {
+            die($ex->getMessage());
+        }
+    }
 
     public static function getInstance()
     {
@@ -60,6 +69,7 @@ class PageViewer
         if (!str_ends_with($template, '.php')) {
             $template .= '.php';
         }
+
         if (is_file($template)) {
             extract($data);
             ob_start();

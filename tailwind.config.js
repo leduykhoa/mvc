@@ -2,9 +2,9 @@
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
  *  ...............(¯'•.(¯'•.......((.....((
- *  ................(¯''•(¯'•...((.)..(. ‘ /)
+ *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_¸´(_.)......|
+ *  .....,,,~”¯¯¯''¯(_.'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -19,7 +19,7 @@
  *  Mail: leduykhoa060690@gmail.com
  *  Skype: leduykhoa060690
  *  Mobile: +84973421508
- *  Website: http://web-fast.com
+ *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/03/13
@@ -33,7 +33,8 @@
 module.exports = {
   content: ["*/**/*.{html,js,php}"],
   presets: [],
-  darkMode: 'media', // or 'class'
+  // darkMode: 'media', // or 'class'
+  darkMode: 'class', // or 'class'
   theme: {
     accentColor: ({ theme }) => ({
       ...theme('colors'),
@@ -281,6 +282,7 @@ module.exports = {
       xl: ['0 20px 13px rgb(0 0 0 / 0.03)', '0 8px 5px rgb(0 0 0 / 0.08)'],
       '2xl': '0 25px 25px rgb(0 0 0 / 0.15)',
       none: '0 0 #0000',
+      error: '-8px 0 0 #fff',
     },
     fill: ({ theme }) => ({
       none: 'none',
@@ -367,6 +369,7 @@ module.exports = {
       '7xl': ['4.5rem', { lineHeight: '1' }],
       '8xl': ['6rem', { lineHeight: '1' }],
       '9xl': ['8rem', { lineHeight: '1' }],
+      'error': ['18rem', { lineHeight: '1' }],
     },
     fontWeight: {
       thin: '100',

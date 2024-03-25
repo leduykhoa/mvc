@@ -3,9 +3,9 @@
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
  *  ...............(¯'•.(¯'•.......((.....((
- *  ................(¯''•(¯'•...((.)..(. ‘ /)
+ *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_¸´(_.)......|
+ *  .....,,,~”¯¯¯''¯(_.'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -20,7 +20,7 @@
  *  Mail: leduykhoa060690@gmail.com
  *  Skype: leduykhoa060690
  *  Mobile: +84973421508
- *  Website: http://web-fast.com
+ *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/02/29
@@ -39,5 +39,17 @@ class PostsController extends BaseController
         $posts = $obj->all();
         $data = ['posts' => $posts];
         $this->render('posts/index', $data);
+    }
+
+    public function detail($id)
+    {
+        $obj = new BaseModel('blog_posts');
+        $posts = $obj->findOne([
+            'conditions' => [
+                ['id', $id]
+            ]
+        ]);
+        $data = ['post' => $posts];
+        $this->render('posts/detail', $data);
     }
 }
