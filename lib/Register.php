@@ -3,9 +3,9 @@
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
  *  ...............(¯'•.(¯'•.......((.....((
- *  ................(¯''•(¯'•...((.)..(. ‘ /)
+ *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_¸´(_.)......|
+ *  .....,,,~”¯¯¯''¯(_.'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -20,7 +20,7 @@
  *  Mail: leduykhoa060690@gmail.com
  *  Skype: leduykhoa060690
  *  Mobile: +84973421508
- *  Website: http://web-fast.com
+ *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/03/12
@@ -30,14 +30,23 @@
 class Register
 {
     private static $instance;
+    private static $_register;
 
-    private static $_register = [];
+    public function __construct()
+    {
+        try {
+            self::getInstance();
+        } catch (\Exception $ex) {
+            die($ex->getMessage());
+        }
+    }
 
     public static function getInstance()
     {
         if (!isset(self::$instance)) {
             try {
                 self::$instance = true;
+                self::$_register = [];
                 self::set('system_time_start', microtime(true));
             } catch (\Exception $ex) {
                 die($ex->getMessage());

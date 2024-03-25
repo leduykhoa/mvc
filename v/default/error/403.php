@@ -24,10 +24,30 @@
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/02/29
- *  Time: 08:45:46
+ *  Time: 11:03:55
  */
-
-require_once('./../config/const.php');
-require_once('./../lib/include.php');
-
-Route::dispatch();
+?>
+<div class="container py-[66px]" style="min-height: 90vh">
+    <div>
+        <div class="text-center">
+            <div class="">
+                <h3 class="uppercase" style="font-family: montserrat, sans-serif;">
+                    <?php __e('Sorry, Forbidden') ?>
+                </h3>
+                <div class="flex justify-center">
+                    <div class="z-20 text-error ms-[-15px] drop-shadow-error">4</div>
+                    <div class="z-10 text-error ms-[-15px] drop-shadow-error">0</div>
+                    <div class="z-0 text-error ms-[-15px] drop-shadow-error">3</div>
+                </div>
+            </div>
+            <h2 class="uppercase" style="font-family: montserrat, sans-serif;">
+                <?php __e('Current requests may be limited. Please come back later!') ?>
+            </h2>
+            <div class="text-center pt-[66px]">
+                <a class="btn btn-link" href="/">
+                    <?php __e('Back to home page') ?>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

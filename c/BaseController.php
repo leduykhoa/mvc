@@ -3,9 +3,9 @@
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
  *  ...............(¯'•.(¯'•.......((.....((
- *  ................(¯''•(¯'•...((.)..(. ‘ /)
+ *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_¸´(_.)......|
+ *  .....,,,~”¯¯¯''¯(_.'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -20,7 +20,7 @@
  *  Mail: leduykhoa060690@gmail.com
  *  Skype: leduykhoa060690
  *  Mobile: +84973421508
- *  Website: http://web-fast.com
+ *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/02/29
@@ -37,13 +37,13 @@ class BaseController
             $layout = PATH_VIEW . DS  . PageViewer::get('theme') . DS . PageViewer::get('layout');
 
             $content = PageViewer::render($viewFile, $data);
-            header('Content-Type: text/html; charset=utf-8');
+            // header('Content-Type: text/html; charset=utf-8');
             echo PageViewer::render($layout, ['content' => $content]);
         } elseif ($type == JSON) {
-            header('Content-Type: application/json; charset=utf-8');
+            // header('Content-Type: application/json; charset=utf-8');
             print_r($data);
         } elseif ($type == JSON) {
-            header('Content-Type: application/xml; charset=utf-8');
+            // header('Content-Type: application/xml; charset=utf-8');
             die('Update after!');
         }
     }

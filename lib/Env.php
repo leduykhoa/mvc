@@ -3,9 +3,9 @@
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
  *  ...............(¯'•.(¯'•.......((.....((
- *  ................(¯''•(¯'•...((.)..(. ‘ /)
+ *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_¸´(_.)......|
+ *  .....,,,~”¯¯¯''¯(_.'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -20,7 +20,7 @@
  *  Mail: leduykhoa060690@gmail.com
  *  Skype: leduykhoa060690
  *  Mobile: +84973421508
- *  Website: http://web-fast.com
+ *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/03/12
@@ -30,15 +30,18 @@
 class Env
 {
     private static $instance;
+    private static $_env;
 
-    private static $_env = [];
+    public function __construct()
+    {
+        self::getInstance();
+    }
 
     public static function getInstance()
     {
         if (!isset(self::$instance)) {
             try {
                 self::readEnv();
-                self::$instance = true;
             } catch (\Exception $ex) {
                 die($ex->getMessage());
             }
@@ -55,7 +58,14 @@ class Env
             if (!str_starts_with($line, '#')) {
                 preg_match("/([^#]+)\=(.*)/", $line, $matches);
                 if (isset($matches[2]) && trim($matches[2]) != '') {
-                    self::$_env[trim($matches[1])] = trim($matches[2]);
+                    $key = trim($matches[1]);
+                    $value = trim($matches[2]);
+                    if ($value == 'true') {
+                        $value = true;
+                    } elseif ($value == 'false') {
+                        $value = false;
+                    }
+                    self::$_env[$key] = $value;
                 }
             }
         }

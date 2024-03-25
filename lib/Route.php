@@ -3,9 +3,9 @@
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
  *  ...............(¯'•.(¯'•.......((.....((
- *  ................(¯''•(¯'•...((.)..(. ‘ /)
+ *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_¸´(_.)......|
+ *  .....,,,~”¯¯¯''¯(_.'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -20,7 +20,7 @@
  *  Mail: leduykhoa060690@gmail.com
  *  Skype: leduykhoa060690
  *  Mobile: +84973421508
- *  Website: http://web-fast.com
+ *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/03/13
@@ -44,6 +44,11 @@ class Route
     private static $_typePatch = [];
     private static $_typeDelete = [];
     private static $_typeOptions = [];
+
+    public function __construct()
+    {
+        self::getInstance();
+    }
 
     public static function getInstance()
     {
@@ -171,20 +176,7 @@ class Route
                     $controller->$action();
                     return;
                 } else {
-                    // $pattern = '/(\{([a-zA-Z0-9])+\})/';
-                    // $replacement = '([-_a-zA-Z0-9]+)';
-                    preg_match('/^\/' . $key . '$/', $_SERVER['REQUEST_URI'], $matches);
-                    if ($key != '' && is_array($matches) && count($matches)) {
-                        $routerObj = explode('@', $item[0]);
-                        $controller = $routerObj[0];
-                        $action = $routerObj[1];
-
-                        include_once(ucwords($controller) . 'Controller.php');
-                        $klass = ucwords($controller) . 'Controller';
-                        $controller = new $klass;
-                        $controller->$action();
-                        return;
-                    }
+                    self::processUrl($key, $item);
                 }
             }
         } catch (\Exception $exc) {
@@ -196,5 +188,30 @@ class Route
         $controller = new $klass;
         $controller->error(404);
         exit();
+    }
+
+    public static function processUrl($key, $item)
+    {
+        $key = str_replace("/", "\/", $key);
+        // $pattern = '/(\{([a-zA-Z0-9])+\})/';
+        // $pattern = '/(\{([a-zA-Z0-9])+\?{1}\})/';
+        $pattern = '/(\{([a-zA-Z0-9])+\?*\})/';
+        preg_match_all($pattern, $key, $urlParams);
+        $replacement = '([-_a-zA-Z0-9]+)';
+        $keyParam = preg_replace($pattern, $replacement, $key);
+
+        preg_match('/^\/' . $keyParam . '$/', $_SERVER['REQUEST_URI'], $matches);
+        if ($key != '' && is_array($matches) && count($matches)) {
+            unset($matches[0]);
+            $routerObj = explode('@', $item[0]);
+            $controller = $routerObj[0];
+            $action = $routerObj[1];
+
+            include_once(ucwords($controller) . 'Controller.php');
+            $klass = ucwords($controller) . 'Controller';
+            $controller = new $klass;
+            call_user_func_array(array($controller, $action), $matches);
+            exit();
+        }
     }
 }
