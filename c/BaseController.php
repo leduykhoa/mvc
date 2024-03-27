@@ -29,6 +29,9 @@
 
 class BaseController
 {
+    public function __construct()
+    {
+    }
 
     public function render($file, $data = [], $type = HTML)
     {
@@ -42,7 +45,7 @@ class BaseController
         } elseif ($type == JSON) {
             // header('Content-Type: application/json; charset=utf-8');
             print_r($data);
-        } elseif ($type == JSON) {
+        } elseif ($type == XML) {
             // header('Content-Type: application/xml; charset=utf-8');
             die('Update after!');
         }

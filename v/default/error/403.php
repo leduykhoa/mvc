@@ -27,7 +27,7 @@
  *  Time: 11:03:55
  */
 ?>
-<div class="container py-[66px]" style="min-height: 90vh">
+<div class="py-[66px] w-full" style="min-height: 90vh">
     <div>
         <div class="text-center">
             <div class="">

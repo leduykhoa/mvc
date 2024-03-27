@@ -46,7 +46,8 @@
     ?>
     <div class="fixed bottom-0 left-0 w-full">
         <div class="flex w-full flex-nowrap bg-gray-800 text-orange-500">
-            <div><label>&nbsp; <?php __e('Memory'); ?></label>: <?php echo $memory; ?></div>
+            <div><label>&nbsp; <?php __e('PHP'); ?></label>: <?php echo phpversion(); ?></div>
+            <div class="ps-2"><label>&nbsp;|&nbsp; <?php __e('Memory'); ?></label>: <?php echo $memory; ?></div>
             <div class="ps-2"><label>&nbsp;|&nbsp; <?php __e('Executions'); ?></label>: <?php echo $execution; ?></div>
         </div>
     </div>

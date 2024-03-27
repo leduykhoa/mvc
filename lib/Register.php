@@ -47,7 +47,17 @@ class Register
             try {
                 self::$instance = true;
                 self::$_register = [];
+                // Add time start for schedule/performance time calculation
                 self::set('system_time_start', microtime(true));
+                // Register data request
+                $data = [];
+                foreach ($_POST as $key => $value) {
+                    $data[$key] = $value;
+                }
+                foreach ($_GET as $key => $value) {
+                    $data[$key] = $value;
+                }
+                self::set('data_old', $data);
             } catch (\Exception $ex) {
                 die($ex->getMessage());
             }

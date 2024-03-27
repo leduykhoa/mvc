@@ -139,34 +139,60 @@ class Route
         return self::set($key, $param, REQUEST_METHOD_GET);
     }
 
+    public static function post($key, $param)
+    {
+        return self::set($key, $param, REQUEST_METHOD_POST);
+    }
+
+    public static function put($key, $param)
+    {
+        return self::set($key, $param, REQUEST_METHOD_PUT);
+    }
+
+    public static function patch($key, $param)
+    {
+        return self::set($key, $param, REQUEST_METHOD_PATCH);
+    }
+
+    // May be delete
+    public static function options($key, $param)
+    {
+        return self::set($key, $param, REQUEST_METHOD_OPTIONS);
+    }
+
     public static function dispatch()
     {
         $type = $_SERVER['REQUEST_METHOD'];
-        $collection = self::$_typeGet;
+        $table = self::$_typeGet;
         switch ($type) {
             case REQUEST_METHOD_POST:
-                $collection = self::$_typePost;
+                $table = self::$_typePost;
                 break;
             case REQUEST_METHOD_PUT:
-                $collection = self::$_typePut;
+                $table = self::$_typePut;
                 break;
             case REQUEST_METHOD_PATCH:
-                $collection = self::$_typePatch;
+                $table = self::$_typePatch;
                 break;
             case REQUEST_METHOD_DELETE:
-                $collection = self::$_typeDelete;
+                $table = self::$_typeDelete;
                 break;
             case REQUEST_METHOD_OPTIONS:
-                $collection = self::$_typeOptions;
+                $table = self::$_typeOptions;
                 break;
             default:
-                $collection = self::$_typeGet;
+                $table = self::$_typeGet;
                 break;
         }
         try {
             // code...
-            foreach ($collection as $key => $item) {
-                if ($key == '' && ($_SERVER['REQUEST_URI'] == '' || $_SERVER['REQUEST_URI'] == '/')) {
+            $uri = $_SERVER['REQUEST_URI'];
+            if (strpos('?', $uri) > 0) {
+                $uri = explode('?', $uri);
+                $uri = $uri[0];
+            }
+            foreach ($table as $key => $item) {
+                if ($key == '' && ($uri == '' || $uri == '/')) {
                     $controller = 'Pages';
                     $action = 'home';
 
