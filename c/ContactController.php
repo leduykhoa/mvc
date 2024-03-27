@@ -23,24 +23,28 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/12
- *  Time: 10:59:15
+ *  Date: 2024/03/25
+ *  Time: 10:24:18
  */
 
-// return [
-//     '' => ['Pages@home', 'home'],
-//     'posts' => ['Posts@index'],
-// ];
+class ContactController extends BaseController
+{
+    public function __construct()
+    {
+    }
 
-Route::get('', ['Pages@home', 'home']);
-Route::get('contact', ['Contact@index', 'contact.index']);
-Route::post('contact', ['Contact@store', 'contact.store']);
-Route::get('about', ['About@index', 'about.index']);
-
-Route::get('register', ['User@register', 'user.register']);
-Route::get('login', ['User@login', 'user.login']);
-
-
-Route::get('posts', ['Posts@index', 'post.index']);
-Route::get('posts/detail/{id?}', ['Posts@detail', 'post.detail']);
-// Route::get('posts/detail/{id?}/{abc?}', ['Posts@detail', 'post.detail']);
+    public function index()
+    {
+        if (isPost() == true) {
+            $obj = new BaseModel('tickets');
+            $data = [
+                'id' => Utils::genUuid(),
+                'name' => request('name'),
+                'email' => request('email'),
+                'content' => request('content'),
+            ];
+            $result = $obj->insert(['data' => $data]);
+        }
+        $this->render('contact/index', $data);
+    }
+}

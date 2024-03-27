@@ -77,7 +77,7 @@ class BaseModel
             if ($counter++ > 0) {
                 $str .= ' ' . (isset($filter[3]) ? strtoupper($filter[3]) : 'AND') . ' ';
             }
-            $value = '\''.$filter[1].'\'';
+            $value = '\'' . $filter[1] . '\'';
             if (gettype($filter[1]) == 'integer' || gettype($filter[1]) == 'double' || gettype($filter[1]) == 'float') {
                 $value = $filter[1];
             }
@@ -91,10 +91,64 @@ class BaseModel
         // ===================================================================================================================================
         $db = DB::getInstance();
         $query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where;
-        // print_r($params);
-        // print_r($conditions);
-        // die($query);
         $req = $db->query($query);
         return $req->fetch($fetchType);
+    }
+
+    public function insert($params = [])
+    {
+        // ===================================================================================================================================
+        $data = [];
+        if (isset($params['data']) && is_array($params['data'])) {
+            $data = $params['data'];
+        }
+        // ===================================================================================================================================
+        $listFields = [];
+        $listFieldReplaces = [];
+        $listValues = [];
+        foreach ($data as $field => $value) {
+            $listFields[] = $field;
+            $listFieldReplaces[] = ':' . $field;
+            $listValues[] = $value;
+        }
+        // ===================================================================================================================================
+        $db = DB::getInstance();
+        $sql = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $listFields) . ') VALUES  (' . implode(', ', $listFieldReplaces) . ')';
+        return $db->prepare($sql)->execute($data);
+    }
+
+    public function inserts($params = [])
+    {
+        // ===================================================================================================================================
+        $data = [];
+        if (isset($params['data']) && is_array($params['data'])) {
+            $data = $params['data'];
+        }
+        $fields = [];
+        if (isset($params['fields']) && is_array($params['fields'])) {
+            $fields = $params['fields'];
+        }
+        // ===================================================================================================================================
+        $listFields = [];
+        $listFieldReplaces = [];
+        foreach ($fields as $field) {
+            $listFields[] = $field;
+            $listFieldReplaces[] = '?';
+        }
+        // ===================================================================================================================================
+        $db = DB::getInstance();
+        $sql = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $listFields) . ') VALUES  (' . implode(', ', $listFieldReplaces) . ')';
+        $stmt = $db->prepare($sql);
+        try {
+            $db->beginTransaction();
+            foreach ($data as $row) {
+                $stmt->execute($row);
+            }
+            $db->commit();
+        } catch (Exception $e) {
+            $db->rollback();
+            throw $e;
+        }
+        return true;
     }
 }
