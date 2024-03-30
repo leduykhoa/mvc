@@ -108,6 +108,24 @@ define('ADMIN', 'admin');
 define('SUPPLY', 'supply');
 define('MANAGE', 'manage');
 // ===================================================================================================================================
+// HEADER_FORWARDED = 0b000001; // When using RFC 7239
+// HEADER_X_FORWARDED_FOR = 0b000010;
+// HEADER_X_FORWARDED_HOST = 0b000100;
+// HEADER_X_FORWARDED_PROTO = 0b001000;
+// HEADER_X_FORWARDED_PORT = 0b010000;
+// HEADER_X_FORWARDED_PREFIX = 0b100000;
+
+// HEADER_X_FORWARDED_AWS_ELB = 0b0011010; // AWS ELB doesn't send X-Forwarded-Host
+// HEADER_X_FORWARDED_TRAEFIK = 0b0111110; // All "X-Forwarded-*" headers sent by Traefik reverse proxy
+define('HEADER_FORWARDED', 0b000001);
+define('HEADER_X_FORWARDED_FOR', 0b000010);
+define('HEADER_X_FORWARDED_HOST', 0b000100);
+define('HEADER_X_FORWARDED_PROTO', 0b001000);
+define('HEADER_X_FORWARDED_PORT', 0b010000);
+define('HEADER_X_FORWARDED_PREFIX', 0b100000);
+define('HEADER_X_FORWARDED_AWS_ELB', 0b0011010);
+define('HEADER_X_FORWARDED_TRAEFIK', 0b0111110);
+// ===================================================================================================================================
 // get
 // post
 // put
@@ -115,13 +133,18 @@ define('MANAGE', 'manage');
 // delete
 // options
 // any
-define('REQUEST_METHOD_GET', 'get');
-define('REQUEST_METHOD_POST', 'post');
-define('REQUEST_METHOD_PUT', 'put');
-define('REQUEST_METHOD_PATCH', 'patch');
-define('REQUEST_METHOD_DELETE', 'delete');
-define('REQUEST_METHOD_OPTIONS', 'options');
+define('REQUEST_METHOD_HEAD', 'HEAD');
+define('REQUEST_METHOD_GET', 'GET');
+define('REQUEST_METHOD_POST', 'POST');
+define('REQUEST_METHOD_PUT', 'PUT');
+define('REQUEST_METHOD_PATCH', 'PATCH');
+define('REQUEST_METHOD_DELETE', 'DELETE');
+define('REQUEST_METHOD_PURGE', 'PURGE');
+define('REQUEST_METHOD_OPTIONS', 'OPTIONS');
+define('REQUEST_METHOD_TRACE', 'TRACE');
+define('REQUEST_METHOD_CONNECT', 'CONNECT');
 define('REQUEST_METHOD_ANY', 'any');
+
 // ===================================================================================================================================
 //
 define('DEFAULT_USER_LOGIN_TYPE_ANONYMOUS', 'anonymous');

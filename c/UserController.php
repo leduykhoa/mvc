@@ -40,6 +40,26 @@ class UserController extends BaseController
     public function register()
     {
         $data = [];
+        // echo plural('translate');
+        // echo '<pre>';
+        // print_r(Language::getLanguage());
+        // setLanguageCode('vi');
+        // Register::set('language.code', strtolower('en'));
+        if (isPost() == true) {
+            $this->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'content' => 'required',
+            ]);
+            $obj = new BaseModel(Pluralize::plural('user'));
+            $data = [
+                'id' => Utils::genUuid(),
+                'name' => request('name'),
+                'email' => request('email'),
+                'content' => request('content'),
+            ];
+            $result = $obj->insert(['data' => $data]);
+        }
         $this->render('user/register', $data);
     }
 

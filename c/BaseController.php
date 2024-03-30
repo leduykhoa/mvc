@@ -29,8 +29,10 @@
 
 class BaseController
 {
+    protected $validateList;
     public function __construct()
     {
+        $this->validateList = require_once(PATH_CONFIG . DS . 'validation.php');
     }
 
     public function render($file, $data = [], $type = HTML)
@@ -49,5 +51,63 @@ class BaseController
             // header('Content-Type: application/xml; charset=utf-8');
             die('Update after!');
         }
+    }
+
+    public function validate($rules, $all = true)
+    {
+        $results = [];
+        foreach ($rules as $key => $rule) {
+            $value = request($key, NULL);
+            $rule = explode('|', $rule);
+            foreach ($rule as $ruleItem) {
+                if (strpos(':', $ruleItem) !== false) {
+                    $ruleItemParams = explode(':', $ruleItem);
+                    $keyCurrent = $ruleItemParams[0];
+                    array_shift($ruleItemParams);
+                    $result = $this->validateItem($value, $keyCurrent, $ruleItemParams);
+                } elseif (gettype($ruleItem) === 'string') {
+                    $result = $this->validateItem($value, $ruleItem);
+                }
+                if ($result !== true && $all === true) {
+                    $results[] = array_merge([$key], $result);
+                } elseif ($result !== true && $all !== true) {
+                    return array_merge([$key], $result);
+                }
+            }
+        }
+        if (count($results)) {
+            $return = [];
+            foreach ($results as $item) {
+                $text = isset($this->validateList[$item[2]]) ? $this->validateList[$item[2]] : '';
+                if (gettype($text) == 'string' && $text != '') {
+                    $text = str_replace(':attribute', $item[0], $text);
+                    $item[] = $text;
+                    $return[] = $item;
+                }
+            }
+            return $return;
+        }
+        return true;
+    }
+
+    public function validateItem($value, $rule, $params = [])
+    {
+        switch ($rule) {
+            case 'required':
+                if ($value == '') {
+                    return [
+                        $value, $rule, $params
+                    ];
+                }
+                break;
+            case 'between':
+                if ($value == '') {
+                    return [
+                        $value, $rule, $params
+                    ];
+                }
+                break;
+        }
+        return true;
     }
 }

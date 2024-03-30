@@ -56,6 +56,7 @@ class BaseModel
 
     public function findOne($params = [])
     {
+        $dataFilter = [];
         // ===================================================================================================================================
         $columns = ['*'];
         if (isset($params['columns']) && is_array($params['columns'])) {
@@ -65,35 +66,129 @@ class BaseModel
         if (isset($params['fetch_type']) && $params['fetch_type'] != '') {
             $fetchType = $params['fetch_type'];
         }
+        // ===================================================================================================================================    
+        $counter = 0;
+        $where = [];
         $conditions = [];
         if (isset($params['conditions']) && is_array($params['conditions'])) {
             $conditions = $params['conditions'];
+
+            foreach ($conditions as $key => $value) {
+                $str = '';
+                if ($counter++ > 0) {
+                    $str .= (isset($value[2]) ? strtoupper($value[2]) : ' AND ');
+                }
+                $valueP = NULL;
+                if (is_array($value)) {
+                    $valueP = (string) $value[0];
+                    if (gettype($value[0]) == 'integer' || gettype($value[0]) == 'double' || gettype($value[0]) == 'float' || gettype($value[0]) == 'boolean') {
+                        $valueP = $value[0];
+                    }
+                } else {
+                    $valueP =  (string) $value;
+                    if (gettype($value) == 'integer' || gettype($value) == 'double' || gettype($value) == 'float' || gettype($value) == 'boolean') {
+                        $valueP = $value;
+                    }
+                }
+                $dataFilter[$key] = $valueP;
+                $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
+            }
         }
         // ===================================================================================================================================
-        $where = [];
-        $counter = 0;
-        foreach ($conditions as $filter) {
-            $str = '';
-            if ($counter++ > 0) {
-                $str .= ' ' . (isset($filter[3]) ? strtoupper($filter[3]) : 'AND') . ' ';
-            }
-            $value = '\'' . $filter[1] . '\'';
-            if (gettype($filter[1]) == 'integer' || gettype($filter[1]) == 'double' || gettype($filter[1]) == 'float') {
-                $value = $filter[1];
-            }
-            $where[] = $str . $filter[0] . ' ' . (isset($filter[2]) ? $filter[2] : ' = ' . $value);
-        }
         if (count($where)) {
-            $where = ' WHERE ' . implode(' ', $where);
+            $where = implode(' ', $where);
         } else {
             $where = '';
         }
         // ===================================================================================================================================
         $db = DB::getInstance();
-        $query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where;
-        $req = $db->query($query);
-        return $req->fetch($fetchType);
+        $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . ' WHERE ' . $where;
+        $stmt = $db->prepare($sql);
+        $stmt->execute($dataFilter);
+        return $stmt->fetch($fetchType);
     }
+
+    // public function findOne($params = [])
+    // {
+    //     $dataFilter = [];
+    //     // ===================================================================================================================================
+    //     $columns = ['*'];
+    //     if (isset($params['columns']) && is_array($params['columns'])) {
+    //         $columns = $params['columns'];
+    //     }
+    //     $fetchType = PDO::FETCH_OBJ;
+    //     if (isset($params['fetch_type']) && $params['fetch_type'] != '') {
+    //         $fetchType = $params['fetch_type'];
+    //     }
+    //     // ===================================================================================================================================    
+    //     $counter = 0;
+    //     $where = [];
+    //     $conditions = [];
+    //     if (isset($params['conditions']) && is_array($params['conditions'])) {
+    //         $conditions = $params['conditions'];
+
+    //         foreach ($conditions as $key => $value) {
+    //             $str = '';
+    //             if ($counter++ > 0) {
+    //                 $str .= (isset($value[2]) ? strtoupper($value[2]) : ' AND ');
+    //             }
+    //             $valueP = '';
+    //             if (is_array($value)) {
+    //                 $valueP = $value[0];
+    //                 if (gettype($value[0]) == 'integer' || gettype($value[0]) == 'double' || gettype($value[0]) == 'float' || gettype($value[0]) == 'boolean') {
+    //                     $valueP = $value[0];
+    //                 }
+    //             } else {
+    //                 $valueP =  (string) $value ;
+    //                 if (gettype($value) == 'integer' || gettype($value) == 'double' || gettype($value) == 'float' || gettype($value) == 'boolean') {
+    //                     $valueP = $value;
+    //                 }
+    //             }
+    //             // $dataFilter[$key] = '\'' . $valueP . '\'';
+    //             $dataFilter[$key] = $valueP;
+    //             $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . '?';
+    //         }
+    //         echo '<pre>';
+    //         // print_r($conditions);
+    //         print_r($dataFilter);
+    //         print_r($where);
+    //     }
+    //     // ===================================================================================================================================
+    //     if (count($where)) {
+    //         $where = implode(' ', $where);
+    //     } else {
+    //         $where = '';
+    //     }
+    //     // ===================================================================================================================================
+    //     $db = DB::getInstance();
+    //     $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . ' ' . $where;
+    //     // die($sql);
+    //     $stmt = $db->prepare("$sql");
+    //     // foreach ($dataFilter as $key => $value) {
+    //     //     switch (gettype($value)) {
+    //     //         case 'NULL':
+    //     //             $stmt->bindValue(':' . $key, NULL, PDO::PARAM_NULL);
+    //     //             break;
+    //     //         case 'integer':
+    //     //             $stmt->bindValue(':' . $key, (int)$value, PDO::PARAM_INT);
+    //     //             break;
+    //     //         case 'double':
+    //     //             $stmt->bindValue(':' . $key, (float)$value, PDO::PARAM_INT);
+    //     //             break;
+    //     //         case 'float':
+    //     //             $stmt->bindValue(':' . $key, (float)$value, PDO::PARAM_INT);
+    //     //             break;
+    //     //         case 'boolean':
+    //     //             $stmt->bindValue(':' . $key, (bool)$value, PDO::PARAM_BOOL);
+    //     //             break;
+    //     //         case 'string':
+    //     //             $stmt->bindValue(':' . $key, (string)$value);
+    //     //             break;
+    //     //     }
+    //     // }
+    //     $stmt->execute(array_values($dataFilter));
+    //     return $stmt->fetch($fetchType);
+    // }
 
     public function insert($params = [])
     {
@@ -150,5 +245,64 @@ class BaseModel
             throw $e;
         }
         return true;
+    }
+
+    public function update($params = [])
+    {
+        $dataSave = [];
+        // ===================================================================================================================================
+        $data = [];
+        $dataKeys = [];
+        if (isset($params['data']) && is_array($params['data'])) {
+            $data = $params['data'];
+            foreach ($data as $key => $value) {
+                $dataKeys[] = $key . '=:' . $key;
+                $valueP = '\'' . $value . '\'';
+                if (gettype($value) == 'integer' || gettype($value) == 'double' || gettype($value) == 'float' || gettype($value) == 'boolean') {
+                    $valueP = $value;
+                }
+                $dataSave[$key] = $valueP;
+            }
+        }
+        // ===================================================================================================================================    
+        $counter = 0;
+        $where = [];
+        $conditions = [];
+        if (isset($params['conditions']) && is_array($params['conditions'])) {
+            $conditions = $params['conditions'];
+
+            foreach ($conditions as $key => $value) {
+                $str = '';
+                if ($counter++ > 0) {
+                    $str .= (isset($value[2]) ? strtoupper($value[2]) : ' AND ');
+                }
+                $valueP = NULL;
+                if (is_array($value)) {
+                    $valueP = (string) $value[0];
+                    if (gettype($value[0]) == 'integer' || gettype($value[0]) == 'double' || gettype($value[0]) == 'float' || gettype($value[0]) == 'boolean') {
+                        $valueP = $value[0];
+                    }
+                } else {
+                    $valueP =  (string) $value;
+                    if (gettype($value) == 'integer' || gettype($value) == 'double' || gettype($value) == 'float' || gettype($value) == 'boolean') {
+                        $valueP = $value;
+                    }
+                }
+                $dataSave[$key] = $valueP;
+                $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
+            }
+        }
+        // ===================================================================================================================================
+        if (count($where)) {
+            $where = implode(' ', $where);
+        } else {
+            $where = '';
+        }
+
+        // ===================================================================================================================================
+        $db = DB::getInstance();
+        $sql = 'UPDATE ' . $this->table . ' SET ' . implode(', ', $dataKeys) . ' WHERE ' . $where;
+        $stmt = $db->prepare($sql);
+        return $stmt->execute($dataSave);
     }
 }

@@ -31,11 +31,12 @@ class PostsController extends BaseController
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     public function index()
     {
-        $obj = new BaseModel('blog_posts');
+        $obj = new BaseModel(plural('blog_post'));
         $posts = $obj->all();
         $data = ['posts' => $posts];
         $this->render('posts/index', $data);
@@ -43,10 +44,10 @@ class PostsController extends BaseController
 
     public function detail($id)
     {
-        $obj = new BaseModel('blog_posts');
+        $obj = new BaseModel(plural('blog_post'));
         $posts = $obj->findOne([
             'conditions' => [
-                ['id', $id]
+                'id' => $id
             ]
         ]);
         $data = ['post' => $posts];

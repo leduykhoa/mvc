@@ -28,7 +28,7 @@
  */
 ?>
 <!doctype html>
-<html class="" lang="<?php echo PageViewer::get('language.code'); ?>">
+<html class="" lang="<?php echo Register::get('language.code'); ?>">
 
 <head>
     <meta charset="utf-8">

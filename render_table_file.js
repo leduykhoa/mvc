@@ -27,18 +27,14 @@
  */
 
 
-// node ./render_migration_file.js
-
+// node ./render_table_file.js
 
 const fs = require(`fs`);
 const pluralize = require(`./pluralize.js`);
-const tableList = `tableist.csv`;
-const dateTimeCurrent = new Date();
-const schemaTableFile = `./schema_table_file.sql`;
+const schemaTableFile = `./render_table_file.sql`;
 const dateRunTime = new Date();
 
-
-let data = fs.readFileSync(`./render_migration_file.json`);
+let data = fs.readFileSync(`./render_table_file.json`);
 let tableNumber = 0;
 let tableListData = [];
 // ===================================================================================================================================

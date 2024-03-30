@@ -11,6 +11,20 @@ This is a web application framework with PHP MVC Skeleton base on PHP language
  *  Mysql >= 5.6
  *  Nodejs >= 12.x
 
+## Style/css/script
+ - Style ./v/default/assets/scss
+ - Image ./v/default/assets/images
+ - Script ./v/default/assets/js
+ - For dev ```npm run tailwind```
+
+ ## Languages
+
+ - Edit ./v/default/languages/languages.csv
+ - Key is column 1
+ - English is column 2
+ - Vietnamese is column 3
+ - For build ```npm run languages```
+
 
 ## Author
 *  Lê Duy Khoa

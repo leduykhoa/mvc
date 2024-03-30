@@ -1,0 +1,30 @@
+# ===================================================================================================================================
+version: "3.5"
+services:
+# ===================================================================================================================================
+  nginx-mvc:
+    container_name: nginx-mvc
+    hostname: nginx-mvc
+    image: nginx
+    links:
+      - php-mvc
+    ports:
+      - 8098:80
+    networks:
+      - php_dev_network
+    volumes:
+      - .:/var/www/html
+      - ./docker/site.nginx.conf:/etc/nginx/conf.d/default.conf
+  php-mvc:
+    container_name: php-mvc
+    hostname: php-mvc
+    build: ./docker
+    volumes:
+      - ./:/var/www/html
+    networks:
+      - php_dev_network
+    working_dir: /var/www/html
+networks:
+  php_dev_network:
+    external:
+      name: php_dev_network
