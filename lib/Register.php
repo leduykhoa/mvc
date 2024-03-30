@@ -57,7 +57,7 @@ class Register
                 foreach ($_GET as $key => $value) {
                     $data[$key] = $value;
                 }
-                self::set('data_old', $data);
+                self::set('data_request', $data);
             } catch (\Exception $ex) {
                 die($ex->getMessage());
             }

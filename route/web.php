@@ -34,7 +34,7 @@
 
 Route::get('', ['Pages@home', 'home']);
 Route::get('contact', ['Contact@index', 'contact.index']);
-Route::post('contact', ['Contact@store', 'contact.store']);
+Route::post('contact', ['Contact@index', 'contact.store']);
 Route::get('about', ['About@index', 'about.index']);
 
 Route::get('register', ['User@register', 'user.register']);

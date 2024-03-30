@@ -36,6 +36,8 @@ require_once('Register.php');
 require_once('Utils.php');
 require_once('Route.php');
 require_once('PageViewer.php');
+require_once('Pluralize.php');
+require_once('Language.php');
 // ===================================================================================================================================
 /**
  * Define constants
@@ -83,18 +85,6 @@ require_once('BaseModel.php');
 require_once('web.php');
 
 // ===================================================================================================================================
-function __e($key, $default = NULL)
-{
-    echo __($key, $default);
-}
-
-// ===================================================================================================================================
-function __($key, $default = NULL)
-{
-    return $key;
-}
-
-// ===================================================================================================================================
 function __env($key, $default = NULL)
 {
     return (Env::__env($key) ?? $default);
@@ -112,6 +102,21 @@ function __more($file)
 }
 
 // ===================================================================================================================================
+function plural($key)
+{
+    return Pluralize::plural($key);
+}
+// ===================================================================================================================================
+function dataRequest($key)
+{
+    Register::getInstance();
+    $dataRequest = Register::get('data_request');
+    if (isset($dataRequest) && isset($dataRequest[$key])) {
+        return $dataRequest[$key];
+    }
+    return NULL;
+}
+// ===================================================================================================================================
 function view($template, $data)
 {
     return PageViewer::render($template, $data);
@@ -124,24 +129,23 @@ function getMethod()
 // ===================================================================================================================================
 function isGet()
 {
-    return (strtolower(getMethod()) == REQUEST_METHOD_GET);
+    return (getMethod() == REQUEST_METHOD_GET);
 }
 // ===================================================================================================================================
 function isPost()
 {
-    return (strtolower(getMethod()) == REQUEST_METHOD_POST);
+    return (getMethod() == REQUEST_METHOD_POST);
 }
 // ===================================================================================================================================
 function isPut()
 {
-    return (strtolower(getMethod()) == REQUEST_METHOD_PUT);
+    return (getMethod() == REQUEST_METHOD_PUT);
 }
 // ===================================================================================================================================
 function isPatch()
 {
-    return (strtolower(getMethod()) == REQUEST_METHOD_PATCH);
+    return (getMethod() == REQUEST_METHOD_PATCH);
 }
-
 // ===================================================================================================================================
 function request($key, $default = NULL)
 {
@@ -149,4 +153,52 @@ function request($key, $default = NULL)
         return (isset($_POST)) ? $_POST[$key] : $default;
     }
     return (isset($_GET)) ? $_GET[$key] : $default;
+}
+// ===================================================================================================================================
+function setCountryCode($key)
+{
+    $countries = Language::getCountry();
+    if ($key != '' && isset($countries[strtoupper($key)])) {
+        Register::set('country.code', strtoupper($key));
+    } else {
+        throw new \ErrorException('Country code \'' . $key . '\' not exist.');
+    }
+}
+// ===================================================================================================================================
+function countryCode()
+{
+    Language::getInstance();
+    return Register::get('country.code');
+}
+// ===================================================================================================================================
+function setLanguageCode($key)
+{
+    $languages = Language::getLanguage();
+    if ($key != '' && isset($languages[strtolower($key)])) {
+        Register::set('language.code', strtolower($key));
+    } else {
+        throw new \ErrorException('Language code \'' . $key . '\' not exist.');
+    }
+}
+// ===================================================================================================================================
+function languageCode()
+{
+    Language::getInstance();
+    return Register::get('language.code');
+}
+// ===================================================================================================================================
+function __($key, $languageCode = NULL)
+{
+    if (is_null($languageCode)) {
+        $languageCode = languageCode();
+    }
+    return Language::translate($key, $languageCode);
+}
+// ===================================================================================================================================
+function __e($key, $languageCode = NULL)
+{
+    if (is_null($languageCode)) {
+        $languageCode = languageCode();
+    }
+    echo __($key, $languageCode);
 }

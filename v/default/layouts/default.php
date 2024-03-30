@@ -30,7 +30,7 @@
 
 ?>
 <!doctype html>
-<html class="light" lang="<?php echo PageViewer::get('language.code'); ?>">
+<html class="light" lang="<?php echo Register::get('language.code'); ?>">
 
 <head>
     <meta charset="utf-8">

@@ -31,12 +31,21 @@ class ContactController extends BaseController
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     public function index()
     {
+        $data = [];
         if (isPost() == true) {
-            $obj = new BaseModel('tickets');
+            $validateResults = $this->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'content' => 'required',
+            ]);
+            echo '<pre>';
+            print_r($validateResults); die('dddd');
+            $obj = new BaseModel(plural('ticket'));
             $data = [
                 'id' => Utils::genUuid(),
                 'name' => request('name'),
