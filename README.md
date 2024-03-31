@@ -18,12 +18,15 @@ This is a web application framework with PHP MVC Skeleton base on PHP language
  - For dev ```npm run tailwind```
 
  ## Languages
-
  - Edit ./v/default/languages/languages.csv
  - Key is column 1
  - English is column 2
  - Vietnamese is column 3
  - For build ```npm run languages```
+
+ ## Database
+ - Edit ./render_table_file.json
+ - For update ```npm run table```
 
 
 ## Author
