@@ -43,16 +43,16 @@ class ContactController extends BaseController
                 'email' => 'required|email',
                 'content' => 'required',
             ]);
-            echo '<pre>';
-            print_r($validateResults); die('dddd');
-            $obj = new BaseModel(plural('ticket'));
-            $data = [
-                'id' => Utils::genUuid(),
-                'name' => request('name'),
-                'email' => request('email'),
-                'content' => request('content'),
-            ];
-            $result = $obj->insert(['data' => $data]);
+            if ($validateResults === true) {
+                $obj = new BaseModel(plural('ticket'));
+                $data = [
+                    'id' => Utils::genUuid(),
+                    'name' => request('name'),
+                    'email' => request('email'),
+                    'content' => request('content'),
+                ];
+                $result = $obj->insert(['data' => $data]);
+            }
         }
         $this->render('contact/index', $data);
     }
