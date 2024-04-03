@@ -38,12 +38,12 @@ class ContactController extends BaseController
     {
         $data = [];
         if (isPost() == true) {
-            $validateResults = $this->validate([
+            $data['validate'] = $this->validate([
                 'name' => 'required',
                 'email' => 'required|email',
                 'content' => 'required',
             ]);
-            if ($validateResults === true) {
+            if ($data['validate'] === true) {
                 $obj = new BaseModel(plural('ticket'));
                 $data = [
                     'id' => Utils::genUuid(),

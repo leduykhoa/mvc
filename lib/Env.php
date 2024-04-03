@@ -73,7 +73,7 @@ class Env
 
     public static function __env($key)
     {
-        self::getInstance();
+        // self::getInstance();
         if (isset(self::$_env[$key])) {
             return self::$_env[$key];
         }

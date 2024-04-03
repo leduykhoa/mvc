@@ -195,7 +195,7 @@ class Pluralize
      */
     public static function plural($word)
     {
-        self::getInstance();
+        // self::getInstance();
         return self::replaceWord($word, self::$irregularSingles, self::$irregularPlurals, self::$pluralRules);
     }
 

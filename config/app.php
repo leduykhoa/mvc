@@ -31,6 +31,8 @@
 if (__env('APP_DEBUG', true) === true) {
     error_reporting(E_ALL);
     ini_set('display_errors', 'On');
+    header("Cache-Control: no-cache, must-revalidate");
+    header("Expires: Mon, 26 Jul 1997 05:00:00 GMT");
 }
 // ===================================================================================================================================
 Register::set('app.url.base',  __env('APP_URL_BASE', 'https://web-fast.com'));
