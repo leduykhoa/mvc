@@ -32,6 +32,7 @@
  */
 require_once('Env.php');
 require_once('DB.php');
+require_once('Session.php');
 require_once('Register.php');
 require_once('Utils.php');
 require_once('Route.php');
@@ -78,11 +79,20 @@ $paths[] = PATH_SERVICE;
 
 $appPath = implode(PS, $paths);
 set_include_path($appPath . PS . get_include_path());
+Env::getInstance();
+DB::getInstance();
+Register::getInstance();
+Pluralize::getInstance();
+Session::getInstance();
+Utils::getInstance();
 // ===================================================================================================================================
 require_once('app.php');
 require_once('BaseController.php');
 require_once('BaseModel.php');
 require_once('web.php');
+
+// ===================================================================================================================================
+Language::getInstance();
 
 // ===================================================================================================================================
 function __env($key, $default = NULL)
@@ -91,13 +101,14 @@ function __env($key, $default = NULL)
 }
 
 // ===================================================================================================================================
-function __more($file)
+function __more($file, $params = [])
 {
     $file = str_replace('.', DS, $file);
     if (!str_ends_with($file, '.php')) {
         $file .= '.php';
     }
     $file = PATH_VIEW . DS . PageViewer::get('theme') . DS .  $file;
+    extract($params);
     include($file);
 }
 
@@ -109,7 +120,7 @@ function plural($key)
 // ===================================================================================================================================
 function dataRequest($key)
 {
-    Register::getInstance();
+    // Register::getInstance();
     $dataRequest = Register::get('data_request');
     if (isset($dataRequest) && isset($dataRequest[$key])) {
         return $dataRequest[$key];
@@ -167,7 +178,6 @@ function setCountryCode($key)
 // ===================================================================================================================================
 function countryCode()
 {
-    Language::getInstance();
     return Register::get('country.code');
 }
 // ===================================================================================================================================
@@ -183,7 +193,6 @@ function setLanguageCode($key)
 // ===================================================================================================================================
 function languageCode()
 {
-    Language::getInstance();
     return Register::get('language.code');
 }
 // ===================================================================================================================================

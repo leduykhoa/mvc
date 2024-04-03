@@ -76,7 +76,7 @@ class BaseModel
             foreach ($conditions as $key => $value) {
                 $str = '';
                 if ($counter++ > 0) {
-                    $str .= (isset($value[2]) ? strtoupper($value[2]) : ' AND ');
+                    $str .= ((is_array($value) && isset($value[2]) && $value[2] != '' && $value[2] != 0) ? strtoupper($value[2]) : ' AND ');
                 }
                 $valueP = NULL;
                 if (is_array($value)) {
@@ -87,6 +87,7 @@ class BaseModel
                 } else {
                     $valueP =  (string) $value;
                     if (gettype($value) == 'integer' || gettype($value) == 'double' || gettype($value) == 'float' || gettype($value) == 'boolean') {
+                        die('ddd');
                         $valueP = $value;
                     }
                 }
@@ -96,13 +97,13 @@ class BaseModel
         }
         // ===================================================================================================================================
         if (count($where)) {
-            $where = implode(' ', $where);
+            $where = ' WHERE ' . implode(' ', $where);
         } else {
             $where = '';
         }
         // ===================================================================================================================================
         $db = DB::getInstance();
-        $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . ' WHERE ' . $where;
+        $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where;
         $stmt = $db->prepare($sql);
         $stmt->execute($dataFilter);
         return $stmt->fetch($fetchType);
@@ -294,14 +295,14 @@ class BaseModel
         }
         // ===================================================================================================================================
         if (count($where)) {
-            $where = implode(' ', $where);
+            $where =  ' WHERE ' . implode(' ', $where);
         } else {
             $where = '';
         }
 
         // ===================================================================================================================================
         $db = DB::getInstance();
-        $sql = 'UPDATE ' . $this->table . ' SET ' . implode(', ', $dataKeys) . ' WHERE ' . $where;
+        $sql = 'UPDATE ' . $this->table . ' SET ' . implode(', ', $dataKeys) . $where;
         $stmt = $db->prepare($sql);
         return $stmt->execute($dataSave);
     }

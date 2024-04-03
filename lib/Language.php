@@ -29,7 +29,7 @@ class Language
 
     public static function translate($key, $language)
     {
-        self::getInstance();
+        // self::getInstance();
         if (isset(self::$translates[$language][$key])) {
             return self::$translates[$language][$key];
         }
@@ -56,13 +56,13 @@ class Language
     }
     public static function getCountry()
     {
-        self::getInstance();
+        // self::getInstance();
         return self::$countries;
     }
 
     public static function getLanguage()
     {
-        self::getInstance();
+        // self::getInstance();
         return self::$languages;
     }
 
@@ -519,14 +519,5 @@ class Language
             'za' => 'Zhuang, Chuang',
             'zu' => 'Zulu'
         ];
-    }
-
-    public static function __env($key)
-    {
-        self::getInstance();
-        if (isset(self::$languages[$key])) {
-            return self::$languages[$key];
-        }
-        return NULL;
     }
 }

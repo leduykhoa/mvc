@@ -94,14 +94,21 @@ class BaseController
     {
         switch ($rule) {
             case 'required':
-                if ($value == '') {
+                if (!preg_match('/' . DEFAULT_PATTERN_EMPTY . '/', $value)) {
                     return [
                         $value, $rule, $params
                     ];
                 }
                 break;
-            case 'between':
-                if ($value == '') {
+            case 'email':
+                if (!preg_match('/' . DEFAULT_PATTERN_EMAIL . '/', $value)) {
+                    return [
+                        $value, $rule, $params
+                    ];
+                }
+                break;
+            case 'email':
+                if (!preg_match('/' . DEFAULT_PATTERN_EMAIL . '/', $value)) {
                     return [
                         $value, $rule, $params
                     ];

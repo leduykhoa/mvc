@@ -31,34 +31,41 @@ class UserController extends BaseController
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     public function index()
     {
+        $data = [];
+        $this->render('user/index', $data);
     }
 
     public function register()
     {
         $data = [];
-        // echo plural('translate');
-        // echo '<pre>';
-        // print_r(Language::getLanguage());
-        // setLanguageCode('vi');
-        // Register::set('language.code', strtolower('en'));
+        $this->render('user/register', $data);
+    }
+
+    public function registerPost()
+    {
+        $data = [];
         if (isPost() == true) {
-            $this->validate([
-                'name' => 'required',
+            $data['validate'] = $this->validate([
+                'full_name' => 'required',
                 'email' => 'required|email',
-                'content' => 'required',
+                'password' => 'required|min:6',
+                'repassword' => 'required|same:password',
             ]);
-            $obj = new BaseModel(Pluralize::plural('user'));
-            $data = [
-                'id' => Utils::genUuid(),
-                'name' => request('name'),
-                'email' => request('email'),
-                'content' => request('content'),
-            ];
-            $result = $obj->insert(['data' => $data]);
+            if ($data['validate'] === true) {
+                $obj = new BaseModel(Pluralize::plural('user'));
+                $dataSave = [
+                    'id' => Utils::genUuid(),
+                    'full_name' => request('full_name'),
+                    'email' => request('email'),
+                    'password' => md5(request('password')),
+                ];
+                $result = $obj->insert(['data' => $dataSave]);
+            }
         }
         $this->render('user/register', $data);
     }
@@ -66,6 +73,26 @@ class UserController extends BaseController
     public function login()
     {
         $data = [];
+        $this->render('user/login', $data);
+    }
+
+    public function loginPost()
+    {
+        $data = [];
+        if (isPost() == true) {
+            $this->validate([
+                'email' => 'required|email',
+                'password' => 'required|min:6'
+            ]);
+            $obj = new BaseModel(Pluralize::plural('user'));
+            $user = $obj->findOne([
+                'conditions' => [
+                    'email' => request('email'),
+                    'password' => md5(request('password')),
+                ]
+            ]);
+            print_r($user);
+        }
         $this->render('user/login', $data);
     }
 }

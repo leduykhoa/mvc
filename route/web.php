@@ -38,8 +38,9 @@ Route::post('contact', ['Contact@index', 'contact.store']);
 Route::get('about', ['About@index', 'about.index']);
 
 Route::get('register', ['User@register', 'user.register']);
+Route::post('register-post', ['User@registerPost', 'user.register.post']);
 Route::get('login', ['User@login', 'user.login']);
-
+Route::post('login-post', ['User@loginPost', 'user.login.post']);
 
 Route::get('posts', ['Posts@index', 'post.index']);
 Route::get('posts/detail/{id?}', ['Posts@detail', 'post.detail']);

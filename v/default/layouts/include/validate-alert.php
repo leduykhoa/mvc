@@ -1,3 +1,4 @@
+<?php
 /*
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
@@ -22,50 +23,14 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/13
- *  Time: 14:42:27
+ *  Date: 2024/04/03
+ *  Time: 08:16:36
  */
-
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-@layer components {
-    .label {
-        @apply mb-1 block text-sm font-bold text-black dark:text-white
-    }
-
-    .form-control {
-        @apply border rounded-md border-gray-400 px-3 py-2 mt-1 bg-white text-sm placeholder-gray-950 focus:outline-none focus:border-gray-950 focus:ring-1 focus:text-gray-950
-    }
-
-    .btn {
-        @apply border rounded-md px-5 py-2 mt-1 text-white text-sm text-center font-medium bg-black dark:bg-white dark:text-black;
-    }
-
-    .h3 {
-        @apply mb-3 text-2xl font-bold text-black dark:text-white sm:text-3xl;
-    }
-
-    .alert {
-        @apply border rounded-sm border-gray-400 px-5 py-3 my-1 bg-white text-sm
-    }
-
-    .alert-danger {
-        @apply border-red-600 text-gray-400
-    }
-
-    .alert-success {
-        @apply border-gray-400 text-emerald-600
-    }
-
-    .alert-warning {
-        @apply border-yellow-600 text-yellow-600
-    }
-
-    .alert-info {
-        @apply border-sky-600 text-sky-600
-    }
-}
-
-@layer utilities {}
+?>
+<?php if (isset($validate) && $validate !== true) : ?>
+    <div class="alert alert-warning">
+        <?php foreach ($validate as $item) : ?>
+            <?php __e($item[4]); ?><br />
+        <?php endforeach; ?>
+    </div>
+<?php endif; ?>

@@ -67,7 +67,7 @@ class Register
 
     public static function set($key, $value)
     {
-        self::getInstance();
+        // self::getInstance();
         // if (isset(self::$_register[$key])) {
         //     self::$_register[$key] = $value;
         // } else {
@@ -79,7 +79,7 @@ class Register
 
     public static function get($key)
     {
-        self::getInstance();
+        // self::getInstance();
         if (isset(self::$_register[$key])) {
             return self::$_register[$key];
         }
