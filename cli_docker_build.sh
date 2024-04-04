@@ -1,6 +1,8 @@
 #!/bin/bash
 echo "Bash version ${BASH_VERSION}..."
 
+# ./cli_docker_build.sh
+
 # - PHP_VERSION=5.6
 # - PHP_VERSION=7.0
 # - PHP_VERSION=7.1
@@ -15,6 +17,11 @@ PHP_VERSION=${1:-'8.3'}
 DOCKER_PREFIX=${2:-'mvc-docker-'}
 DOCKER_NETWORK=${3:-'php_dev_network'}
 
+MYSQL_VERSION='5.7'
+MYSQL_PASSWORD='1234567'
+MYSQL_DATABASE='mvc'
+MYSQL_USER='mvc'
+
 # ===================================================================================================================================
 if [ -n "${PHP_VERSION}" ]; then
     docker build \
@@ -22,6 +29,34 @@ if [ -n "${PHP_VERSION}" ]; then
     -t ${DOCKER_PREFIX}php:${PHP_VERSION} \
     .
 fi
+
+# ===================================================================================================================================
+docker stop ${DOCKER_PREFIX}mysql 
+docker rm ${DOCKER_PREFIX}mysql -v
+sleep 6
+# Remove sudo - Thinking
+sudo chmod -R 777 ./mysql*
+rm -rf ./mysql/*
+
+docker run \
+ --network=${DOCKER_NETWORK} \
+ --name ${DOCKER_PREFIX}mysql -d \
+-h ${DOCKER_PREFIX}mysql \
+-v ./mysql:/var/lib/mysql/ \
+-v ./render_table_file.sql:/apt/render_table_file.sql \
+-v ./render_table_file_custom.sql:/apt/render_table_file_custom.sql \
+-e MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD} \
+-e MYSQL_DATABASE=${MYSQL_DATABASE} \
+-e MYSQL_USER=${MYSQL_USER} \
+-e MYSQL_PASSWORD=${MYSQL_PASSWORD} \
+-e MYSQL_ALLOW_EMPTY_PASSWORD='no' \
+-e MYSQL_HOST='0.0.0.0' \
+-t mysql:${MYSQL_VERSION} \
+--lower_case_table_names=1 --sql_mode='ON' --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+sleep 36
+docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} mvc < render_table_file.sql
+docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} mvc < render_table_file_custom.sql
 
 # ===================================================================================================================================
 docker stop ${DOCKER_PREFIX}php 

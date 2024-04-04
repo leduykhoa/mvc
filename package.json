@@ -14,5 +14,8 @@
   "devDependencies": {
     "tailwindcss": "^3.4.1"
   },
-  "main": "main.js"
+  "main": "main.js",
+  "dependencies": {
+    "mysql": "^2.18.1"
+  }
 }

@@ -29,9 +29,9 @@
 
 class PageViewer
 {
-    private static $instance;
+    const __SESSION = '__page_viewer_';
 
-    public const __SESSION = '__page_viewer_';
+    private static $instance;
 
     public function __construct()
     {

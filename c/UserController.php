@@ -42,6 +42,7 @@ class UserController extends BaseController
 
     public function register()
     {
+        PageViewer::set('layout', 'layouts' . DS . 'simple');
         $data = [];
         $this->render('user/register', $data);
     }
@@ -72,6 +73,7 @@ class UserController extends BaseController
 
     public function login()
     {
+        PageViewer::set('layout', 'layouts' . DS . 'simple');
         $data = [];
         $this->render('user/login', $data);
     }

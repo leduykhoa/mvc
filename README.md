@@ -8,7 +8,7 @@ This is a web application framework with PHP MVC Skeleton base on PHP language
 ## About version
 
  *  Php >= 5.6
- *  Mysql >= 5.6
+ *  Mysql >= 5.7
  *  Nodejs >= 12.x
 
 ## Style/css/script
