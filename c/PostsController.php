@@ -37,7 +37,7 @@ class PostsController extends BaseController
     public function index()
     {
         $obj = new BaseModel(plural('blog_post'));
-        $posts = $obj->all();
+        $posts = $obj->find([]);
         $data = ['posts' => $posts];
         $this->render('posts/index', $data);
     }

@@ -17,8 +17,11 @@ yarn-error.log
 /.fleet
 /.idea
 /.vscode
+/mysql
 
 /public/css
 /public/js
 /public/images
 /public/test.php
+
+news*

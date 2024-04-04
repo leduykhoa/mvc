@@ -54,6 +54,65 @@ class BaseModel
         return $req->fetchAll($fetchType);
     }
 
+    public function find($params = [])
+    {
+        $dataFilter = [];
+        // ===================================================================================================================================
+        $columns = ['*'];
+        if (isset($params['columns']) && is_array($params['columns'])) {
+            $columns = $params['columns'];
+        }
+        $fetchType = PDO::FETCH_OBJ;
+        if (isset($params['fetch_type']) && $params['fetch_type'] != '') {
+            $fetchType = $params['fetch_type'];
+        }
+        $limit = 20;
+        if (isset($params['limit']) && $params['limit'] != '') {
+            $limit = (int)$params['limit'];
+        }
+        // ===================================================================================================================================    
+        $counter = 0;
+        $where = [];
+        $conditions = [];
+        if (isset($params['conditions']) && is_array($params['conditions'])) {
+            $conditions = $params['conditions'];
+
+            foreach ($conditions as $key => $value) {
+                $str = '';
+                if ($counter++ > 0) {
+                    $str .= ((is_array($value) && isset($value[2]) && $value[2] != '' && $value[2] != 0) ? strtoupper($value[2]) : ' AND ');
+                }
+                $valueP = NULL;
+                if (is_array($value)) {
+                    $valueP = (string) $value[0];
+                    if (gettype($value[0]) == 'integer' || gettype($value[0]) == 'double' || gettype($value[0]) == 'float' || gettype($value[0]) == 'boolean') {
+                        $valueP = $value[0];
+                    }
+                } else {
+                    $valueP =  (string) $value;
+                    if (gettype($value) == 'integer' || gettype($value) == 'double' || gettype($value) == 'float' || gettype($value) == 'boolean') {
+                        die('ddd');
+                        $valueP = $value;
+                    }
+                }
+                $dataFilter[$key] = $valueP;
+                $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
+            }
+        }
+        // ===================================================================================================================================
+        if (count($where)) {
+            $where = ' WHERE ' . implode(' ', $where);
+        } else {
+            $where = '';
+        }
+        // ===================================================================================================================================
+        $db = DB::getInstance();
+        $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where . ' LIMIT ' . $limit;
+        $stmt = $db->prepare($sql);
+        $stmt->execute($dataFilter);
+        return $stmt->fetchAll($fetchType);
+    }
+
     public function findOne($params = [])
     {
         $dataFilter = [];

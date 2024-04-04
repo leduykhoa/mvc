@@ -28,17 +28,33 @@
  */
 
 /**
+ * Custom functions missing on some old versions
+ */
+if (!function_exists('str_starts_with')) {
+    function str_starts_with($haystack, $needle)
+    {
+        return (string)$needle !== '' && strncmp($haystack, $needle, strlen($needle)) === 0;
+    }
+}
+if (!function_exists('str_ends_with')) {
+    function str_ends_with($haystack, $needle)
+    {
+        return $needle !== '' ? substr($haystack, -strlen($needle)) === $needle : true;
+    }
+}
+// ===================================================================================================================================
+/**
  * Include some functions and class
  */
 require_once('Env.php');
 require_once('DB.php');
+require_once('Utils.php');
 require_once('Session.php');
 require_once('Register.php');
-require_once('Utils.php');
-require_once('Route.php');
 require_once('PageViewer.php');
 require_once('Pluralize.php');
 require_once('Language.php');
+require_once('Route.php');
 // ===================================================================================================================================
 /**
  * Define constants
@@ -79,39 +95,54 @@ $paths[] = PATH_SERVICE;
 
 $appPath = implode(PS, $paths);
 set_include_path($appPath . PS . get_include_path());
+Session::getInstance();
 Env::getInstance();
-DB::getInstance();
 Register::getInstance();
 Pluralize::getInstance();
-Session::getInstance();
 Utils::getInstance();
 // ===================================================================================================================================
+
 require_once('app.php');
 require_once('BaseController.php');
 require_once('BaseModel.php');
 require_once('web.php');
-
-// ===================================================================================================================================
 Language::getInstance();
-
+// ===================================================================================================================================
 // ===================================================================================================================================
 function __env($key, $default = NULL)
 {
-    return (Env::__env($key) ?? $default);
-}
+    try {
+        $value = Env::__env($key);
+        if (isset($value) && $value !== false && $value != '') {
+            return Env::__env($key);
+        }
+        return $default;
+    } catch (\Exception $exc) {
+        die($exc->getMessage());
+    }
 
+    // try {
+    //     return (Env::__env($key) ?? $default);
+    // } catch (\Exception $exc) {
+    //     //throw $th;
+    //     $value = Env::__env($key);
+    //     if (isset($value) && $value !== false && $value != '') {
+    //         return Env::__env($key);
+    //     }
+    //     return $default;
+    // }
+}
 // ===================================================================================================================================
 function __more($file, $params = [])
 {
     $file = str_replace('.', DS, $file);
-    if (!str_ends_with($file, '.php')) {
+    if (str_ends_with($file, '.php') === false) {
         $file .= '.php';
     }
     $file = PATH_VIEW . DS . PageViewer::get('theme') . DS .  $file;
     extract($params);
     include($file);
 }
-
 // ===================================================================================================================================
 function plural($key)
 {
@@ -120,7 +151,6 @@ function plural($key)
 // ===================================================================================================================================
 function dataRequest($key)
 {
-    // Register::getInstance();
     $dataRequest = Register::get('data_request');
     if (isset($dataRequest) && isset($dataRequest[$key])) {
         return $dataRequest[$key];

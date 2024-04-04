@@ -69,8 +69,13 @@
                         </div>
                         <p class="text-center text-base font-medium">
                             <?php __e('Don\'t have an account yet?'); ?>
-                            <a href="/register" class="text-primary hover:underline">
+                            <a href="/register" class="hover:underline">
                                 <?php __e('Register'); ?>
+                            </a>
+                        </p>
+                        <p class="text-center text-base font-medium pt-5">
+                            <a href="/" class="hover:underline">
+                                <?php __e('Back to home page') ?>
                             </a>
                         </p>
                     </form>

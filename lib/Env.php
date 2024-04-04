@@ -30,7 +30,6 @@
 class Env
 {
     private static $instance;
-    private static $_env;
 
     public function __construct()
     {
@@ -41,6 +40,7 @@ class Env
     {
         if (!isset(self::$instance)) {
             try {
+                self::$instance = [];
                 self::readEnv();
             } catch (\Exception $ex) {
                 die($ex->getMessage());
@@ -55,7 +55,7 @@ class Env
         $lines = explode("\n", $env);
         foreach ($lines as $line) {
             $line = trim($line);
-            if (!str_starts_with($line, '#')) {
+            if ((str_starts_with($line, '#') === false)) {
                 preg_match("/([^#]+)\=(.*)/", $line, $matches);
                 if (isset($matches[2]) && trim($matches[2]) != '') {
                     $key = trim($matches[1]);
@@ -65,7 +65,7 @@ class Env
                     } elseif ($value == 'false') {
                         $value = false;
                     }
-                    self::$_env[$key] = $value;
+                    self::$instance[$key] = $value;
                 }
             }
         }
@@ -73,9 +73,8 @@ class Env
 
     public static function __env($key)
     {
-        // self::getInstance();
-        if (isset(self::$_env[$key])) {
-            return self::$_env[$key];
+        if (isset(self::$instance[$key])) {
+            return self::$instance[$key];
         }
         return NULL;
     }

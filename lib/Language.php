@@ -29,7 +29,6 @@ class Language
 
     public static function translate($key, $language)
     {
-        // self::getInstance();
         if (isset(self::$translates[$language][$key])) {
             return self::$translates[$language][$key];
         }
@@ -40,7 +39,7 @@ class Language
         $dirFile = PATH_VIEW . DS . PageViewer::get('theme') . DS . 'languages' . DS;
         $dir = scandir($dirFile);
         foreach ($dir as $file) {
-            if (str_ends_with($file, '.json')) {
+            if (str_ends_with($file, '.json') === true) {
                 $lag = str_replace('.json', '', $file);
                 $content = file_get_contents($dirFile . $file);
                 $content = trim($content);
@@ -56,13 +55,11 @@ class Language
     }
     public static function getCountry()
     {
-        // self::getInstance();
         return self::$countries;
     }
 
     public static function getLanguage()
     {
-        // self::getInstance();
         return self::$languages;
     }
 
