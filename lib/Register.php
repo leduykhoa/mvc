@@ -80,7 +80,6 @@ class Register
 
     public static function get($key)
     {
-        // self::getInstance();
         if (isset(self::$_register[$key])) {
             return self::$_register[$key];
         }

@@ -9,7 +9,7 @@ services:
     links:
       - php-mvc
     ports:
-      - 8098:80
+      - 9090:80
     networks:
       - php_dev_network
     volumes:

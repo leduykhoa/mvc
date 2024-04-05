@@ -56,14 +56,12 @@ class Session
 
     public static function set($key, $value)
     {
-        // self::getInstance();
         $_SESSION[$key] = $value;
         return true;
     }
 
     public static function get($key)
     {
-        // self::getInstance();
         if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
         }

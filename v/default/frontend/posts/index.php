@@ -26,14 +26,24 @@
  *  Date: 2024/03/16
  *  Time: 08:34:14
  */
-
 ?>
-<ul>
+<div>
   <?php foreach ($posts as $post) : ?>
-    <li>
-      <a href="/posts/detail/<?php echo $post->id; ?>">
-        <?php echo $post->name; ?>
-      </a>
-    </li>
+    <div class="py-2 mt-2 border border-b flex">
+      <div class="flex-none w-14">
+        <?php if (isset($post->image) && $post->image != '') : ?>
+          <a href="/posts/detail/<?php echo $post->id; ?>">
+            <img class="px-2" src="<?php echo $post->image; ?>" alt="<?php echo $post->name; ?>" />
+          </a>
+        <?php endif ?>
+      </div>
+      <div class="flex-1">
+        <a class="font-bold" href="/posts/detail/<?php echo $post->id; ?>">
+          <?php echo $post->name; ?>
+        </a>
+        <br />
+        <?php echo $post->description; ?>
+      </div>
+    </div>
   <?php endforeach ?>
-</ul>
+</div>
