@@ -48,7 +48,8 @@ class Register
                 self::$instance = true;
                 self::$_register = [];
                 // Add time start for schedule/performance time calculation
-                self::set('system_time_start', microtime(true));
+                // self::set('system_time_start', microtime(true));
+                // self::set('system_time_start', (float)$_SERVER['REQUEST_TIME_FLOAT']);
                 // Register data request
                 $data = [];
                 foreach ($_POST as $key => $value) {

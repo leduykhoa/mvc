@@ -36,6 +36,6 @@ class AboutController extends BaseController
     public function index()
     {
         $data = [];
-        $this->render('about/index', $data);
+        $this->render('frontend/about/index', $data);
     }
 }

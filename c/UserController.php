@@ -37,14 +37,14 @@ class UserController extends BaseController
     public function index()
     {
         $data = [];
-        $this->render('user/index', $data);
+        $this->render('frontend/user/index', $data);
     }
 
     public function register()
     {
-        PageViewer::set('layout', 'layouts' . DS . 'simple');
+        PageViewer::set('layout', 'frontend' . DS . 'layouts' . DS . 'simple');
         $data = [];
-        $this->render('user/register', $data);
+        $this->render('frontend/user/register', $data);
     }
 
     public function registerPost()
@@ -68,14 +68,14 @@ class UserController extends BaseController
                 $result = $obj->insert(['data' => $dataSave]);
             }
         }
-        $this->render('user/register', $data);
+        $this->render('frontend/user/register', $data);
     }
 
     public function login()
     {
-        PageViewer::set('layout', 'layouts' . DS . 'simple');
+        PageViewer::set('layout', 'frontend' . DS . 'layouts' . DS . 'simple');
         $data = [];
-        $this->render('user/login', $data);
+        $this->render('frontend/user/login', $data);
     }
 
     public function loginPost()
@@ -95,6 +95,6 @@ class UserController extends BaseController
             ]);
             print_r($user);
         }
-        $this->render('user/login', $data);
+        $this->render('frontend/user/login', $data);
     }
 }

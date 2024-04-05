@@ -3,9 +3,9 @@
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
  *  ...............(¯'•.(¯'•.......((.....((
- *  ................(¯''•(¯'•...((.)..(. ' /)
+ *  ................(¯''•(¯'•...((.)..(. ‘ /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_.'(_.)......|
+ *  .....,,,~”¯¯¯''¯(_¸´(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -20,37 +20,23 @@
  *  Mail: leduykhoa060690@gmail.com
  *  Skype: leduykhoa060690
  *  Mobile: +84973421508
- *  Website: https://web-fast.com
+ *  Website: http://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/02/29
- *  Time: 11:05:09
+ *  Date: 2024/04/04
+ *  Time: 16:39:06
  */
 
-class PostsController extends BaseController
+
+class AdminController extends BaseController
 {
     public function __construct()
     {
-        parent::__construct();
     }
 
     public function index()
     {
-        $obj = new BaseModel(plural('blog_post'));
-        $posts = $obj->find([]);
-        $data = ['posts' => $posts];
-        $this->render('frontend/posts/index', $data);
-    }
-
-    public function detail($id)
-    {
-        $obj = new BaseModel(plural('blog_post'));
-        $posts = $obj->findOne([
-            'conditions' => [
-                'id' => $id
-            ]
-        ]);
-        $data = ['post' => $posts];
-        $this->render('frontend/posts/detail', $data);
+        $data = [];
+        $this->render('about/index', $data);
     }
 }
