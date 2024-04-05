@@ -36,7 +36,7 @@ class PagesController extends BaseController
   public function home()
   {
     $data = [];
-    $this->render('pages/home', $data);
+    $this->render('frontend/pages/home', $data);
   }
 
   public function error($code = 500)

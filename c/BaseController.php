@@ -32,7 +32,11 @@ class BaseController
     protected $validateList;
     public function __construct()
     {
-        $this->validateList = require_once(PATH_CONFIG . DS . 'validation.php');
+        $fileLanguage = PATH_CONFIG . DS . 'validation_' . Register::get('language.code') . '.php';
+        if (!is_file($fileLanguage)) {
+            $fileLanguage = PATH_CONFIG . DS . 'validation_en.php';
+        }
+        $this->validateList = require_once($fileLanguage);
     }
 
     public function render($file, $data = [], $type = HTML)

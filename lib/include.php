@@ -93,6 +93,7 @@ $paths[] = PATH_PUBLIC;
 $paths[] = PATH_ROUTE;
 $paths[] = PATH_SERVICE;
 
+$paths = getIncludeLoop($paths);
 $appPath = implode(PS, $paths);
 set_include_path($appPath . PS . get_include_path());
 Session::getInstance();
@@ -108,6 +109,54 @@ require_once('BaseModel.php');
 require_once('web.php');
 Language::getInstance();
 // ===================================================================================================================================
+// ===================================================================================================================================
+function getIncludeLoop($paths, $list = [])
+{
+    if (is_array($paths)) {
+        foreach ($paths as $dir) {
+            if (is_dir($dir) && !in_array($dir, $list)) {
+                $list[] = $dir;
+            }
+            // Check and scan sub folder
+            if (is_dir($dir)) {
+                $dirs = scandir($dir);
+                foreach ($dirs as $dirScan) {
+                    // Check is back folder
+                    if ($dirScan == '.' || $dirScan == '..') {
+                        continue;
+                    }
+                    $dirPath = $dir . DS . $dirScan;
+                    if (is_dir($dirPath)) {
+                        // Scan sub folder
+                        $list = getIncludeLoop([$dirPath], $list);
+                    }
+                }
+            }
+        }
+    }
+    return $list;
+}
+// ===================================================================================================================================
+function executionToUse()
+{
+    $unit = ['pico', 'nano', 'micro', 'milli', 'second', 'minute'];
+    $startTime = $_SERVER['REQUEST_TIME_FLOAT'];
+    $endTime = microtime(true);
+    $execution = ($endTime - $startTime);
+
+    $execution = $execution * 1000 * 1000;
+    $execution =  @round($execution / pow(1000, ($i = floor(log($execution, 1000)))), 3) . ' ' . $unit[$i];
+    return $execution;
+}
+// ===================================================================================================================================
+function memoryToUse()
+{
+    $unit = ['B', 'Kb', 'MB', 'GB', 'TB', 'PB'];
+    $memory = memory_get_usage(true);
+    $i = floor(log($memory, 1024));
+    $memory =  sprintf('%.0f' . $unit[$i], @round($memory / pow(1024, $i), 2));
+    return $memory;
+}
 // ===================================================================================================================================
 function __env($key, $default = NULL)
 {

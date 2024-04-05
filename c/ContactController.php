@@ -54,6 +54,6 @@ class ContactController extends BaseController
                 $result = $obj->insert(['data' => $data]);
             }
         }
-        $this->render('contact/index', $data);
+        $this->render('frontend/contact/index', $data);
     }
 }

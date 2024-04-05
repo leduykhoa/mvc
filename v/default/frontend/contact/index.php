@@ -37,7 +37,7 @@
                 <p class="mb-12 text-base font-medium ">
                     <?php __e('Our support team will get back to you ASAP via email.'); ?>
                 </p>
-                <?php @__more('layouts.include.validate-alert', ['validate' => $validate]); ?>
+                <?php @__more('frontend.layouts.include.validate-alert', ['validate' => $validate]); ?>
                 <form action="/contact" method="POST">
                     <div class="-mx-4 flex flex-wrap">
                         <div class="w-full px-4 md:w-1/2">
