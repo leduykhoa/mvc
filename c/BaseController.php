@@ -102,9 +102,10 @@ class BaseController
 
     public function validateItem($value, $rule, $params = [])
     {
+        $value = trim($value);
         switch ($rule) {
             case 'required':
-                if (!preg_match('/' . DEFAULT_PATTERN_EMPTY . '/', $value)) {
+                if ($value == '') {
                     return [
                         $value, $rule, $params
                     ];

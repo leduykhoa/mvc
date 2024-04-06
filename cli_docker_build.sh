@@ -15,7 +15,7 @@ echo "Bash version ${BASH_VERSION}..."
 # - PHP_VERSION=8.2
 # - PHP_VERSION=8.3
 PHP_VERSION=${1:-'8.3'}
-PHP_VERSION=${2:-'1'}
+DOCKER_MYSQL_REPLACE=${2:-'1'}
 DOCKER_NGINX_PORT=${3:-9090}
 DOCKER_PREFIX=${4:-'mvc-docker-'}
 DOCKER_NETWORK=${5:-'php_dev_network'}
@@ -35,11 +35,14 @@ fi
 
 # ===================================================================================================================================
 docker stop ${DOCKER_PREFIX}mysql 
-docker rm ${DOCKER_PREFIX}mysql -v
-sleep 6
 # Remove sudo - Thinking
 # sudo chmod -R 777 ./mysql*
+if [ "$DOCKER_MYSQL_REPLACE" == "1" ]; then
+docker stop ${DOCKER_PREFIX}mysql 
+docker rm ${DOCKER_PREFIX}mysql -v
+sleep 6
 rm -rf ./mysql/*
+fi
 
 docker run \
  --network=${DOCKER_NETWORK} \
