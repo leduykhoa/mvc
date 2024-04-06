@@ -29,6 +29,8 @@
 
 //  https://github.com/doctrine/inflector/blob/2.0.x/lib/Doctrine/Inflector/Rules/English/Inflectible.php
 
+namespace App\Lib;
+
 class Pluralize
 {
     private static $instance;
@@ -52,8 +54,6 @@ class Pluralize
                 self::buildPluralizationRules();
                 self::buildSingularizationRules();
                 self::buildUncountableRules();
-                // echo '<pre>';
-                // print_r([self::$uncountables, self::$pluralRules, self::$irregularSingles, self::$irregularPlurals]);
             } catch (\Exception $ex) {
                 die($ex->getMessage());
             }

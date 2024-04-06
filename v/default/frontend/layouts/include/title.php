@@ -26,6 +26,9 @@
  *  Date: 2024/03/20
  *  Time: 09:47:40
  */
+
+use App\Lib\PageViewer;
+
 ?>
 <?php
 $title = PageViewer::get('page.title');

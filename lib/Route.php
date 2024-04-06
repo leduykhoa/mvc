@@ -35,6 +35,8 @@
 // options
 // any
 
+namespace App\Lib;
+
 class Route
 {
     private static $instance;
@@ -193,11 +195,11 @@ class Route
             }
             foreach ($table as $key => $item) {
                 if ($key == '' && ($uri == '' || $uri == '/')) {
-                    $controller = 'Pages';
+                    $controller = 'Frontend\Pages';
                     $action = 'home';
 
-                    include_once(ucwords($controller) . 'Controller.php');
-                    $klass = ucwords($controller) . 'Controller';
+                    include_once(PATH_CONTROLLER . DS . ucwords(str_replace("\\", DS, $controller)) . 'Controller.php');
+                    $klass = '\App\Controllers\\' . ucwords($controller) . 'Controller';
                     $controller = new $klass;
                     $controller->$action();
                     return;
@@ -208,9 +210,9 @@ class Route
         } catch (\Exception $exc) {
             echo $exc->getMessage();
         }
+        include_once(PATH_CONTROLLER . DS . 'Frontend' . DS . 'PagesController.php');
+        $klass = 'App\Controllers\Frontend\PagesController';
         header('HTTP/1.0 404 Not Found');
-        include_once('PagesController.php');
-        $klass = 'PagesController';
         $controller = new $klass;
         $controller->error(404);
         exit();
@@ -233,11 +235,15 @@ class Route
             $controller = $routerObj[0];
             $action = $routerObj[1];
 
-            include_once(ucwords($controller) . 'Controller.php');
-            $klass = ucwords($controller) . 'Controller';
+            include_once(PATH_CONTROLLER . DS . ucwords(str_replace("\\", DS, $controller)) . 'Controller.php');
+            $klass = 'App\Controllers\\' . ucwords($controller) . 'Controller';
             $controller = new $klass;
-            call_user_func_array(array($controller, $action), $matches);
+            call_user_func_array([$controller, $action], $matches);
             exit();
         }
+    }
+
+    public static function callToController()
+    {
     }
 }

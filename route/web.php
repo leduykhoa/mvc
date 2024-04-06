@@ -31,17 +31,18 @@
 //     '' => ['Pages@home', 'home'],
 //     'posts' => ['Posts@index'],
 // ];
+use App\Lib\Route;
 
-Route::get('', ['Pages@home', 'home']);
-Route::get('contact', ['Contact@index', 'contact.index']);
-Route::post('contact', ['Contact@index', 'contact.store']);
-Route::get('about', ['About@index', 'about.index']);
+Route::get('', ['Frontend\Pages@home', 'home']);
+Route::get('contact', ['Frontend\Contact@index', 'contact.index']);
+Route::post('contact', ['Frontend\Contact@index', 'contact.store']);
+Route::get('about', ['Frontend\About@index', 'about.index']);
 
-Route::get('register', ['User@register', 'user.register']);
-Route::post('register-post', ['User@registerPost', 'user.register.post']);
-Route::get('login', ['User@login', 'user.login']);
-Route::post('login-post', ['User@loginPost', 'user.login.post']);
+Route::get('register', ['Frontend\User@register', 'user.register']);
+Route::post('register-post', ['Frontend\User@registerPost', 'user.register.post']);
+Route::get('login', ['Frontend\User@login', 'user.login']);
+Route::post('login-post', ['Frontend\User@loginPost', 'user.login.post']);
 
-Route::get('posts', ['Posts@index', 'post.index']);
-Route::get('posts/detail/{id?}', ['Posts@detail', 'post.detail']);
+Route::get('posts', ['Frontend\Posts@index', 'post.index']);
+Route::get('posts/detail/{id?}', ['Frontend\Posts@detail', 'post.detail']);
 // Route::get('posts/detail/{id?}/{abc?}', ['Posts@detail', 'post.detail']);

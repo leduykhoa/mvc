@@ -27,6 +27,10 @@
  *  Time: 11:04:34
  */
 
+namespace App\Model;
+
+use App\Lib\DB;
+
 class BaseModel
 {
     public $table;
@@ -43,7 +47,7 @@ class BaseModel
         if (isset($params['columns']) && is_array($params['columns'])) {
             $columns = $params['columns'];
         }
-        $fetchType = PDO::FETCH_OBJ;
+        $fetchType = \PDO::FETCH_OBJ;
         if (isset($params['fetch_type']) && $params['fetch_type'] != '') {
             $fetchType = $params['fetch_type'];
         }
@@ -62,7 +66,7 @@ class BaseModel
         if (isset($params['columns']) && is_array($params['columns'])) {
             $columns = $params['columns'];
         }
-        $fetchType = PDO::FETCH_OBJ;
+        $fetchType = \PDO::FETCH_OBJ;
         if (isset($params['fetch_type']) && $params['fetch_type'] != '') {
             $fetchType = $params['fetch_type'];
         }
@@ -91,7 +95,6 @@ class BaseModel
                 } else {
                     $valueP =  (string) $value;
                     if (gettype($value) == 'integer' || gettype($value) == 'double' || gettype($value) == 'float' || gettype($value) == 'boolean') {
-                        die('ddd');
                         $valueP = $value;
                     }
                 }
@@ -121,7 +124,7 @@ class BaseModel
         if (isset($params['columns']) && is_array($params['columns'])) {
             $columns = $params['columns'];
         }
-        $fetchType = PDO::FETCH_OBJ;
+        $fetchType = \PDO::FETCH_OBJ;
         if (isset($params['fetch_type']) && $params['fetch_type'] != '') {
             $fetchType = $params['fetch_type'];
         }
@@ -146,7 +149,6 @@ class BaseModel
                 } else {
                     $valueP =  (string) $value;
                     if (gettype($value) == 'integer' || gettype($value) == 'double' || gettype($value) == 'float' || gettype($value) == 'boolean') {
-                        die('ddd');
                         $valueP = $value;
                     }
                 }
@@ -300,7 +302,7 @@ class BaseModel
                 $stmt->execute($row);
             }
             $db->commit();
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $db->rollback();
             throw $e;
         }

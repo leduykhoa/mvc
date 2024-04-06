@@ -27,16 +27,12 @@
  *  Time: 16:39:06
  */
 
+use App\Controllers\BaseController;
 
 class AdminController extends BaseController
 {
     public function __construct()
     {
-    }
-
-    public function index()
-    {
-        $data = [];
-        $this->render('about/index', $data);
+        parent::__construct();
     }
 }

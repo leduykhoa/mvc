@@ -2,6 +2,7 @@
 echo "Bash version ${BASH_VERSION}..."
 
 # ./cli_docker_build.sh
+# docker exec -it mvc-docker-php /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"
 
 # - PHP_VERSION=5.6
 # - PHP_VERSION=7.0
@@ -14,8 +15,10 @@ echo "Bash version ${BASH_VERSION}..."
 # - PHP_VERSION=8.2
 # - PHP_VERSION=8.3
 PHP_VERSION=${1:-'8.3'}
-DOCKER_PREFIX=${2:-'mvc-docker-'}
-DOCKER_NETWORK=${3:-'php_dev_network'}
+PHP_VERSION=${2:-'1'}
+DOCKER_NGINX_PORT=${3:-9090}
+DOCKER_PREFIX=${4:-'mvc-docker-'}
+DOCKER_NETWORK=${5:-'php_dev_network'}
 
 MYSQL_VERSION='5.7'
 MYSQL_PASSWORD='1234567'
@@ -35,7 +38,7 @@ docker stop ${DOCKER_PREFIX}mysql
 docker rm ${DOCKER_PREFIX}mysql -v
 sleep 6
 # Remove sudo - Thinking
-sudo chmod -R 777 ./mysql*
+# sudo chmod -R 777 ./mysql*
 rm -rf ./mysql/*
 
 docker run \
@@ -55,8 +58,8 @@ docker run \
 --lower_case_table_names=1 --sql_mode='ON' --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
 sleep 36
-docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} mvc < render_table_file.sql
-docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} mvc < render_table_file_custom.sql
+docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < render_table_file.sql
+docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < render_table_file_custom.sql
 
 # ===================================================================================================================================
 docker stop ${DOCKER_PREFIX}php 
@@ -67,7 +70,7 @@ docker run \
  --name ${DOCKER_PREFIX}php -d \
 -h ${DOCKER_PREFIX}php \
 -v .:/var/www/html \
--w /var/www/html/public \
+-w /var/www/html \
 -t ${DOCKER_PREFIX}php:${PHP_VERSION} 
 # ===================================================================================================================================
 docker stop ${DOCKER_PREFIX}nginx 
@@ -79,5 +82,5 @@ docker run \
 -h ${DOCKER_PREFIX}nginx \
 -v .:/var/www/html \
 -v ./docker/nginx.conf:/etc/nginx/conf.d/default.conf \
--p 8098:80 \
+-p ${DOCKER_NGINX_PORT}:80 \
 -t nginx

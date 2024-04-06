@@ -27,6 +27,8 @@
  *  Time: 10:28:08
  */
 
+namespace App\Lib;
+
 class DB
 {
     private static $instance = NULl;
@@ -41,9 +43,9 @@ class DB
         if (!isset(self::$instance)) {
             try {
                 $dsn = 'mysql:host=' . __env('DB_HOST') . ';dbname=' . __env('DB_DATABASE');
-                self::$instance = new PDO($dsn, __env('DB_USERNAME'), __env('DB_PASSWORD'));
+                self::$instance = new \PDO($dsn, __env('DB_USERNAME'), __env('DB_PASSWORD'));
                 self::$instance->exec('SET NAMES "utf8"');
-            } catch (PDOException $ex) {
+            } catch (\PDOException $ex) {
                 die($ex->getMessage());
             }
         }

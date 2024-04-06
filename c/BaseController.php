@@ -27,9 +27,16 @@
  *  Time: 10:37:32
  */
 
+namespace App\Controllers;
+
+use App\Lib\PageViewer;
+use App\Lib\Register;
+
 class BaseController
 {
     protected $validateList;
+    protected $packageTheme = 'frontend';
+
     public function __construct()
     {
         $fileLanguage = PATH_CONFIG . DS . 'validation_' . Register::get('language.code') . '.php';
@@ -44,7 +51,6 @@ class BaseController
         if ($type == HTML) {
             $viewFile = PATH_VIEW . DS  . PageViewer::get('theme') . DS . $file;
             $layout = PATH_VIEW . DS  . PageViewer::get('theme') . DS . PageViewer::get('layout');
-
             $content = PageViewer::render($viewFile, $data);
             // header('Content-Type: text/html; charset=utf-8');
             echo PageViewer::render($layout, ['content' => $content]);

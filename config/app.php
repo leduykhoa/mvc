@@ -28,6 +28,10 @@
  */
 
 //  ===================================================================================================================================
+
+use App\Lib\PageViewer;
+use App\Lib\Register;
+
 if (__env('APP_DEBUG', true) === true) {
     error_reporting(E_ALL);
     ini_set('display_errors', 'On');

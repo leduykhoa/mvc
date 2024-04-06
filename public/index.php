@@ -27,6 +27,8 @@
  *  Time: 08:45:46
  */
 
+use App\Lib\Route;
+
 require_once('./../config/const.php');
 require_once('./../lib/include.php');
 

@@ -27,6 +27,7 @@
  *  Time: 01:54:22
  */
 
+namespace App\Lib;
 
 class Utils
 {

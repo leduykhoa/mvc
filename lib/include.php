@@ -27,6 +27,16 @@
  *  Time: 08:20:18
  */
 
+use App\Lib\DB;
+use App\Lib\Env;
+use App\Lib\Language;
+use App\Lib\PageViewer;
+use App\Lib\Pluralize;
+use App\Lib\Register;
+use App\Lib\Route;
+use App\Lib\Session;
+use App\Lib\Utils;
+
 /**
  * Custom functions missing on some old versions
  */
@@ -102,12 +112,13 @@ Register::getInstance();
 Pluralize::getInstance();
 Utils::getInstance();
 // ===================================================================================================================================
-
 require_once('app.php');
 require_once('BaseController.php');
+require_once('FrontendController.php');
 require_once('BaseModel.php');
 require_once('web.php');
 Language::getInstance();
+// echo $appPath;
 // ===================================================================================================================================
 // ===================================================================================================================================
 function getIncludeLoop($paths, $list = [])

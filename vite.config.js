@@ -8,9 +8,9 @@ module.exports = defineConfig({
       // https://rollupjs.org/guide/en/#watch-options
     },
     lib: {
-      name: `mvc-php-simple`,
+      name: `mvc-php-skeleton`,
       entry: path.resolve(__dirname, 'main.js'),
-      fileName: (format) => `mvc-php-simple.${format}.js`
+      fileName: (format) => `mvc-php-skeleton.${format}.js`
     }
   }
 });

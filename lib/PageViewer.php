@@ -27,6 +27,8 @@
  *  Time: 03:03:46
  */
 
+namespace App\Lib;
+
 class PageViewer
 {
     const __SESSION = '__page_viewer_';
@@ -69,15 +71,16 @@ class PageViewer
         if (!str_ends_with($template, '.php')) {
             $template .= '.php';
         }
-
         if (is_file($template)) {
             extract($data);
             ob_start();
             require_once($template);
             return ob_get_clean();
         } else {
+            echo $template;
+            echo '<br/>';
             print_r($data);
-            throw new ErrorException('Not found template: [' . $template . ']');
+            throw new \ErrorException('Not found template: [' . $template . ']');
         }
     }
 }

@@ -26,6 +26,10 @@
  *  Date: 2024/03/16
  *  Time: 08:34:14
  */
+
+use App\Lib\PageViewer;
+use App\Lib\Register;
+
 ?>
 <!doctype html>
 <html class="" lang="<?php echo Register::get('language.code'); ?>">
