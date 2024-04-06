@@ -184,8 +184,8 @@ define('DATE_MYSQL_FORMAT_FULL', 'Y-m-d');
 define('DATE_MYSQL_FORMAT_SHORT', 'm-d');
 // ===================================================================================================================================
 //
-define('DEFAULT_PATTERN_EMPTY', '^\\S+$');
-define('DEFAULT_PATTERN_NO_HTML', '<(\\/)?\\w+');
+define('DEFAULT_PATTERN_EMPTY', '^\S+$');
+define('DEFAULT_PATTERN_NO_HTML', '<(\/)?\w+');
 define('DEFAULT_PATTERN_NUMBER', '^\\s*-?\\d*(\\.\\d*)?\\s*$');
 define('DEFAULT_PATTERN_DIGITS', '!/[^\d]/');
 define('DEFAULT_PATTERN_ALPHA', '^[a-zA-Z]+$');

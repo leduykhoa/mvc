@@ -48,8 +48,9 @@ class ContactController extends FrontendController
                 'email' => 'required|email',
                 'content' => 'required',
             ]);
+            // die(request('name'));
             if ($data['validate'] === true) {
-                $obj = new BaseModel(plural('ticket'));
+                $obj = new BaseModel(plural('ticket'));                
                 $data = [
                     'id' => Utils::genUuid(),
                     'name' => request('name'),

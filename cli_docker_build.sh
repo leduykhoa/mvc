@@ -35,11 +35,12 @@ fi
 
 # ===================================================================================================================================
 docker stop ${DOCKER_PREFIX}mysql 
-docker rm ${DOCKER_PREFIX}mysql -v
-sleep 6
 # Remove sudo - Thinking
 # sudo chmod -R 777 ./mysql*
-if [ "$DOCKER_MYSQL_REPLACE" == "1" ]
+if [ "$DOCKER_MYSQL_REPLACE" == "1" ]; then
+docker stop ${DOCKER_PREFIX}mysql 
+docker rm ${DOCKER_PREFIX}mysql -v
+sleep 6
 rm -rf ./mysql/*
 fi
 
