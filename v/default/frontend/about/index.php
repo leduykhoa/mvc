@@ -27,4 +27,6 @@
  *  Time: 10:29:55
  */
 ?>
-dsdsds
+<h1>
+    <?php __e('This is about page.'); ?>
+</h1>

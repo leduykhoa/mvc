@@ -23,42 +23,17 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/25
- *  Time: 10:24:18
+ *  Date: 2024/03/20
+ *  Time: 10:03:27
  */
 
-namespace App\Controllers\Frontend;
-
-use App\Lib\Utils;
-use App\Model\BaseModel;
-
-class ContactController extends FrontendController
-{
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function index()
-    {
-        $data = [];
-        if (isPost() == true) {
-            $data['validate'] = $this->validate([
-                'name' => 'required',
-                'email' => 'required|email',
-                'content' => 'required',
-            ]);
-            if ($data['validate'] === true) {
-                $obj = new BaseModel(plural('ticket'));                
-                $data = [
-                    'id' => Utils::genUuid(),
-                    'name' => request('name'),
-                    'email' => request('email'),
-                    'content' => request('content'),
-                ];
-                $result = $obj->insert(['data' => $data]);
-            }
-        }
-        $this->render('frontend/contact/index', $data);
-    }
-}
+?>
+<?php if (__env('SHOW_DEBUG_BAR', true) == true) : ?>
+    <div class="fixed bottom-0 left-0 w-full">
+        <div class="flex w-full flex-nowrap bg-gray-800 text-orange-500">
+            <div><label>&nbsp; <?php __e('PHP'); ?></label>: <?php echo phpversion(); ?></div>
+            <div class="ps-2"><label>&nbsp;|&nbsp; <?php __e('Memory'); ?></label>: <?php echo memoryToUse(); ?></div>
+            <div class="ps-2"><label>&nbsp;|&nbsp; <?php __e('Executions'); ?></label>: <?php echo executionToUse(); ?></div>
+        </div>
+    </div>
+<?php endif ?>
