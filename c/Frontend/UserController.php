@@ -27,7 +27,14 @@
  *  Time: 10:25:39
  */
 
-class UserController extends BaseController
+namespace App\Controllers\Frontend;
+
+use App\Lib\PageViewer;
+use App\Lib\Pluralize;
+use App\Lib\Utils;
+use App\Model\BaseModel;
+
+class UserController extends FrontendController
 {
     public function __construct()
     {

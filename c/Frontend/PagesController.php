@@ -23,37 +23,33 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/25
- *  Time: 10:24:18
+ *  Date: 2024/02/29
+ *  Time: 10:59:54
  */
 
-class ContactController extends BaseController
-{
-    public function __construct()
-    {
-        parent::__construct();
-    }
+namespace App\Controllers\Frontend;
 
-    public function index()
-    {
-        $data = [];
-        if (isPost() == true) {
-            $data['validate'] = $this->validate([
-                'name' => 'required',
-                'email' => 'required|email',
-                'content' => 'required',
-            ]);
-            if ($data['validate'] === true) {
-                $obj = new BaseModel(plural('ticket'));
-                $data = [
-                    'id' => Utils::genUuid(),
-                    'name' => request('name'),
-                    'email' => request('email'),
-                    'content' => request('content'),
-                ];
-                $result = $obj->insert(['data' => $data]);
-            }
-        }
-        $this->render('frontend/contact/index', $data);
-    }
+class PagesController extends FrontendController
+{
+  public function __construct()
+  {
+  }
+
+  public function home()
+  {
+    $data = [];
+    $this->render('frontend/pages/home', $data);
+  }
+
+  public function error($code = 500)
+  {
+    $data = ['code' => $code];
+    $this->render('frontend/error/' . $code, $data);
+  }
+
+  // public function error($code)
+  // {
+  //   $data = ['code' => $code];
+  //   $this->render('error', $data);
+  // }
 }

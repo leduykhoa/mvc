@@ -15,9 +15,10 @@ echo "Bash version ${BASH_VERSION}..."
 # - PHP_VERSION=8.2
 # - PHP_VERSION=8.3
 PHP_VERSION=${1:-'8.3'}
-DOCKER_NGINX_PORT=${2:-9090}
-DOCKER_PREFIX=${3:-'mvc-docker-'}
-DOCKER_NETWORK=${4:-'php_dev_network'}
+PHP_VERSION=${2:-'1'}
+DOCKER_NGINX_PORT=${3:-9090}
+DOCKER_PREFIX=${4:-'mvc-docker-'}
+DOCKER_NETWORK=${5:-'php_dev_network'}
 
 MYSQL_VERSION='5.7'
 MYSQL_PASSWORD='1234567'

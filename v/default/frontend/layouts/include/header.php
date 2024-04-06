@@ -26,6 +26,9 @@
  *  Date: 2024/03/22
  *  Time: 06:19:08
  */
+
+use App\Lib\Register;
+
 ?>
 <header>
     <div class="container mx-auto">

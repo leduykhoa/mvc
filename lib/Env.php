@@ -27,6 +27,8 @@
  *  Time: 11:29:59
  */
 
+namespace App\Lib;
+
 class Env
 {
     private static $instance;

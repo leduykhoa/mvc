@@ -23,11 +23,16 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/02/29
- *  Time: 11:05:09
+ *  Date: 2024/03/25
+ *  Time: 10:24:18
  */
 
-class PostsController extends BaseController
+namespace App\Controllers\Frontend;
+
+use App\Lib\Utils;
+use App\Model\BaseModel;
+
+class ContactController extends FrontendController
 {
     public function __construct()
     {
@@ -36,21 +41,24 @@ class PostsController extends BaseController
 
     public function index()
     {
-        $obj = new BaseModel(plural('blog_post'));
-        $posts = $obj->find([]);
-        $data = ['posts' => $posts];
-        $this->render('frontend/posts/index', $data);
-    }
-
-    public function detail($id)
-    {
-        $obj = new BaseModel(plural('blog_post'));
-        $posts = $obj->findOne([
-            'conditions' => [
-                'id' => $id
-            ]
-        ]);
-        $data = ['post' => $posts];
-        $this->render('frontend/posts/detail', $data);
+        $data = [];
+        if (isPost() == true) {
+            $data['validate'] = $this->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'content' => 'required',
+            ]);
+            if ($data['validate'] === true) {
+                $obj = new BaseModel(plural('ticket'));
+                $data = [
+                    'id' => Utils::genUuid(),
+                    'name' => request('name'),
+                    'email' => request('email'),
+                    'content' => request('content'),
+                ];
+                $result = $obj->insert(['data' => $data]);
+            }
+        }
+        $this->render('frontend/contact/index', $data);
     }
 }

@@ -27,6 +27,8 @@
  *  Time: 01:39:47
  */
 
+namespace App\Lib;
+
 class Register
 {
     private static $instance;
@@ -68,12 +70,6 @@ class Register
 
     public static function set($key, $value)
     {
-        // self::getInstance();
-        // if (isset(self::$_register[$key])) {
-        //     self::$_register[$key] = $value;
-        // } else {
-        //     self::$_register[$key] = $value;
-        // }
         self::$_register[$key] = $value;
         return true;
     }

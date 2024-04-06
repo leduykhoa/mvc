@@ -27,6 +27,7 @@
  *  Time: 11:26:45
  */
 
+namespace App\Lib;
 
 class Session
 {

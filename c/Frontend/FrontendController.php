@@ -24,30 +24,21 @@
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/02/29
- *  Time: 10:59:54
+ *  Time: 10:37:32
  */
 
-class PagesController extends BaseController
+namespace App\Controllers\Frontend;
+
+use App\Controllers\BaseController;
+use App\Lib\PageViewer;
+use App\Lib\Register;
+
+class FrontendController extends BaseController
 {
-  public function __construct()
-  {
-  }
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-  public function home()
-  {
-    $data = [];
-    $this->render('frontend/pages/home', $data);
-  }
-
-  public function error($code = 500)
-  {
-    $data = ['code' => $code];
-    $this->render('error/' . $code, $data);
-  }
-
-  // public function error($code)
-  // {
-  //   $data = ['code' => $code];
-  //   $this->render('error', $data);
-  // }
+    
 }

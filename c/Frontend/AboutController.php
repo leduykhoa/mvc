@@ -27,10 +27,13 @@
  *  Time: 10:24:38
  */
 
-class AboutController extends BaseController
+namespace App\Controllers\Frontend;
+
+class AboutController extends FrontendController
 {
     public function __construct()
     {
+        parent::__construct();
     }
 
     public function index()

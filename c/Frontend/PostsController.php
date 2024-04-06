@@ -23,26 +23,38 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/12
- *  Time: 10:59:15
+ *  Date: 2024/02/29
+ *  Time: 11:05:09
  */
 
-// return [
-//     '' => ['Pages@home', 'home'],
-//     'posts' => ['Posts@index'],
-// ];
-use App\Lib\Route;
+namespace App\Controllers\Frontend;
 
-Route::get('', ['Frontend\Pages@home', 'home']);
-Route::get('contact', ['Frontend\Contact@index', 'contact.index']);
-Route::post('contact', ['Frontend\Contact@index', 'contact.store']);
-Route::get('about', ['Frontend\About@index', 'about.index']);
+use App\Model\BaseModel;
 
-Route::get('register', ['Frontend\User@register', 'user.register']);
-Route::post('register-post', ['Frontend\User@registerPost', 'user.register.post']);
-Route::get('login', ['Frontend\User@login', 'user.login']);
-Route::post('login-post', ['Frontend\User@loginPost', 'user.login.post']);
+class PostsController extends FrontendController
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-Route::get('posts', ['Frontend\Posts@index', 'post.index']);
-Route::get('posts/detail/{id?}', ['Frontend\Posts@detail', 'post.detail']);
-// Route::get('posts/detail/{id?}/{abc?}', ['Posts@detail', 'post.detail']);
+    public function index()
+    {
+        $obj = new BaseModel(plural('blog_post'));
+        $posts = $obj->find([]);
+        $data = ['posts' => $posts];
+        $this->render('frontend/posts/index', $data);
+    }
+
+    public function detail($id)
+    {
+        $obj = new BaseModel(plural('blog_post'));
+        $posts = $obj->findOne([
+            'conditions' => [
+                'id' => $id
+            ]
+        ]);
+        $data = ['post' => $posts];
+        $this->render('frontend/posts/detail', $data);
+    }
+}
