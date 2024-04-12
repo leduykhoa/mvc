@@ -210,8 +210,8 @@ class Route
         } catch (\Exception $exc) {
             echo $exc->getMessage();
         }
-        include_once(PATH_CONTROLLER . DS . 'Frontend' . DS . 'PagesController.php');
-        $klass = 'App\Controllers\Frontend\PagesController';
+        include_once(PATH_CONTROLLER . DS . 'Frontend' . DS . 'PageController.php');
+        $klass = 'App\Controllers\Frontend\PageController';
         header('HTTP/1.0 404 Not Found');
         $controller = new $klass;
         $controller->error(404);
