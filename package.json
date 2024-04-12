@@ -3,8 +3,12 @@
   "private": true,
   "version": "0.0.1",
   "scripts": {
-    "copy-img": "cp -rf ./v/default/frontend/assets/images ./public",
-    "tailwind": "npm run copy-img && npx tailwindcss -i ./v/default/frontend/assets/css/styles.css -o ./public/css/styles.css --watch",
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "build-backend": "vite build --config vite.config.backend.js",
+    "copy-image": "cp -rf ./v/default/frontend/assets/images ./public/assets",
+    "copy-image-backend": "cp -rf ./v/default/backend/assets/images ./public/backend-assets",
     "languages": "node ./languages",
     "table": "node ./render_table_file",
     "table_import": "node ./render_table_file",
@@ -19,9 +23,13 @@
     "docker_8.2": "./cli_docker_build.sh 8.2",
     "docker_8.3": "./cli_docker_build.sh 8.3"
   },
-  "dependencies": {},
   "devDependencies": {
+    "@alpinejs/persist": "^3.13.8",
+    "alpinejs": "^3.13.8",
+    "autoprefixer": "^10.4.19",
     "mysql": "^2.18.1",
-    "tailwindcss": "^3.4.3"
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.3",
+    "vite": "^5.2.8"
   }
 }

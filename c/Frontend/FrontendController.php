@@ -30,8 +30,6 @@
 namespace App\Controllers\Frontend;
 
 use App\Controllers\BaseController;
-use App\Lib\PageViewer;
-use App\Lib\Register;
 
 class FrontendController extends BaseController
 {

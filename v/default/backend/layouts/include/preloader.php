@@ -23,42 +23,16 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/25
- *  Time: 10:24:18
+ *  Date: 2024/04/08
+ *  Time: 09:54:43
  */
-
-namespace App\Controllers\Frontend;
-
-use App\Lib\Utils;
-use App\Model\BaseModel;
-
-class ContactController extends FrontendController
-{
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function index()
-    {
-        $data = [];
-        if (isPost() == true) {
-            $data['validate'] = $this->validate([
-                'name' => 'required',
-                'email' => 'required|email',
-                'content' => 'required',
-            ]);
-            if ($data['validate'] === true) {
-                $obj = new BaseModel(plural('ticket'));                
-                $data = [
-                    'id' => Utils::genUuid(),
-                    'name' => request('name'),
-                    'email' => request('email'),
-                    'content' => request('content'),
-                ];
-                $result = $obj->insert(['data' => $data]);
-            }
-        }
-        $this->render('frontend/contact/index', $data);
-    }
-}
+?>
+<div
+  x-show="loaded"
+  x-init="window.addEventListener('DOMContentLoaded', () => {setTimeout(() => loaded = false, 500)})"
+  class="fixed left-0 top-0 z-999999 flex h-screen w-screen items-center justify-center bg-white dark:bg-black"
+>
+  <div
+    class="h-16 w-16 animate-spin rounded-full border-4 border-solid border-primary border-t-transparent"
+  ></div>
+</div>

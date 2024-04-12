@@ -7,13 +7,8 @@ echo "Bash version ${BASH_VERSION}..."
 
 npm i --save-dev tailwindcss 
 npm i --save-dev mysql 
-# npm i --save-dev sass 
-# npm i --save-dev jquery 
-# npm i --save-dev moment 
-# npm i --save-dev moment-timezone
-# npm i --save-dev @popperjs/core 
-# npm i --save-dev bootstrap
-# npm i --save-dev jquery-datetimepicker
-
-
-# https://dev.to/sakibsnaz/installing-tailwind-css-as-a-postcss-plugin-and-vite-5h64
+npm i --save-dev vite 
+npm i --save-dev alpinejs 
+npm i --save-dev @alpinejs/persist
+npm i --save-dev postcss
+npm i --save-dev autoprefixer

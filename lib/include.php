@@ -115,10 +115,11 @@ Utils::getInstance();
 require_once('app.php');
 require_once('BaseController.php');
 require_once('FrontendController.php');
+require_once('AdminController.php');
 require_once('BaseModel.php');
 require_once('web.php');
+require_once('admin.php');
 Language::getInstance();
-// echo $appPath;
 // ===================================================================================================================================
 // ===================================================================================================================================
 function getIncludeLoop($paths, $list = [])
@@ -180,17 +181,6 @@ function __env($key, $default = NULL)
     } catch (\Exception $exc) {
         die($exc->getMessage());
     }
-
-    // try {
-    //     return (Env::__env($key) ?? $default);
-    // } catch (\Exception $exc) {
-    //     //throw $th;
-    //     $value = Env::__env($key);
-    //     if (isset($value) && $value !== false && $value != '') {
-    //         return Env::__env($key);
-    //     }
-    //     return $default;
-    // }
 }
 // ===================================================================================================================================
 function __more($file, $params = [])

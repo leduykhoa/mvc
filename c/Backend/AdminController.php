@@ -27,12 +27,16 @@
  *  Time: 16:39:06
  */
 
+namespace App\Controllers\Backend;
+
 use App\Controllers\BaseController;
+use App\Lib\PageViewer;
 
 class AdminController extends BaseController
 {
     public function __construct()
     {
+        PageViewer::set('layout', 'backend' . DS . 'layouts' . DS . 'default');
         parent::__construct();
     }
 }

@@ -1,11 +1,10 @@
-<?php
 /*
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
  *  ...............(¯'•.(¯'•.......((.....((
  *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_.'(_.)......|
+ *  .....,,,~”¯¯¯''¯(_,'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -23,42 +22,24 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/25
- *  Time: 10:24:18
+ *  Date: 2024/04/12
+ *  Time: 10:30:53
  */
 
-namespace App\Controllers\Frontend;
+// vite.config.backend.js
+import { defineConfig } from 'vite'
+import path from 'path';
 
-use App\Lib\Utils;
-use App\Model\BaseModel;
-
-class ContactController extends FrontendController
-{
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function index()
-    {
-        $data = [];
-        if (isPost() == true) {
-            $data['validate'] = $this->validate([
-                'name' => 'required',
-                'email' => 'required|email',
-                'content' => 'required',
-            ]);
-            if ($data['validate'] === true) {
-                $obj = new BaseModel(plural('ticket'));                
-                $data = [
-                    'id' => Utils::genUuid(),
-                    'name' => request('name'),
-                    'email' => request('email'),
-                    'content' => request('content'),
-                ];
-                $result = $obj->insert(['data' => $data]);
-            }
-        }
-        $this->render('frontend/contact/index', $data);
-    }
-}
+export default defineConfig({
+  build: {
+    outDir: path.resolve(__dirname, './public/backend-assets'),
+    copyPublicDir: false,
+    lib: {
+      entry: path.resolve(__dirname, './v/default/backend/assets/main-backend.js'),
+      name: `mvc-php-skeleton`,
+      fileName: (format) => `backend.script.${format}.js`
+    },
+    rollupOptions: {
+    },
+  }
+});

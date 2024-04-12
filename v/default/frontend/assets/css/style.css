@@ -1,4 +1,3 @@
-<?php
 /*
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
@@ -23,42 +22,50 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/25
- *  Time: 10:24:18
+ *  Date: 2024/03/13
+ *  Time: 14:42:27
  */
 
-namespace App\Controllers\Frontend;
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
-use App\Lib\Utils;
-use App\Model\BaseModel;
-
-class ContactController extends FrontendController
-{
-    public function __construct()
-    {
-        parent::__construct();
+@layer components {
+    .label {
+        @apply mb-1 block text-sm font-bold text-black dark:text-white
     }
 
-    public function index()
-    {
-        $data = [];
-        if (isPost() == true) {
-            $data['validate'] = $this->validate([
-                'name' => 'required',
-                'email' => 'required|email',
-                'content' => 'required',
-            ]);
-            if ($data['validate'] === true) {
-                $obj = new BaseModel(plural('ticket'));                
-                $data = [
-                    'id' => Utils::genUuid(),
-                    'name' => request('name'),
-                    'email' => request('email'),
-                    'content' => request('content'),
-                ];
-                $result = $obj->insert(['data' => $data]);
-            }
-        }
-        $this->render('frontend/contact/index', $data);
+    .form-control {
+        @apply border rounded-md border-gray-400 px-3 py-2 mt-1 bg-white text-sm placeholder-gray-950 focus:outline-none focus:border-gray-950 focus:ring-1 focus:text-gray-950
+    }
+
+    .btn {
+        @apply border rounded-md px-5 py-2 mt-1 text-white text-sm text-center font-medium bg-black dark:bg-white dark:text-black;
+    }
+
+    .h3 {
+        @apply mb-3 text-2xl font-bold text-black dark:text-white sm:text-3xl;
+    }
+
+    .alert {
+        @apply border rounded-sm border-gray-400 px-5 py-3 my-1 bg-white text-sm
+    }
+
+    .alert-danger {
+        @apply border-red-600 text-gray-400
+    }
+
+    .alert-success {
+        @apply border-gray-400 text-emerald-600
+    }
+
+    .alert-warning {
+        @apply border-yellow-600 text-yellow-600
+    }
+
+    .alert-info {
+        @apply border-sky-600 text-sky-600
     }
 }
+
+@layer utilities {}

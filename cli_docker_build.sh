@@ -60,7 +60,7 @@ docker run \
 -t mysql:${MYSQL_VERSION} \
 --lower_case_table_names=1 --sql_mode='ON' --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
 
-sleep 36
+sleep 26
 docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < render_table_file.sql
 docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < render_table_file_custom.sql
 
