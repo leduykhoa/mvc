@@ -1,4 +1,3 @@
-<?php
 /*
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
@@ -23,8 +22,20 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/21
- *  Time: 15:07:25
+ *  Date: 2024/04/08
+ *  Time: 10:39:39
  */
-?>
-<link href="/backend-assets/style.css" rel="stylesheet">
+
+import './css/style.css'
+
+import Alpine from 'alpinejs';
+import persist from '@alpinejs/persist';
+
+window.Alpine = Alpine;
+Alpine.plugin(persist);
+
+Alpine.store('darkMode', {
+    on: Alpine.$persist(false).as('darkModeSetting'),
+})
+
+Alpine.start();

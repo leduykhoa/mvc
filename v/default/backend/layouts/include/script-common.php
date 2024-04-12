@@ -23,8 +23,8 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/21
- *  Time: 15:07:25
+ *  Date: 2024/04/10
+ *  Time: 08:51:09
  */
 ?>
-<link href="/backend-assets/style.css" rel="stylesheet">
+<script type="module" src="/backend-assets/backend.script.es.js"></script>

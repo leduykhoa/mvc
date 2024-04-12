@@ -38,30 +38,62 @@ use App\Lib\Register;
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <?php @__more('frontend.layouts.include.title'); ?>
-    <?php @__more('frontend.layouts.include.meta'); ?>
-    <?php @__more('frontend.layouts.include.layouts.include.font'); ?>
-    <?php @__more('frontend.layouts.include.favicon'); ?>
-    <?php @__more('frontend.layouts.include.const'); ?>
-    <?php @__more('frontend.layouts.include.seo'); ?>
+
+    <?php @__more('backend.layouts.include.title'); ?>
+    <?php @__more('backend.layouts.include.meta'); ?>
+    <?php @__more('backend.layouts.include.layouts.include.font'); ?>
+    <?php @__more('backend.layouts.include.favicon'); ?>
+    <?php @__more('backend.layouts.include.const'); ?>
+    <?php @__more('backend.layouts.include.seo'); ?>
     <!--   style   -->
-    <?php @__more('frontend.layouts.include.style-pre'); ?>
-    <?php @__more('frontend.layouts.include.style-common'); ?>
-    <?php @__more('frontend.layouts.include.style'); ?>
-    <?php @__more('frontend.layouts.include.style-end'); ?>
+    <?php @__more('backend.layouts.include.style-pre'); ?>
+    <?php @__more('backend.layouts.include.style-common'); ?>
+    <?php @__more('backend.layouts.include.style'); ?>
+    <?php @__more('backend.layouts.include.style-end'); ?>
 </head>
 
 <!-- <body class="min-h-screen min-w-full <?php echo PageViewer::get('body.class'); ?> bg-white text-black dark:bg-black dark:text-white"> -->
-<body class="min-h-screen min-w-full <?php echo PageViewer::get('body.class'); ?> bg-white text-black dark:bg-black dark:text-white">
-    <?php @__more('frontend.layouts.include.header'); ?>
-    <?= @$content ?>
-    <?php @__more('frontend.layouts.include.footer'); ?>
-    <?php @__more('frontend.layouts.include.toolbar-develop'); ?>
+
+<body class="min-h-screen min-w-full <?php echo PageViewer::get('body.class'); ?> bg-white text-black dark:bg-black dark:text-white" x-data="{ page: 'ecommerce', 'loaded': true, 'darkMode': true, 'stickyMenu': false, 'sidebarToggle': false, 'scrollTop': false }" x-init="
+         darkMode = JSON.parse(localStorage.getItem('darkMode'));
+         $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))">
+    <!-- ===== Preloader Start ===== -->
+    <?php @__more('backend.layouts.include.preloader'); ?>
+    <!-- ===== Preloader End ===== -->
+
+    <!-- ===== Page Wrapper Start ===== -->
+    <div class="flex h-screen overflow-hidden">
+        <!-- ===== Sidebar Start ===== -->
+        <?php @__more('backend.layouts.include.sidebar'); ?>
+        <!-- ===== Sidebar End ===== -->
+        <!-- ===== Content Area Start ===== -->
+        <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+            <!-- ===== Header Start ===== -->
+            <?php @__more('backend.layouts.include.header'); ?>
+            <!-- ===== Header End ===== -->
+
+            <!-- ===== Main Content Start ===== -->
+            <main>
+                <div class="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+                    <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+                        <div class="grid grid-cols-1 gap-4 md:grid-cols-2 md:gap-6 xl:grid-cols-4 2xl:gap-7.5">
+                            <?= @$content ?>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <!-- ===== Main Content End ===== -->
+        </div>
+        <!-- ===== Content Area End ===== -->
+    </div>
+    <!-- ===== Page Wrapper End ===== -->
+    <?php @__more('backend.layouts.include.footer'); ?>
+    <?php @__more('backend.layouts.include.toolbar-develop'); ?>
     <!--   script   -->
-    <?php @__more('frontend.layouts.include.script-pre'); ?>
-    <?php @__more('frontend.layouts.include.script-common'); ?>
-    <?php @__more('frontend.layouts.include.script'); ?>
-    <?php @__more('frontend.layouts.include.script-end'); ?>
+    <?php @__more('backend.layouts.include.script-pre'); ?>
+    <?php @__more('backend.layouts.include.script-common'); ?>
+    <?php @__more('backend.layouts.include.script'); ?>
+    <?php @__more('backend.layouts.include.script-end'); ?>
 </body>
 
 </html>

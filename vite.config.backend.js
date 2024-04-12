@@ -1,11 +1,10 @@
-<?php
 /*
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
  *  ...............(¯'•.(¯'•.......((.....((
  *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_.'(_.)......|
+ *  .....,,,~”¯¯¯''¯(_,'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -23,8 +22,24 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/21
- *  Time: 15:07:25
+ *  Date: 2024/04/12
+ *  Time: 10:30:53
  */
-?>
-<link href="/backend-assets/style.css" rel="stylesheet">
+
+// vite.config.backend.js
+import { defineConfig } from 'vite'
+import path from 'path';
+
+export default defineConfig({
+  build: {
+    outDir: path.resolve(__dirname, './public/backend-assets'),
+    copyPublicDir: false,
+    lib: {
+      entry: path.resolve(__dirname, './v/default/backend/assets/main-backend.js'),
+      name: `mvc-php-skeleton`,
+      fileName: (format) => `backend.script.${format}.js`
+    },
+    rollupOptions: {
+    },
+  }
+});
