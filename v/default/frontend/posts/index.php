@@ -28,17 +28,17 @@
  */
 ?>
 <div>
-  <?php foreach ($posts as $post) : ?>
+  <?php foreach ($post as $post) : ?>
     <div class="py-2 mt-2 border border-b flex">
       <div class="flex-none w-14">
         <?php if (isset($post->image) && $post->image != '') : ?>
-          <a href="/posts/detail/<?php echo $post->id; ?>">
+          <a href="/post/detail/<?php echo $post->id; ?>">
             <img class="px-2" src="<?php echo $post->image; ?>" alt="<?php echo $post->name; ?>" />
           </a>
         <?php endif ?>
       </div>
       <div class="flex-1">
-        <a class="font-bold" href="/posts/detail/<?php echo $post->id; ?>">
+        <a class="font-bold" href="/post/detail/<?php echo $post->id; ?>">
           <?php echo $post->name; ?>
         </a>
         <br />

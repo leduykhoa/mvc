@@ -5,7 +5,7 @@
  *  ...............(¯'•.(¯'•.......((.....((
  *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_.'(_.)......|
+ *  .....,,,~”¯¯¯''¯(_,'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -23,33 +23,39 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/02/29
- *  Time: 10:59:54
+ *  Date: 2024/04/12
+ *  Time: 16:06:31
  */
 
-namespace App\Controllers\Frontend;
 
-class PagesController extends FrontendController
+namespace App\Controllers\Api;
+
+use App\Model\BaseModel;
+
+class PostController extends ApiController
 {
-  public function __construct()
-  {
-  }
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-  public function home()
-  {
-    $data = [];
-    $this->render('frontend/pages/home', $data);
-  }
+    public function index()
+    {
+        $obj = new BaseModel(plural('blog_post'));
+        $post = $obj->find([]);
+        $data = ['list' => $post];
+        $this->render($data);
+    }
 
-  public function error($code = 500)
-  {
-    $data = ['code' => $code];
-    $this->render('frontend/error/' . $code, $data);
-  }
-
-  // public function error($code)
-  // {
-  //   $data = ['code' => $code];
-  //   $this->render('error', $data);
-  // }
+    public function detail($id)
+    {
+        $obj = new BaseModel(plural('blog_post'));
+        $post = $obj->findOne([
+            'conditions' => [
+                'id' => $id
+            ]
+        ]);
+        $data = ['post' => $post];
+        $this->render($data);
+    }
 }

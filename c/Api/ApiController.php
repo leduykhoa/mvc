@@ -5,7 +5,7 @@
  *  ...............(¯'•.(¯'•.......((.....((
  *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_.'(_.)......|
+ *  .....,,,~”¯¯¯''¯(_,'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -23,26 +23,24 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/12
- *  Time: 10:59:15
+ *  Date: 2024/04/12
+ *  Time: 15:55:34
  */
 
-// return [
-//     '' => ['Pages@home', 'home'],
-//     'post' => ['Post@index'],
-// ];
-use App\Lib\Route;
 
-Route::get('', ['Frontend\Pages@home', 'home']);
-Route::get('contact', ['Frontend\Contact@index', 'contact.index']);
-Route::post('contact', ['Frontend\Contact@index', 'contact.store']);
-Route::get('about', ['Frontend\About@index', 'about.index']);
+namespace App\Controllers\Api;
 
-Route::get('register', ['Frontend\User@register', 'user.register']);
-Route::post('register-post', ['Frontend\User@registerPost', 'user.register.post']);
-Route::get('login', ['Frontend\User@login', 'user.login']);
-Route::post('login-post', ['Frontend\User@loginPost', 'user.login.post']);
+use App\Controllers\BaseController;
 
-Route::get('post', ['Frontend\Post@index', 'post.index']);
-Route::get('post/detail/{id?}', ['Frontend\Post@detail', 'post.detail']);
-// Route::get('post/detail/{id?}/{abc?}', ['Post@detail', 'post.detail']);
+class ApiController extends BaseController
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
+
+    public function render($data = [], $type = JSON, $forget = NULL)
+    {
+        return parent::render($forget, $data, $type);
+    }
+}

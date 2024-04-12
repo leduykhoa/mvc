@@ -24,37 +24,32 @@
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
  *  Date: 2024/02/29
- *  Time: 11:05:09
+ *  Time: 10:59:54
  */
 
 namespace App\Controllers\Frontend;
 
-use App\Model\BaseModel;
-
-class PostsController extends FrontendController
+class PageController extends FrontendController
 {
-    public function __construct()
-    {
-        parent::__construct();
-    }
+  public function __construct()
+  {
+  }
 
-    public function index()
-    {
-        $obj = new BaseModel(plural('blog_post'));
-        $posts = $obj->find([]);
-        $data = ['posts' => $posts];
-        $this->render('frontend/posts/index', $data);
-    }
+  public function home()
+  {
+    $data = [];
+    $this->render('frontend/page/home', $data);
+  }
 
-    public function detail($id)
-    {
-        $obj = new BaseModel(plural('blog_post'));
-        $posts = $obj->findOne([
-            'conditions' => [
-                'id' => $id
-            ]
-        ]);
-        $data = ['post' => $posts];
-        $this->render('frontend/posts/detail', $data);
-    }
+  public function error($code = 500)
+  {
+    $data = ['code' => $code];
+    $this->render('frontend/error/' . $code, $data);
+  }
+
+  // public function error($code)
+  // {
+  //   $data = ['code' => $code];
+  //   $this->render('error', $data);
+  // }
 }
