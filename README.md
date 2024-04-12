@@ -5,7 +5,6 @@
 This is a web application framework with PHP MVC Skeleton base on PHP language
 Developed based on Ubuntu operating system
 
-
 ## About version
  *  Php >= 5.6
  *  Mysql >= 5.7
@@ -28,11 +27,12 @@ Before initializing Docker, please delete/chmod the ```./mysql``` folder
  - For import structure table```docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < render_table_file.sql```
  - For import data example(posts) ```npm run news```
 
-## Style/css/script
- - Style ./v/default/[package]/assets/scss
+## Style/css/script/images
+ - Style ./v/default/[package]/assets/
  - Image ./v/default/[package]/assets/images
- - Script ./v/default/[package]/assets/js
- - For dev ```npm run tailwind```
+ - Script ./v/default/[package]/assets/
+ - For frontend ```npm run build```
+ - For backend ```npm run build-backend```
 
  ## Languages
  - Edit ./v/default/languages/languages.csv

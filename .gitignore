@@ -23,3 +23,5 @@ yarn-error.log
 /public/js
 /public/images
 /public/test.php
+/public/backend-assets
+/public/assets
