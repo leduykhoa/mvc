@@ -55,8 +55,8 @@ class BaseController
             // header('Content-Type: text/html; charset=utf-8');
             echo PageViewer::render($layout, ['content' => $content]);
         } elseif ($type == JSON) {
-            // header('Content-Type: application/json; charset=utf-8');
-            print_r($data);
+            header('Content-Type: application/json; charset=utf-8');
+            echo json_encode($data);
         } elseif ($type == XML) {
             // header('Content-Type: application/xml; charset=utf-8');
             die('Update after!');

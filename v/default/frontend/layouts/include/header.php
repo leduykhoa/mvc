@@ -60,7 +60,7 @@ use App\Lib\Register;
                                 </a>
                             </li>
                             <li>
-                                <a href="/posts" class="block md:px-4 transition hover:text-primary">
+                                <a href="/post" class="block md:px-4 transition hover:text-primary">
                                     <span><?php __e('Blog'); ?></span>
                                 </a>
                             </li>
