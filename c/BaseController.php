@@ -52,7 +52,7 @@ class BaseController
             $viewFile = PATH_VIEW . DS  . PageViewer::get('theme') . DS . $file;
             $layout = PATH_VIEW . DS  . PageViewer::get('theme') . DS . PageViewer::get('layout');
             $content = PageViewer::render($viewFile, $data);
-            // header('Content-Type: text/html; charset=utf-8');
+            header('Content-Type: text/html; charset=utf-8');
             echo PageViewer::render($layout, ['content' => $content]);
         } elseif ($type == JSON) {
             header('Content-Type: application/json; charset=utf-8');

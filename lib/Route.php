@@ -195,7 +195,7 @@ class Route
             }
             foreach ($table as $key => $item) {
                 if ($key == '' && ($uri == '' || $uri == '/')) {
-                    $controller = 'Frontend\Pages';
+                    $controller = 'Frontend\Page';
                     $action = 'home';
 
                     include_once(PATH_CONTROLLER . DS . ucwords(str_replace("\\", DS, $controller)) . 'Controller.php');
@@ -220,6 +220,7 @@ class Route
 
     public static function processUrl($key, $item)
     {
+        $keyOrigin = $key;
         $key = str_replace("/", "\/", $key);
         // $pattern = '/(\{([a-zA-Z0-9])+\})/';
         // $pattern = '/(\{([a-zA-Z0-9])+\?{1}\})/';
@@ -229,7 +230,22 @@ class Route
         $keyParam = preg_replace($pattern, $replacement, $key);
 
         preg_match('/^\/' . $keyParam . '$/', $_SERVER['REQUEST_URI'], $matches);
-        if ($key != '' && is_array($matches) && count($matches)) {
+
+        if ($key != '' && is_array($matches) && count($matches) > 0) {
+            // Todo: debug after
+            // echo $key;
+            // echo '<br/>';
+            // echo '<pre>';
+            // echo $keyOrigin;
+            // echo '<br/>';
+            // echo '<br/>';
+            // echo '<br/>';
+
+            // print_r($matches);
+            // print_r($item);
+            // echo '<br/>';
+            // echo '<br/>';
+
             unset($matches[0]);
             $routerObj = explode('@', $item[0]);
             $controller = $routerObj[0];
