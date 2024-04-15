@@ -27,10 +27,6 @@
  *  Time: 10:59:15
  */
 
-// return [
-//     '' => ['Pages@home', 'home'],
-//     'post' => ['Post@index'],
-// ];
 use App\Lib\Route;
 
 Route::get('', ['Frontend\Pages@home', 'home']);
