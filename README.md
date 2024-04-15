@@ -41,6 +41,14 @@ Before initializing Docker, please delete/chmod the ```./mysql``` folder
  - Vietnamese is column 3
  - For build ```npm run languages```
 
+ ## Setup step by step 
+ - Go to root directory ```/path_to/mvc```
+ - Make .env file: ```cp ./.env.example ./.env```
+ - Make docker ```npm run docker_5.6```
+ - Make data example: 
+    - Go to docker php ```docker exec -it mvc-docker-php /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"``` 
+    - And then run script create database example: ```npm run news```
+ - Try: ```http://0.0.0.0:9090```
 
 
 
