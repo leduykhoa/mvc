@@ -48,9 +48,13 @@ Before initializing Docker, please delete/chmod the ```./mysql``` folder
  - Make data example: 
     - Go to docker php ```docker exec -it mvc-docker-php /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"``` 
     - And then run script create database example: ```npm run news```
+ - Make assets file: ```npm run build``` and ```npm run build-backend```
  - Try: ```http://0.0.0.0:9090```
 
+## Keep it simple and faster ;)
+![](./api_request_fast.png)
 
+[Postman](./PHP-MVC-Skeleton.postman_collection.json)
 
 ## Author
 *  Lê Duy Khoa
