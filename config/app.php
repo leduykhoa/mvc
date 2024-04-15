@@ -48,7 +48,7 @@ Register::set('app.asset',  __env('APP_ASSET', 'https://web-fast.com'));
 Register::set('language.code', 'vi');
 // ===================================================================================================================================
 PageViewer::set('theme', _DEFAULT);
-PageViewer::set('layout', 'frontend' . DS . 'layouts' . DS . 'default');
+PageViewer::set('layout', 'frontend' . DS . 'layout' . DS . 'default');
 PageViewer::set('page.title', __env('APP_NAME', 'PHP MVC Skeleton'));
 PageViewer::set('page.title.separate', ' | ');
 PageViewer::set('page.title.suffix', __env('APP_NAME', 'PHP MVC Skeleton'));

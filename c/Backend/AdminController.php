@@ -36,7 +36,7 @@ class AdminController extends BaseController
 {
     public function __construct()
     {
-        PageViewer::set('layout', 'backend' . DS . 'layouts' . DS . 'default');
+        PageViewer::set('layout', 'backend' . DS . 'layout' . DS . 'default');
         parent::__construct();
     }
 }
