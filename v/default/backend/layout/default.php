@@ -39,17 +39,17 @@ use App\Lib\Register;
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-    <?php @__more('backend.layouts.include.title'); ?>
-    <?php @__more('backend.layouts.include.meta'); ?>
-    <?php @__more('backend.layouts.include.layouts.include.font'); ?>
-    <?php @__more('backend.layouts.include.favicon'); ?>
-    <?php @__more('backend.layouts.include.const'); ?>
-    <?php @__more('backend.layouts.include.seo'); ?>
+    <?php @__more('backend.layout.include.title'); ?>
+    <?php @__more('backend.layout.include.meta'); ?>
+    <?php @__more('backend.layout.include.layout.include.font'); ?>
+    <?php @__more('backend.layout.include.favicon'); ?>
+    <?php @__more('backend.layout.include.const'); ?>
+    <?php @__more('backend.layout.include.seo'); ?>
     <!--   style   -->
-    <?php @__more('backend.layouts.include.style-pre'); ?>
-    <?php @__more('backend.layouts.include.style-common'); ?>
-    <?php @__more('backend.layouts.include.style'); ?>
-    <?php @__more('backend.layouts.include.style-end'); ?>
+    <?php @__more('backend.layout.include.style-pre'); ?>
+    <?php @__more('backend.layout.include.style-common'); ?>
+    <?php @__more('backend.layout.include.style'); ?>
+    <?php @__more('backend.layout.include.style-end'); ?>
 </head>
 
 <!-- <body class="min-h-screen min-w-full <?php echo PageViewer::get('body.class'); ?> bg-white text-black dark:bg-black dark:text-white"> -->
@@ -58,18 +58,18 @@ use App\Lib\Register;
          darkMode = JSON.parse(localStorage.getItem('darkMode'));
          $watch('darkMode', value => localStorage.setItem('darkMode', JSON.stringify(value)))">
     <!-- ===== Preloader Start ===== -->
-    <?php @__more('backend.layouts.include.preloader'); ?>
+    <?php @__more('backend.layout.include.preloader'); ?>
     <!-- ===== Preloader End ===== -->
 
     <!-- ===== Page Wrapper Start ===== -->
     <div class="flex h-screen overflow-hidden">
         <!-- ===== Sidebar Start ===== -->
-        <?php @__more('backend.layouts.include.sidebar'); ?>
+        <?php @__more('backend.layout.include.sidebar'); ?>
         <!-- ===== Sidebar End ===== -->
         <!-- ===== Content Area Start ===== -->
         <div class="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
             <!-- ===== Header Start ===== -->
-            <?php @__more('backend.layouts.include.header'); ?>
+            <?php @__more('backend.layout.include.header'); ?>
             <!-- ===== Header End ===== -->
 
             <!-- ===== Main Content Start ===== -->
@@ -87,13 +87,13 @@ use App\Lib\Register;
         <!-- ===== Content Area End ===== -->
     </div>
     <!-- ===== Page Wrapper End ===== -->
-    <?php @__more('backend.layouts.include.footer'); ?>
-    <?php @__more('backend.layouts.include.toolbar-develop'); ?>
+    <?php @__more('backend.layout.include.footer'); ?>
+    <?php @__more('backend.layout.include.toolbar-develop'); ?>
     <!--   script   -->
-    <?php @__more('backend.layouts.include.script-pre'); ?>
-    <?php @__more('backend.layouts.include.script-common'); ?>
-    <?php @__more('backend.layouts.include.script'); ?>
-    <?php @__more('backend.layouts.include.script-end'); ?>
+    <?php @__more('backend.layout.include.script-pre'); ?>
+    <?php @__more('backend.layout.include.script-common'); ?>
+    <?php @__more('backend.layout.include.script'); ?>
+    <?php @__more('backend.layout.include.script-end'); ?>
 </body>
 
 </html>

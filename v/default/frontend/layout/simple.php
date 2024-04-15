@@ -32,36 +32,33 @@ use App\Lib\Register;
 
 ?>
 <!doctype html>
-<html class="light" lang="<?php echo Register::get('language.code'); ?>">
+<html class="" lang="<?php echo Register::get('language.code'); ?>">
 
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
-    <?php @__more('frontend.layouts.include.title'); ?>
-    <?php @__more('frontend.layouts.include.meta'); ?>
-    <?php @__more('frontend.layouts.include.layouts.include.font'); ?>
-    <?php @__more('frontend.layouts.include.favicon'); ?>
-    <?php @__more('frontend.layouts.include.const'); ?>
-    <?php @__more('frontend.layouts.include.seo'); ?>
+    <?php @__more('frontend.layout.include.title'); ?>
+    <?php @__more('frontend.layout.include.meta'); ?>
+    <?php @__more('frontend.layout.include.layout.include.font'); ?>
+    <?php @__more('frontend.layout.include.favicon'); ?>
+    <?php @__more('frontend.layout.include.const'); ?>
+    <?php @__more('frontend.layout.include.seo'); ?>
     <!--   style   -->
-    <?php @__more('frontend.layouts.include.style-pre'); ?>
-    <?php @__more('frontend.layouts.include.style-common'); ?>
-    <?php @__more('frontend.layouts.include.style'); ?>
-    <?php @__more('frontend.layouts.include.style-end'); ?>
+    <?php @__more('frontend.layout.include.style-pre'); ?>
+    <?php @__more('frontend.layout.include.style-common'); ?>
+    <?php @__more('frontend.layout.include.style'); ?>
+    <?php @__more('frontend.layout.include.style-end'); ?>
 </head>
 
-<!-- <body class="min-h-screen min-w-full <?php echo PageViewer::get('body.class'); ?> bg-white text-black dark:bg-black dark:text-white"> -->
-<body class="min-h-screen min-w-full <?php echo PageViewer::get('body.class'); ?> bg-white text-black dark:bg-black dark:text-white">
-    <?php @__more('frontend.layouts.include.header'); ?>
+<body class="min-h-screen min-w-full <?php echo PageViewer::get('body.class'); ?>">
     <?= @$content ?>
-    <?php @__more('frontend.layouts.include.footer'); ?>
-    <?php @__more('frontend.layouts.include.toolbar-develop'); ?>
+    <?php @__more('frontend.layout.include.toolbar-develop'); ?>
     <!--   script   -->
-    <?php @__more('frontend.layouts.include.script-pre'); ?>
-    <?php @__more('frontend.layouts.include.script-common'); ?>
-    <?php @__more('frontend.layouts.include.script'); ?>
-    <?php @__more('frontend.layouts.include.script-end'); ?>
+    <?php @__more('frontend.layout.include.script-pre'); ?>
+    <?php @__more('frontend.layout.include.script-common'); ?>
+    <?php @__more('frontend.layout.include.script'); ?>
+    <?php @__more('frontend.layout.include.script-end'); ?>
 </body>
 
 </html>
