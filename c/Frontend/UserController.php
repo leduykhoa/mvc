@@ -49,7 +49,7 @@ class UserController extends FrontendController
 
     public function register()
     {
-        PageViewer::set('layout', 'frontend' . DS . 'layouts' . DS . 'simple');
+        PageViewer::set('layout', 'frontend' . DS . 'layout' . DS . 'simple');
         $data = [];
         $this->render('frontend/user/register', $data);
     }
@@ -80,7 +80,7 @@ class UserController extends FrontendController
 
     public function login()
     {
-        PageViewer::set('layout', 'frontend' . DS . 'layouts' . DS . 'simple');
+        PageViewer::set('layout', 'frontend' . DS . 'layout' . DS . 'simple');
         $data = [];
         $this->render('frontend/user/login', $data);
     }

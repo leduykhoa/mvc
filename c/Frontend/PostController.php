@@ -54,7 +54,11 @@ class PostController extends FrontendController
                 'id' => $id
             ]
         ]);
-        $data = ['post' => $post];
-        $this->render('frontend/post/detail', $data);
+        if ($post) {
+            $data = ['post' => $post];
+            $this->render('frontend/post/detail', $data);
+            return;
+        }
+        $this->render('frontend/error/404', []);
     }
 }
