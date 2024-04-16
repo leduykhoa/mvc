@@ -80,6 +80,7 @@ define('DIR_LIBRARY', 'lib');
 define('DIR_PUBLIC', 'public');
 define('DIR_ROUTE', 'route');
 define('DIR_SERVICE', 'service');
+define('DIR_MIDDLEWARE', 'middleware');
 
 define('PATH_CONTROLLER', BP . DS . DIR_CONTROLLER);
 define('PATH_MODEL', BP . DS . DIR_MODEL);
@@ -89,6 +90,7 @@ define('PATH_LIBRARY', BP . DS . DIR_LIBRARY);
 define('PATH_PUBLIC', BP . DS . DIR_PUBLIC);
 define('PATH_ROUTE', BP . DS . DIR_ROUTE);
 define('PATH_SERVICE', BP . DS . DIR_SERVICE);
+define('PATH_MIDDLEWARE', BP . DS . DIR_MIDDLEWARE);
 // ===================================================================================================================================
 /**
  * Set include path
@@ -102,6 +104,7 @@ $paths[] = PATH_LIBRARY;
 $paths[] = PATH_PUBLIC;
 $paths[] = PATH_ROUTE;
 $paths[] = PATH_SERVICE;
+$paths[] = DIR_MIDDLEWARE;
 
 $paths = getIncludeLoop($paths);
 $appPath = implode(PS, $paths);
@@ -113,6 +116,7 @@ Pluralize::getInstance();
 Utils::getInstance();
 // ===================================================================================================================================
 require_once('app.php');
+require_once('middleware.php');
 require_once('BaseController.php');
 require_once('FrontendController.php');
 require_once('AdminController.php');
