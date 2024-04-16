@@ -15,7 +15,7 @@ echo "Bash version ${BASH_VERSION}..."
 # - PHP_VERSION=8.2
 # - PHP_VERSION=8.3
 PHP_VERSION=${1:-'8.3'}
-DOCKER_MYSQL_REPLACE=${2:-'1'}
+DOCKER_MYSQL_REPLACE=${2:-'0'}
 DOCKER_NGINX_PORT=${3:-9090}
 DOCKER_PREFIX=${4:-'mvc-docker-'}
 DOCKER_NETWORK=${5:-'php_dev_network'}
@@ -42,8 +42,6 @@ docker stop ${DOCKER_PREFIX}mysql
 docker rm ${DOCKER_PREFIX}mysql -v
 sleep 6
 rm -rf ./mysql/*
-fi
-
 docker run \
  --network=${DOCKER_NETWORK} \
  --name ${DOCKER_PREFIX}mysql -d \
@@ -59,6 +57,8 @@ docker run \
 -e MYSQL_HOST='0.0.0.0' \
 -t mysql:${MYSQL_VERSION} \
 --lower_case_table_names=1 --sql_mode='ON' --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+fi
+docker start ${DOCKER_PREFIX}mysql
 
 sleep 26
 docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < render_table_file.sql

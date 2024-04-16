@@ -186,6 +186,7 @@ class Route
                 $table = self::$_typeGet;
                 break;
         }
+
         try {
             // code...
             $uri = $_SERVER['REQUEST_URI'];
@@ -195,14 +196,7 @@ class Route
             }
             foreach ($table as $key => $item) {
                 if ($key == '' && ($uri == '' || $uri == '/')) {
-                    $controller = 'Frontend\Page';
-                    $action = 'home';
-
-                    include_once(PATH_CONTROLLER . DS . ucwords(str_replace("\\", DS, $controller)) . 'Controller.php');
-                    $klass = '\App\Controllers\\' . ucwords($controller) . 'Controller';
-                    $controller = new $klass;
-                    $controller->$action();
-                    return;
+                    self::exeController();
                 } else {
                     self::processUrl($key, $item);
                 }
@@ -210,12 +204,9 @@ class Route
         } catch (\Exception $exc) {
             echo $exc->getMessage();
         }
-        include_once(PATH_CONTROLLER . DS . 'Frontend' . DS . 'PageController.php');
-        $klass = 'App\Controllers\Frontend\PageController';
+
         header('HTTP/1.0 404 Not Found');
-        $controller = new $klass;
-        $controller->error(404);
-        exit();
+        self::exeController('Frontend\Page@error', ['404']);
     }
 
     public static function processUrl($key, $item)
@@ -232,34 +223,22 @@ class Route
         preg_match('/^\/' . $keyParam . '$/', $_SERVER['REQUEST_URI'], $matches);
 
         if ($key != '' && is_array($matches) && count($matches) > 0) {
-            // Todo: debug after
-            // echo $key;
-            // echo '<br/>';
-            // echo '<pre>';
-            // echo $keyOrigin;
-            // echo '<br/>';
-            // echo '<br/>';
-            // echo '<br/>';
-
-            // print_r($matches);
-            // print_r($item);
-            // echo '<br/>';
-            // echo '<br/>';
-
             unset($matches[0]);
-            $routerObj = explode('@', $item[0]);
-            $controller = $routerObj[0];
-            $action = $routerObj[1];
-
-            include_once(PATH_CONTROLLER . DS . ucwords(str_replace("\\", DS, $controller)) . 'Controller.php');
-            $klass = 'App\Controllers\\' . ucwords($controller) . 'Controller';
-            $controller = new $klass;
-            call_user_func_array([$controller, $action], $matches);
-            exit();
+            self::exeController($item[0], $matches);
         }
     }
 
-    public static function callToController()
+    public static function exeController($controllerKey = 'Frontend\Page@home', $params = [])
     {
+        $routerObj = explode('@', $controllerKey);
+        $controller = $routerObj[0];
+        $action = $routerObj[1];
+
+        // Include controller and run
+        include_once(PATH_CONTROLLER . DS . ucwords(str_replace("\\", DS, $controller)) . 'Controller.php');
+        $klass = 'App\Controllers\\' . ucwords($controller) . 'Controller';
+        $controller = new $klass;
+        call_user_func_array([$controller, $action], $params);
+        exit();
     }
 }
