@@ -12,3 +12,4 @@ npm i --save-dev alpinejs
 npm i --save-dev @alpinejs/persist
 npm i --save-dev postcss
 npm i --save-dev autoprefixer
+npm i --save-dev rollup-plugin-copy

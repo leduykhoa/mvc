@@ -25,3 +25,7 @@ yarn-error.log
 /public/test.php
 /public/backend-assets
 /public/assets
+
+/storage/core/cache
+/storage/core/session
+/storage/log

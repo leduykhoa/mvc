@@ -27,7 +27,8 @@
  */
 
 // vite.config.backend.js
-import { defineConfig } from 'vite'
+import { defineConfig } from 'vite';
+import copy from 'rollup-plugin-copy';
 import path from 'path';
 
 export default defineConfig({
@@ -40,6 +41,18 @@ export default defineConfig({
       fileName: (format) => `backend.script.${format}.js`
     },
     rollupOptions: {
+      plugins: [
+        copy({
+          targets: [
+            {
+              src: `./v/default/backend/assets/images`,
+              dest: `./public/backend-assets`
+            }
+          ],
+          hook: `writeBundle`,
+          verbose: true
+        })
+      ]
     },
   }
 });

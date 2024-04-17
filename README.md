@@ -8,7 +8,7 @@ Developed based on Ubuntu operating system
 ## About version
  *  Php >= 5.6
  *  Mysql >= 5.7
- *  Nodejs >= 14.x
+ *  Nodejs >= 16.x
 
 ## Docker
 Before initializing Docker, please delete/chmod the ```./mysql``` folder
@@ -44,6 +44,7 @@ Before initializing Docker, please delete/chmod the ```./mysql``` folder
  ## Setup step by step 
  - Go to root directory ```/path_to/mvc```
  - Make .env file: ```cp ./.env.example ./.env```
+ - Make netword docker  ```docker network create php_dev_network```
  - Make docker ```npm run docker_5.6```
  - Make data example: 
     - Go to docker php ```docker exec -it mvc-docker-php /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"``` 

@@ -82,6 +82,12 @@ define('DIR_ROUTE', 'route');
 define('DIR_SERVICE', 'service');
 define('DIR_MIDDLEWARE', 'middleware');
 
+define('DIR_STORAGE', 'storage');
+define('DIR_LOG', 'log');
+define('DIR_STORAGE_CORE', 'core');
+define('DIR_STORAGE_CACHE', 'cache');
+define('DIR_STORAGE_SESSION', 'session');
+
 define('PATH_CONTROLLER', BP . DS . DIR_CONTROLLER);
 define('PATH_MODEL', BP . DS . DIR_MODEL);
 define('PATH_VIEW', BP . DS . DIR_VIEW);
@@ -91,6 +97,12 @@ define('PATH_PUBLIC', BP . DS . DIR_PUBLIC);
 define('PATH_ROUTE', BP . DS . DIR_ROUTE);
 define('PATH_SERVICE', BP . DS . DIR_SERVICE);
 define('PATH_MIDDLEWARE', BP . DS . DIR_MIDDLEWARE);
+
+define('PATH_STORAGE', BP . DS . DIR_STORAGE);
+define('PATH_LOG', PATH_STORAGE . DS . DIR_LOG);
+define('PATH_STORAGE_CORE', PATH_STORAGE . DS . DIR_STORAGE_CORE);
+define('PATH_STORAGE_CACHE', PATH_STORAGE_CORE . DS . DIR_STORAGE_CACHE);
+define('PATH_STORAGE_SESSION', PATH_STORAGE_CORE . DS . DIR_STORAGE_SESSION);
 // ===================================================================================================================================
 /**
  * Set include path
@@ -109,8 +121,8 @@ $paths[] = DIR_MIDDLEWARE;
 $paths = getIncludeLoop($paths);
 $appPath = implode(PS, $paths);
 set_include_path($appPath . PS . get_include_path());
-Session::getInstance();
 Env::getInstance();
+Session::getInstance();
 Register::getInstance();
 Pluralize::getInstance();
 Utils::getInstance();
