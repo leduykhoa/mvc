@@ -107,6 +107,7 @@ define('OPERATOR', 'operator');
 define('ADMIN', 'admin');
 define('SUPPLY', 'supply');
 define('MANAGE', 'manage');
+define('SESSION', 'session');
 // ===================================================================================================================================
 // HEADER_FORWARDED = 0b000001; // When using RFC 7239
 // HEADER_X_FORWARDED_FOR = 0b000010;

@@ -36,7 +36,7 @@ use App\Lib\Register;
             <div class="flex flex-wrap items-center justify-between py-2 md:py-0 gap-0 relative">
                 <div class="relative z-20 w-full flex justify-between lg:w-max md:px-0">
                     <a href="/" class="flex space-x-2 items-center">
-                        <img class="m-3" src="/images/logo.png" alt="<?php echo Register::get('app.name'); ?>" width="60" />
+                        <img class="m-3" src="/assets/images/logo.png" alt="<?php echo Register::get('app.name'); ?>" width="60" />
                     </a>
                     <div class="relative flex items-center lg:hidden max-h-10">
                         <label role="button" for="toggle_nav" aria-label="humburger" id="hamburger" class="relative  p-6 -mr-6">

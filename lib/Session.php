@@ -47,6 +47,7 @@ class Session
         if (!isset(self::$instance)) {
             try {
                 self::$instance = true;
+                ini_set('session.save_path', PATH_STORAGE_SESSION);
                 session_start();
             } catch (\Exception $ex) {
                 die($ex->getMessage());

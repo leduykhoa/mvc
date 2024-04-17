@@ -106,4 +106,7 @@ con.connect((err) => {
         }
         console.log(`process: ${i}`)
     });
+    setTimeout(() => {
+        process.exit();
+    }, 1000);
 });

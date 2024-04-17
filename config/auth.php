@@ -1,3 +1,4 @@
+<?php
 /*
  *  ............(¯''•.
  *  ..............(¯'•(¯'•............_/)/)
@@ -22,37 +23,15 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/13
- *  Time: 10:10:19
+ *  Date: 2024/04/16
+ *  Time: 10:46:32
  */
 
-// vite.config.js
-import { defineConfig } from 'vite';
-import copy from 'rollup-plugin-copy';
-import path from 'path';
-
-export default defineConfig({
-  build: {
-    outDir: path.resolve(__dirname, './public/assets'),
-    copyPublicDir: false,
-    lib: {
-      entry: path.resolve(__dirname, './v/default/frontend/assets/main.js'),
-      name: `mvc-php-skeleton`,
-      fileName: (format) => `script.${format}.js`
-    },
-    rollupOptions: {
-      plugins: [
-        copy({
-          targets: [
-            {
-              src: `./v/default/frontend/assets/images`,
-              dest: `./public/assets`
-            }
-          ],
-          hook: `writeBundle`,
-          verbose: true
-        })
-      ]
-    },
-  }
-});
+ return [
+    'guard' => [
+        'web' => [
+            'driver' => SESSION,
+            'provider' => SESSION,
+        ]
+    ],
+];
