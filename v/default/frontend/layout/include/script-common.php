@@ -27,4 +27,4 @@
  *  Time: 08:51:09
  */
 ?>
-<script type="module" src="/assets/scrip.es.js"></script>
+<script type="module" src="/assets/script.es.js"></script>

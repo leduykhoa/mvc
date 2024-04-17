@@ -27,44 +27,52 @@ MYSQL_USER='mvc'
 
 # ===================================================================================================================================
 if [ -n "${PHP_VERSION}" ]; then
-    docker build \
+    docker build --force-rm	--no-cache \
     -f ./docker/Dockerfile-${PHP_VERSION} \
     -t ${DOCKER_PREFIX}php:${PHP_VERSION} \
     .
 fi
 
 # ===================================================================================================================================
+# if [ ! "$(docker ps -a -q -f name=${DOCKER_PREFIX}mysql )" ]; then
+#     # if [ "$(docker ps -aq -f status=exited -f name=${DOCKER_PREFIX}mysql)" ]; then            
+#     # fi
+# fi
 docker stop ${DOCKER_PREFIX}mysql 
 # Remove sudo - Thinking
 # sudo chmod -R 777 ./mysql*
 if [ "$DOCKER_MYSQL_REPLACE" == "1" ]; then
-docker stop ${DOCKER_PREFIX}mysql 
-docker rm ${DOCKER_PREFIX}mysql -v
-sleep 6
-rm -rf ./mysql/*
-docker run \
- --network=${DOCKER_NETWORK} \
- --name ${DOCKER_PREFIX}mysql -d \
--h ${DOCKER_PREFIX}mysql \
--v ./mysql:/var/lib/mysql/ \
--v ./render_table_file.sql:/apt/render_table_file.sql \
--v ./render_table_file_custom.sql:/apt/render_table_file_custom.sql \
--e MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD} \
--e MYSQL_DATABASE=${MYSQL_DATABASE} \
--e MYSQL_USER=${MYSQL_USER} \
--e MYSQL_PASSWORD=${MYSQL_PASSWORD} \
--e MYSQL_ALLOW_EMPTY_PASSWORD='no' \
--e MYSQL_HOST='0.0.0.0' \
--t mysql:${MYSQL_VERSION} \
---lower_case_table_names=1 --sql_mode='ON' --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    docker rm ${DOCKER_PREFIX}mysql -v
+    sleep 6
+    rm -rf ./mysql/*
+    docker run \
+    --network=${DOCKER_NETWORK} \
+    --name ${DOCKER_PREFIX}mysql -d \
+    -h ${DOCKER_PREFIX}mysql \
+    -v ./mysql:/var/lib/mysql/ \
+    -v ./render_table_file.sql:/apt/render_table_file.sql \
+    -v ./render_table_file_custom.sql:/apt/render_table_file_custom.sql \
+    -e MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD} \
+    -e MYSQL_DATABASE=${MYSQL_DATABASE} \
+    -e MYSQL_USER=${MYSQL_USER} \
+    -e MYSQL_PASSWORD=${MYSQL_PASSWORD} \
+    -e MYSQL_ALLOW_EMPTY_PASSWORD='no' \
+    -e MYSQL_HOST='0.0.0.0' \
+    -t mysql:${MYSQL_VERSION} \
+    --lower_case_table_names=1 --sql_mode='ON' --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    sleep 26
+    docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < render_table_file.sql
+    docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < render_table_file_custom.sql
 fi
 docker start ${DOCKER_PREFIX}mysql
 
-sleep 26
-docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < render_table_file.sql
-docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < render_table_file_custom.sql
+# # ===================================================================================================================================
+# # docker stop ${DOCKER_PREFIX}php 
+# if [ ! "$(docker ps -a -q -f name=${DOCKER_PREFIX}php )" ]; then
+#     # if [ "$(docker ps -aq -f status=exited -f name=${DOCKER_PREFIX}php)" ]; then            
+#     # fi    
+# fi
 
-# ===================================================================================================================================
 docker stop ${DOCKER_PREFIX}php 
 docker rm ${DOCKER_PREFIX}php 
 
@@ -75,7 +83,20 @@ docker run \
 -v .:/var/www/html \
 -w /var/www/html \
 -t ${DOCKER_PREFIX}php:${PHP_VERSION} 
+if [ "$DOCKER_MYSQL_REPLACE" == "1" ]; then
+    sleep 6
+    if [ ! -d ./node_modules ]; then
+        docker exec -i ${DOCKER_PREFIX}php npm i
+    fi
+    docker exec -i ${DOCKER_PREFIX}php npm run news
+fi
 # ===================================================================================================================================
+# docker stop ${DOCKER_PREFIX}nginx 
+# if [ ! "$(docker ps -a -q -f name=${DOCKER_PREFIX}nginx )" ]; then
+#     # if [ "$(docker ps -aq -f status=exited -f name=${DOCKER_PREFIX}nginx)" ]; then            
+#     # fi    
+# fi
+
 docker stop ${DOCKER_PREFIX}nginx 
 docker rm ${DOCKER_PREFIX}nginx 
 
