@@ -42,7 +42,7 @@ class PostController extends ApiController
     public function index()
     {
         $obj = new BaseModel(plural('blog_post'));
-        $post = $obj->find([]);
+        $post = $obj->find();
         $data = ['list' => $post];
         $this->render($data);
     }
