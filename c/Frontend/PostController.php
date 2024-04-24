@@ -41,7 +41,7 @@ class PostController extends FrontendController
     public function index()
     {
         $obj = new BaseModel(plural('blog_post'));
-        $post = $obj->find([]);
+        $post = $obj->find();
         $data = ['post' => $post];
         $this->render('frontend/post/index', $data);
     }
