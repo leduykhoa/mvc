@@ -28,3 +28,8 @@ RUN pecl install mcrypt \
     && docker-php-ext-enable mcrypt \
     && docker-php-ext-enable imagick \
     && docker-php-ext-enable xdebug
+
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get install -y nodejs
+
+RUN curl --silent --show-error https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer

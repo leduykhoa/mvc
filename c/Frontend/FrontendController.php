@@ -37,6 +37,4 @@ class FrontendController extends BaseController
     {
         parent::__construct();
     }
-
-    
 }
