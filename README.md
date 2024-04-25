@@ -53,9 +53,19 @@ Before initializing Docker, please delete/chmod 777 the ```./mysql``` folder
  - Try ```http://0.0.0.0:9090```
 
 ## Keep it simple and faster ;)
-![](./api_request_fast.png)
 
-[Postman](./PHP-MVC-Skeleton.postman_collection.json)
+[Postman collection](./PHP-MVC-Skeleton.postman_collection.json)
+
+![](./test_report/api_request_fast.png)
+
+## Jmeter test 
+[Jmeter.jmx](./PHP-MVC-Skeleton.jmeter.jmx)
+
+![](./test_report/jmeter_test_best_result.png)
+
+[Report details](./test_report/README.md)
+
+
 
 ## Author
 *  Lê Duy Khoa
