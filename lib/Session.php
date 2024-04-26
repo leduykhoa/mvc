@@ -47,6 +47,10 @@ class Session
         if (!isset(self::$instance)) {
             try {
                 self::$instance = true;
+                if (!is_dir(PATH_STORAGE_SESSION)) {
+                    mkdir(PATH_STORAGE_SESSION, 0777);
+                }
+                ini_set('session.gc_maxlifetime', 3600);
                 ini_set('session.save_path', PATH_STORAGE_SESSION);
                 session_start();
             } catch (\Exception $ex) {
@@ -66,6 +70,14 @@ class Session
     {
         if (isset($_SESSION[$key])) {
             return $_SESSION[$key];
+        }
+        return NULL;
+    }
+
+    public static function destroy($key)
+    {
+        if (isset($_SESSION[$key])) {
+            unset($_SESSION[$key]);
         }
         return NULL;
     }
