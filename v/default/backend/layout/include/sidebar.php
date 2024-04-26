@@ -34,7 +34,7 @@ use App\Lib\Register;
     <!-- SIDEBAR HEADER -->
     <div class="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
     <a href="/myadmins/dashboard" class="flex space-x-2 items-center">
-            <img class="m-3" src="/images/logo.png" alt="<?php echo Register::get('app.name'); ?>" width="60" />
+            <img class="m-3" src="/assets/images/logo.png" alt="<?php echo Register::get('app.name'); ?>" width="60" />
         </a>
         <button class="block lg:hidden" @click.stop="sidebarToggle = !sidebarToggle">
             <svg class="fill-current" width="20" height="18" viewBox="0 0 20 18" fill="none" xmlns="http://www.w3.org/2000/svg">
