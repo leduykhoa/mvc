@@ -29,6 +29,8 @@
 
 namespace App\Controllers\Backend;
 
+use App\Service\AuthService;
+
 class DashboardController extends AdminController
 {
     public function __construct()
@@ -39,6 +41,9 @@ class DashboardController extends AdminController
     public function index()
     {
         $data = [];
+        // $service = AuthService::getInstance();
+        // $service->auth(['abc'=>'dddd']);
+        // print_r($service->user());die();
         $this->render('backend/dashboard/index', $data);
     }
 }

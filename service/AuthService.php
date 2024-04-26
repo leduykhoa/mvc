@@ -5,7 +5,7 @@
  *  ...............(¯'•.(¯'•.......((.....((
  *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_.'(_.)......|
+ *  .....,,,~”¯¯¯''¯(_,'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -23,40 +23,24 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/12
- *  Time: 01:39:47
+ *  Date: 2024/04/26
+ *  Time: 09:54:42
  */
 
-namespace App\Lib;
+namespace App\Service;
 
-class Register
+use App\Lib\Register;
+
+class AuthService extends AbstractService
 {
     private static $instance;
-    private static $_register;
-
-    public function __construct()
-    {
-        try {
-            self::getInstance();
-        } catch (\Exception $ex) {
-            die($ex->getMessage());
-        }
-    }
 
     public static function getInstance()
     {
         if (!isset(self::$instance)) {
             try {
-                self::$instance = true;
-                self::$_register = [];
-                $data = [];
-                foreach ($_POST as $key => $value) {
-                    $data[$key] = $value;
-                }
-                foreach ($_GET as $key => $value) {
-                    $data[$key] = $value;
-                }
-                self::set('data_request', $data);
+                $obj = self::class;
+                self::$instance = new $obj();
             } catch (\Exception $ex) {
                 die($ex->getMessage());
             }
@@ -64,25 +48,34 @@ class Register
         return self::$instance;
     }
 
-    public static function set($key, $value)
+    public function check($guard = '')
     {
-        self::$_register[$key] = $value;
-        return true;
+        if ($guard == '') {
+            $guard = Register::get('guard.default');
+        }
+        if (self::getSession($guard . '_auth')) {
+            return true;
+        }
+        return false;
     }
 
-    public static function get($key)
+    public function auth($user, $guard = '')
     {
-        if (isset(self::$_register[$key])) {
-            return self::$_register[$key];
+        if ($guard == '') {
+            $guard = Register::get('guard.default');
         }
-        return NULL;
+        return self::setSession($guard . '_auth', $user);
     }
 
-    public static function destroy($key)
+    public function user($guard = '')
     {
-        if (isset(self::$_register[$key])) {
-            unset(self::$_register[$key]);
+        if ($guard == '') {
+            $guard = Register::get('guard.default');
         }
-        return NULL;
+        $result = self::getSession($guard . '_auth');
+        if (is_null($result)) {
+            return false;
+        }
+        return $result;
     }
 }

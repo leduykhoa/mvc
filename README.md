@@ -66,7 +66,6 @@ Before initializing Docker, please delete/chmod 777 the ```./mysql``` folder
 [Report details](./test_report/README.md)
 
 
-
 ## Author
 *  Lê Duy Khoa
 *  Mail: web.fast.2017@gmail.com
