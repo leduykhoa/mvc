@@ -49,8 +49,7 @@ class Session
                 self::$instance = true;
                 if (!is_dir(PATH_STORAGE_SESSION)) {
                     mkdir(PATH_STORAGE_SESSION, 0777);
-                }
-                ini_set('session.gc_maxlifetime', 3600);
+                }                
                 ini_set('session.save_path', PATH_STORAGE_SESSION);
                 session_start();
             } catch (\Exception $ex) {

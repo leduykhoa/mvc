@@ -34,6 +34,13 @@ use App\Lib\Register;
 class AuthService extends AbstractService
 {
     private static $instance;
+    private $guards;
+
+    public function __construct()
+    {
+        $guards = require(PATH_CONFIG . DS . 'auth.php');
+        $this->guards = $guards['guard'];
+    }
 
     public static function getInstance()
     {
@@ -53,7 +60,7 @@ class AuthService extends AbstractService
         if ($guard == '') {
             $guard = Register::get('guard.default');
         }
-        if (self::getSession($guard . '_auth')) {
+        if ($this->getSession($guard . '_auth')) {
             return true;
         }
         return false;
@@ -64,7 +71,7 @@ class AuthService extends AbstractService
         if ($guard == '') {
             $guard = Register::get('guard.default');
         }
-        return self::setSession($guard . '_auth', $user);
+        return $this->setSession($guard . '_auth', $user);
     }
 
     public function user($guard = '')
@@ -72,10 +79,21 @@ class AuthService extends AbstractService
         if ($guard == '') {
             $guard = Register::get('guard.default');
         }
-        $result = self::getSession($guard . '_auth');
+        $result = $this->getSession($guard . '_auth');
         if (is_null($result)) {
             return false;
         }
         return $result;
+    }
+
+    public function getGuard($guard = '')
+    {
+        if ($guard == '') {
+            $guard = Register::get('guard.default');
+        }
+        if (isset($this->guards[$guard])) {
+            return $this->guards[$guard];
+        }
+        return false;
     }
 }

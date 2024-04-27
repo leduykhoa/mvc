@@ -33,6 +33,7 @@ use App\Lib\PageViewer;
 use App\Lib\Pluralize;
 use App\Lib\Utils;
 use App\Model\BaseModel;
+use App\Service\AuthService;
 
 class UserController extends FrontendController
 {
@@ -100,7 +101,14 @@ class UserController extends FrontendController
                     'password' => md5(request('password')),
                 ]
             ]);
-            print_r($user);
+            if (!is_null($user)) {
+                $this->authService->auth($user);
+                header('Location: /');
+            }
+            // print_r($user);
+            // print_r($service->user());
+            // die();
+            // print_r($user);
         }
         $this->render('frontend/user/login', $data);
     }
