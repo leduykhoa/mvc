@@ -40,7 +40,7 @@
                             <?php __e('It\'s totally free and super easy'); ?>
                         </p>
 
-                        <?php @__more('frontend.layout.include.validate-alert', ['validate' => $validate]); ?>
+                        <?php @__more('frontend.layout.include.flash'); ?>
                         <button class="mb-6 flex w-full items-center justify-center rounded-md bg-white p-3 text-base font-medium shadow-one hover:text-primary">
                             <span class="mr-3">
                                 <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">

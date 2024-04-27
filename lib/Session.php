@@ -31,6 +31,13 @@ namespace App\Lib;
 
 class Session
 {
+    const FLASH = 'FLASH';
+    // Message types and shortcuts
+    const INFO    = 'info';
+    const SUCCESS = 'success';
+    const WARNING = 'warning';
+    const ERROR   = 'error';
+
     private static $instance;
 
     public function __construct()
@@ -50,7 +57,8 @@ class Session
                 if (!is_dir(PATH_STORAGE_SESSION)) {
                     mkdir(PATH_STORAGE_SESSION, 0777);
                 }
-                ini_set('session.gc_maxlifetime', 3600);
+                // ===================================================================================================================================
+                ini_set('session.gc_maxlifetime', __env('SESSION_MAX_LIFE_TIME', 3600 * 24));
                 ini_set('session.save_path', PATH_STORAGE_SESSION);
                 session_start();
             } catch (\Exception $ex) {
@@ -80,5 +88,39 @@ class Session
             unset($_SESSION[$key]);
         }
         return NULL;
+    }
+
+    public static function flash($key, $value = null)
+    {
+        $flash = self::get(self::FLASH);
+        // For get flash value 
+        if (is_null($value) || $value == '') {
+            if ($flash && isset($flash[$key]) && is_array($flash[$key]) && count($flash[$key])) {
+                $result = $flash[$key];
+                unset($flash[$key]);
+                self::set(self::FLASH, $flash);
+                return $result;
+            }
+            return [];
+        }
+        // For set flash value 
+        if ($flash && isset($flash[$key]) && is_array($flash[$key])) {
+            $flashCurrent = $flash[$key];
+            if (is_array($value)) {
+                $flashCurrent = array_merge($flashCurrent, $value);
+            } else {
+                $flashCurrent[] = $value;
+            }
+            $flash[$key] = $flashCurrent;
+        } else {
+            if (is_array($value)) {
+                $flash[$key] = $value;
+            } else {
+                $flash[$key] = [$value];
+            }
+        }
+
+        self::set(self::FLASH, $flash);
+        return true;
     }
 }

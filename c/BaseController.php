@@ -31,11 +31,13 @@ namespace App\Controllers;
 
 use App\Lib\PageViewer;
 use App\Lib\Register;
+use App\Service\AuthService;
 
 class BaseController
 {
     protected $validateList;
     protected $packageTheme = 'frontend';
+    protected $authService;
 
     public function __construct()
     {
@@ -44,6 +46,7 @@ class BaseController
             $fileLanguage = PATH_CONFIG . DS . 'validation_en.php';
         }
         $this->validateList = require_once($fileLanguage);
+        $this->authService = AuthService::getInstance();
     }
 
     public function render($file, $data = [], $type = HTML)
@@ -100,6 +103,7 @@ class BaseController
         return true;
     }
 
+    // Todo: Update more
     public function validateItem($value, $rule, $params = [])
     {
         $value = trim($value);

@@ -269,9 +269,44 @@ class BaseModel
             $listValues[] = $value;
         }
         // ===================================================================================================================================
-        $db = DB::getInstance();
-        $sql = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $listFields) . ') VALUES  (' . implode(', ', $listFieldReplaces) . ')';
-        return $db->prepare($sql)->execute($data);
+        try {
+            $db = DB::getInstance();
+            $sql = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $listFields) . ') VALUES  (' . implode(', ', $listFieldReplaces) . ')';
+            return $db->prepare($sql)->execute($data);
+        } catch (\PDOException $e) {
+            die($e->getMessage());
+            return false;
+        }
+    }
+
+    public function insertGetId($params = [])
+    {
+        // ===================================================================================================================================
+        $data = [];
+        if (isset($params['data']) && is_array($params['data'])) {
+            $data = $params['data'];
+        }
+        // ===================================================================================================================================
+        $listFields = [];
+        $listFieldReplaces = [];
+        $listValues = [];
+        foreach ($data as $field => $value) {
+            $listFields[] = $field;
+            $listFieldReplaces[] = ':' . $field;
+            $listValues[] = $value;
+        }
+        // ===================================================================================================================================
+        try {
+            $db = DB::getInstance();
+            $sql = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $listFields) . ') VALUES  (' . implode(', ', $listFieldReplaces) . ')';
+            $stm = $db->prepare($sql);
+            $stm->execute($data);
+            $lastId = $db->lastInsertId();
+            return $lastId;
+        } catch (\PDOException $e) {
+            die($e->getMessage());
+            return false;
+        }
     }
 
     public function inserts($params = [])
