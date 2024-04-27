@@ -42,9 +42,10 @@ class DB
     {
         if (!isset(self::$instance)) {
             try {
-                $dsn = 'mysql:host=' . __env('DB_HOST') . ';dbname=' . __env('DB_DATABASE');
+                $dsn = 'mysql:host=' . __env('DB_HOST') . ';dbname=' . __env('DB_DATABASE') . ';charset=utf8';
                 self::$instance = new \PDO($dsn, __env('DB_USERNAME'), __env('DB_PASSWORD'));
-                self::$instance->exec('SET NAMES "utf8"');
+                // self::$instance->exec('SET NAMES "utf8"');
+                self::$instance->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
             } catch (\PDOException $ex) {
                 die($ex->getMessage());
             }

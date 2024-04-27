@@ -40,8 +40,6 @@ if (__env('APP_DEBUG', true) === true) {
     header("Expires: Wed, 06 June 1990 06:06:06 GMT");
 }
 // ===================================================================================================================================
-ini_set('session.gc_maxlifetime', 3600 * 24);
-// ===================================================================================================================================
 Register::set('app.url.base',  __env('APP_URL_BASE', 'https://web-fast.com'));
 Register::set('app.name',  __env('APP_NAME', 'PHP MVC Skeleton'));
 Register::set('app.env',  __env('APP_ENV', 'local'));

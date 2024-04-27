@@ -31,6 +31,7 @@ namespace App\Controllers\Frontend;
 
 use App\Lib\PageViewer;
 use App\Lib\Pluralize;
+use App\Lib\Session;
 use App\Lib\Utils;
 use App\Model\BaseModel;
 use App\Service\AuthService;
@@ -65,6 +66,7 @@ class UserController extends FrontendController
                 'password' => 'required|min:6',
                 'repassword' => 'required|same:password',
             ]);
+
             if ($data['validate'] === true) {
                 $obj = new BaseModel(Pluralize::plural('user'));
                 $dataSave = [
@@ -74,9 +76,20 @@ class UserController extends FrontendController
                     'password' => md5(request('password')),
                 ];
                 $result = $obj->insert(['data' => $dataSave]);
+                if ($result === true) {
+                    Session::flash(Session::SUCCESS, 'Register successfully');
+                    header('Location: /');
+                    return true;
+                }
+            } else {
+                $warning = [];
+                foreach ($data['validate'] as $item) {
+                    $warning[] = $item[4];
+                }
+                Session::flash(Session::WARNING, $warning);
             }
+            header('Location: /register');
         }
-        $this->render('frontend/user/register', $data);
     }
 
     public function login()
@@ -88,8 +101,7 @@ class UserController extends FrontendController
 
     public function loginPost()
     {
-        $data = [];
-        if (isPost() == true) {
+        if (isPost()) {
             $this->validate([
                 'email' => 'required|email',
                 'password' => 'required|min:6'
@@ -101,15 +113,16 @@ class UserController extends FrontendController
                     'password' => md5(request('password')),
                 ]
             ]);
-            if (!is_null($user)) {
+            if (isset($user)) {
                 $this->authService->auth($user);
+                Session::flash(Session::SUCCESS, 'Login successfully');
                 header('Location: /');
+                return true;
             }
-            // print_r($user);
-            // print_r($service->user());
-            // die();
-            // print_r($user);
+            Session::flash(Session::ERROR, 'Login failed');
+            header('Location: /login');
+            return true;
         }
-        $this->render('frontend/user/login', $data);
+        header('HTTP/1.0 404 Not Found');
     }
 }

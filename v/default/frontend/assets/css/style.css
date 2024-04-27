@@ -51,12 +51,12 @@
         @apply border rounded-sm border-gray-400 px-5 py-3 my-1 bg-white text-sm
     }
 
-    .alert-danger {
-        @apply border-red-600 text-gray-400
+    .alert-error {
+        @apply border-red-600 text-red-400
     }
 
     .alert-success {
-        @apply border-gray-400 text-emerald-600
+        @apply border-emerald-400 text-emerald-600
     }
 
     .alert-warning {
