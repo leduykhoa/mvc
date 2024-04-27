@@ -36,6 +36,8 @@
                         <?php __e('Sign in to your account'); ?>
                     </h1>
                     <br/>
+                    <?php @__more('frontend.layout.include.flash'); ?>
+                    <br/>
                     <form action="/login-post" method="POST">
                         <div class="mb-5">
                             <label htmlFor="email" class="label">
