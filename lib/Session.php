@@ -87,14 +87,14 @@ class Session
         if (isset($_SESSION[$key])) {
             unset($_SESSION[$key]);
         }
-        return NULL;
+        return true;
     }
 
     public static function flash($key, $value = null)
     {
         $flash = self::get(self::FLASH);
         // For get flash value 
-        if (is_null($value) || $value == '') {
+        if (is_null($value)) {
             if ($flash && isset($flash[$key]) && is_array($flash[$key]) && count($flash[$key])) {
                 $result = $flash[$key];
                 unset($flash[$key]);
@@ -119,7 +119,7 @@ class Session
                 $flash[$key] = [$value];
             }
         }
-
+        // 
         self::set(self::FLASH, $flash);
         return true;
     }

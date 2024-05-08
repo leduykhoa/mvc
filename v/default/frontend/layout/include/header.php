@@ -28,7 +28,9 @@
  */
 
 use App\Lib\Register;
+use App\Service\AuthService;
 
+$auth = AuthService::getInstance();
 ?>
 <header>
     <div class="container mx-auto">
@@ -51,29 +53,45 @@ use App\Lib\Register;
                         <ul class="tracking-wide font-medium lg:text-sm flex-col flex lg:flex-row gap-6 lg:gap-0">
                             <li>
                                 <a href="/about" class="block md:px-4 transition hover:text-primary">
-                                    <span><?php __e('About'); ?></span>
+                                    <?php __e('About'); ?>
                                 </a>
                             </li>
                             <li>
                                 <a href="/contact" class="block md:px-4 transition hover:text-primary">
-                                    <span><?php __e('Contact'); ?></span>
+                                    <?php __e('Contact'); ?>
                                 </a>
                             </li>
                             <li>
                                 <a href="/post" class="block md:px-4 transition hover:text-primary">
-                                    <span><?php __e('Blog'); ?></span>
+                                    <?php __e('Blog'); ?>
                                 </a>
                             </li>
-                            <li>
-                                <a href="/register" class="block md:px-4 transition hover:text-primary">
-                                    <span><?php __e('Register'); ?></span>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="/login" class="block md:px-4 transition hover:text-primary">
-                                    <span><?php __e('Login'); ?></span>
-                                </a>
-                            </li>
+                            <?php if ($auth->check()) : ?>
+                                <li>
+                                    <a href="/account" class="block md:px-4 transition hover:text-primary">
+                                        <?php __e('Account'); ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/logout" class="block md:px-4 transition hover:text-primary" onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                        <?php __e('Logout'); ?>
+                                    </a>
+                                    <form id="logout-form" action="/logout" method="POST" class="d-none">
+                                    </form>
+                                </li>
+                            <?php else : ?>
+                                <li>
+                                    <a href="/register" class="block md:px-4 transition hover:text-primary">
+                                        <?php __e('Register'); ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/login" class="block md:px-4 transition hover:text-primary">
+                                        <?php __e('Login'); ?>
+                                    </a>
+                                </li>
+                            <?php endif ?>
                             <li>
                                 <div aria-hidden="true" class="flex space-x-1">
                                     <div class="h-4 w-4 rounded-full bg-gray-900 dark:bg-white"></div>
