@@ -5,7 +5,7 @@
  *  ...............(¯'•.(¯'•.......((.....((
  *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_.'(_.)......|
+ *  .....,,,~”¯¯¯''¯(_,'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -23,24 +23,20 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/03/12
- *  Time: 10:59:15
+ *  Date: 2024/05/09
+ *  Time: 06:00:25
  */
-
-use App\Lib\Route;
-
-Route::get('', ['Frontend\Pages@home', 'home']);
-Route::get('contact', ['Frontend\Contact@index', 'contact.index']);
-Route::post('contact', ['Frontend\Contact@index', 'contact.store']);
-Route::get('about', ['Frontend\About@index', 'about.index']);
-
-Route::get('account', ['Frontend\User@account', 'user.account']);
-Route::get('register', ['Frontend\User@register', 'user.register']);
-Route::post('register-post', ['Frontend\User@registerPost', 'user.register.post']);
-Route::get('login', ['Frontend\User@login', 'user.login']);
-Route::post('login-post', ['Frontend\User@loginPost', 'user.login.post']);
-Route::post('logout', ['Frontend\User@logout', 'user.logout.post']);
-
-Route::get('post', ['Frontend\Post@index', 'post.index']);
-Route::get('post/detail/{id?}', ['Frontend\Post@detail', 'post.detail']);
-// Route::get('post/detail/{id?}/{abc?}', ['Post@detail', 'post.detail']);
+?>
+<section class="overflow-hidden pt-[26px] pb-16 md:pb-20 lg:pt-[48px] lg:pb-28">
+    <div class="container mx-auto">
+        <div class="flex flex-wrap justify-center">
+            <div class="w-full px-4">
+                <h1 class="text-2xl	uppercase"><?php __e('Account information'); ?></h1>
+                <?php __e('Full name'); ?>: <?php echo $user->full_name; ?><br />
+                <?php __e('First name'); ?>: <?php echo $user->first_name; ?><br />
+                <?php __e('Last name'); ?>: <?php echo $user->last_name; ?><br />
+                <?php __e('Email'); ?>: <?php echo $user->email; ?><br />
+            </div>
+        </div>
+    </div>
+</section>

@@ -43,12 +43,6 @@ class UserController extends FrontendController
         parent::__construct();
     }
 
-    public function index()
-    {
-        $data = [];
-        $this->render('frontend/user/index', $data);
-    }
-
     public function register()
     {
         PageViewer::set('layout', 'frontend' . DS . 'layout' . DS . 'simple');
@@ -114,15 +108,37 @@ class UserController extends FrontendController
                 ]
             ]);
             if (isset($user)) {
+                $user->password = NULL;
                 $this->authService->auth($user);
-                Session::flash(Session::SUCCESS, 'Login successfully');
+                Session::flash(Session::SUCCESS, __('Login successfully'));
                 header('Location: /');
                 return true;
             }
-            Session::flash(Session::ERROR, 'Login failed');
+            Session::flash(Session::ERROR, __('Login failed'));
             header('Location: /login');
             return true;
         }
         header('HTTP/1.0 404 Not Found');
+    }
+
+    public function logout()
+    {
+        if (isPost()) {
+            $this->authService->logout();
+            Session::flash(Session::SUCCESS, __('Logout successfully'));
+            header('Location: /');
+            return true;
+        }
+        header('HTTP/1.0 404 Not Found');
+    }
+
+    public function account()
+    {
+        $user = $this->authService->user();
+        if (!$user) {
+            header('Location: /login');
+            return true;
+        }
+        $this->render('frontend/user/account', ['user' => $user]);
     }
 }

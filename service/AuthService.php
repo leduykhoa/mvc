@@ -80,10 +80,7 @@ class AuthService extends AbstractService
             $guard = Register::get('guard.default');
         }
         $result = $this->getSession($guard . '_auth');
-        if (is_null($result)) {
-            return false;
-        }
-        return $result;
+        return is_null($result) ? false : $result;
     }
 
     public function getGuard($guard = '')
@@ -95,5 +92,13 @@ class AuthService extends AbstractService
             return $this->guards[$guard];
         }
         return false;
+    }
+
+    public function logout($guard = '')
+    {
+        if ($guard == '') {
+            $guard = Register::get('guard.default');
+        }
+        return $this->destroySession($guard . '_auth');
     }
 }
