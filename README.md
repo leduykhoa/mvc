@@ -60,6 +60,10 @@ Before initializing Docker, please delete/chmod 777 the ```./mysql``` folder
 
 ![](./test_report/api_request_fast.png)
 
+Jwt Auth 
+
+![](./test_report/api_request_fast_with_jwt_auth.png)
+
 ## Jmeter test 
 [Jmeter.jmx](./PHP-MVC-Skeleton.jmeter.jmx)
 
