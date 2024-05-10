@@ -30,8 +30,8 @@
 namespace App\Controllers\Api;
 
 use App\Model\BaseModel;
-use App\Lib\Jwt;
 use App\Lib\Pluralize;
+use App\Lib\Utils;
 use App\Service\AuthService;
 
 class UserController extends ApiController
@@ -41,53 +41,62 @@ class UserController extends ApiController
         parent::__construct();
     }
 
-    public function index()
-    {
-        $obj = new BaseModel(plural('blog_post'));
-        $post = $obj->find();
-        $data = ['list' => $post];
-        $this->render($data);
-    }
-
-    public function login()
+    public function register()
     {
         try {
             $data = [
                 'success' => 1,
                 'message' => 'login_success',
             ];
-            if (isPost()) {
-                $this->validate([
-                    'email' => 'required|email',
-                    'password' => 'required|min:6'
-                ]);
+            $data['validate'] = $this->validate([
+                'full_name' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|min:6',
+            ]);
+
+            if ($data['validate'] === true) {
                 $obj = new BaseModel(Pluralize::plural('user'));
-                $user = $obj->findOne([
+                $userCheck = $obj->findOne([
                     'conditions' => [
                         'email' => request('email')
-                    ]
+                    ],
+                    'columns' => ['id', 'email']
                 ]);
-                if (isset($user) && $user !== false && AuthService::passwordVerify(request('password'), $user->password)) {
-                    $user->password = NULL;
-                    $payload = [
-                        'id' => $user->id,
-                        'full_name' => $user->full_name,
-                        'first_name' => $user->first_name,
-                        'last_name' => $user->last_name,
-                        'email' => $user->email,
+                if (isset($userCheck) && $userCheck !== false && isset($userCheck->id)) {
+                    $data = [
+                        'success' => 0,
+                        'message' => 'register_failed',
+                        'code' => 1,
                     ];
-                    $token = AuthService::jwtRender($payload);
+                    $this->render($data);
+                    return;
+                }
+                $dataSave = [
+                    'id' => Utils::genUuid(),
+                    'full_name' => request('full_name'),
+                    'first_name' => request('first_name'),
+                    'last_name' => request('last_name'),
+                    'email' => request('email'),
+                    'password' => AuthService::passwordHash(request('password')),
+                ];
+                $result = $obj->insert(['data' => $dataSave]);
+                if ($result === true) {
                     $data = [
                         'success' => 1,
-                        'message' => 'login_success',
-                        'token' => $token,
-                    ];
-                } else {
-                    $data = [
-                        'success' => 1,
-                        'message' => 'login_failed'
+                        'message' => 'register_success',
+                        'id' => $dataSave['id'],
                     ];
                 }
+            } else {
+                $warning = [];
+                foreach ($data['validate'] as $item) {
+                    $warning[] = $item[4];
+                }
+                $data = [
+                    'success' => 0,
+                    'message' => 'register_failed',
+                    'data' => $warning,
+                ];
             }
             $this->render($data);
         } catch (\Exception $exc) {
@@ -99,15 +108,55 @@ class UserController extends ApiController
         }
     }
 
-    public function detail($id)
+    public function login()
     {
-        $obj = new BaseModel(plural('blog_post'));
-        $post = $obj->findOne([
-            'conditions' => [
-                'id' => $id
-            ]
-        ]);
-        $data = ['post' => $post];
-        $this->render($data);
+        try {
+            $data = [
+                'success' => 1,
+                'message' => 'login_success',
+            ];
+            $this->validate([
+                'email' => 'required|email',
+                'password' => 'required|min:6'
+            ]);
+            $obj = new BaseModel(Pluralize::plural('user'));
+            $user = $obj->findOne([
+                'conditions' => [
+                    'email' => request('email')
+                ]
+            ]);
+            if (isset($user) && $user !== false && AuthService::passwordVerify(request('password'), $user->password)) {
+                $user->password = NULL;
+                $payload = [
+                    'id' => $user->id,
+                    'full_name' => $user->full_name,
+                    'first_name' => $user->first_name,
+                    'last_name' => $user->last_name,
+                    'email' => $user->email,
+                ];
+                $token = AuthService::jwtRender($payload);
+                $data = [
+                    'success' => 1,
+                    'message' => 'login_success',
+                    'token' => $token,
+                ];
+            } else {
+                $data = [
+                    'success' => 1,
+                    'message' => 'login_failed'
+                ];
+            }
+            $this->render($data);
+        } catch (\Exception $exc) {
+            $data = [
+                'success' => 0,
+                'message' => $exc->getMessage(),
+            ];
+            $this->render($data);
+        }
+    }
+
+    public function profile($id)
+    {
     }
 }
