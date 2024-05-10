@@ -65,6 +65,7 @@ class ApiController extends BaseController
         }
         return $headers;
     }
+
     /**
      * Get access token from header
      * 
