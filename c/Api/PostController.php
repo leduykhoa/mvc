@@ -42,17 +42,12 @@ class PostController extends ApiController
     public function index()
     {
         try {
-            // echo '<pre>';
-            // echo $this->getBearerToken();
-            // echo '<br/>';
-            // print_r($_SERVER);
             $bearerToken = $this->getBearerToken();
             $payload = Jwt::decode($bearerToken);
-            if ($payload ) {
+            if ($payload) {
                 $obj = new BaseModel(plural('blog_post'));
                 $post = $obj->find();
                 $data = [
-                    // 'payload' => $payload,
                     'list' => $post,
                 ];
                 $this->render($data);

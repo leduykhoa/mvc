@@ -28,7 +28,7 @@
  */
 
 return [
-    'password_algos' => NULL,
+    'password_algos' => PASSWORD_BCRYPT,
     'password_options' => [],
     // 6h
     'api_time_expired' => __env('API_TIME_EXPIRED', 21600),
