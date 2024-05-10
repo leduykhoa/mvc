@@ -44,7 +44,17 @@
           <stringProp name="HTTPSampler.connect_timeout"></stringProp>
           <stringProp name="HTTPSampler.response_timeout"></stringProp>
         </HTTPSamplerProxy>
-        <hashTree/>
+        <hashTree>
+          <HeaderManager guiclass="HeaderPanel" testclass="HeaderManager" testname="HTTP Header Manager" enabled="true">
+            <collectionProp name="HeaderManager.headers">
+              <elementProp name="" elementType="Header">
+                <stringProp name="Header.name">Authorization</stringProp>
+                <stringProp name="Header.value">Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE3MTUzNDE3NTYsImV4cCI6MTcxNTM2MzM1NiwiaWQiOiI4Y2Y3OWMzYi03YzA4LTQ0YTItYWNhYy1kM2FjYzAwZTY0Y2QiLCJmdWxsX25hbWUiOiJMXHUwMGVhIER1eSBLaG9hIiwiZmlyc3RfbmFtZSI6Iktob2EiLCJsYXN0X25hbWUiOiJMXHUwMGVhIER1eSIsImVtYWlsIjoiYWRtaW5Ad2ViLWZhc3QuY29tIn0.LgbATR6zbjhvHBI2MC3wK7ev397MkV27JAUQck3-aeA</stringProp>
+              </elementProp>
+            </collectionProp>
+          </HeaderManager>
+          <hashTree/>
+        </hashTree>
         <ResultCollector guiclass="ViewResultsFullVisualizer" testclass="ResultCollector" testname="View Results Tree" enabled="true">
           <boolProp name="ResultCollector.error_logging">false</boolProp>
           <objProp>
