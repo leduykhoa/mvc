@@ -28,6 +28,7 @@
  */
 
 use App\Lib\DB;
+use App\Lib\Jwt;
 use App\Lib\Env;
 use App\Lib\Language;
 use App\Lib\PageViewer;
@@ -57,6 +58,7 @@ if (!function_exists('str_ends_with')) {
  * Include some functions and class
  */
 require_once('Env.php');
+require_once('Jwt.php');
 require_once('DB.php');
 require_once('Utils.php');
 require_once('Session.php');
@@ -261,9 +263,15 @@ function isPatch()
 function request($key, $default = NULL)
 {
     if (isPost()) {
-        return (isset($_POST)) ? $_POST[$key] : $default;
+        $data = file_get_contents('php://input');
+        $data = json_decode($data, true);
+        if(!is_array($data)) {
+            $data = [];
+        }
+        $data = array_merge($_POST, $data);
+        return (isset($data) && isset($data[$key])) ? $data[$key] : $default;
     }
-    return (isset($_GET)) ? $_GET[$key] : $default;
+    return (isset($_GET) && isset($_GET[$key])) ? $_GET[$key] : $default;
 }
 // ===================================================================================================================================
 function setCountryCode($key)

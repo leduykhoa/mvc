@@ -56,6 +56,8 @@ Before initializing Docker, please delete/chmod 777 the ```./mysql``` folder
 
 [Postman collection](./PHP-MVC-Skeleton.postman_collection.json)
 
+[Postman environment](./PHP-MVC-Skeleton.postman_environment.json)
+
 ![](./test_report/api_request_fast.png)
 
 ## Jmeter test 

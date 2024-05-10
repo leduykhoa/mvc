@@ -27,7 +27,11 @@
  *  Time: 10:46:32
  */
 
- return [
+return [
+    'password_algos' => NULL,
+    'password_options' => [],
+    // 6h
+    'api_time_expired' => __env('API_TIME_EXPIRED', 21600),
     'guard' => [
         'web' => [
             'driver' => SESSION,
