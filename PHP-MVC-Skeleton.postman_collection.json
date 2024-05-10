@@ -12,18 +12,41 @@
 				"method": "GET",
 				"header": [],
 				"url": {
-					"raw": "http://0.0.0.0:9090/api/post",
-					"protocol": "http",
+					"raw": "{{baseUrl}}post",
 					"host": [
-						"0",
-						"0",
-						"0",
-						"0"
+						"{{baseUrl}}post"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User login",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseUrl}}user/login",
+					"host": [
+						"{{baseUrl}}user"
 					],
-					"port": "9090",
 					"path": [
-						"api",
-						"post"
+						"login"
 					]
 				}
 			},

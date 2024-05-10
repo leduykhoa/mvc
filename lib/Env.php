@@ -58,7 +58,8 @@ class Env
         foreach ($lines as $line) {
             $line = trim($line);
             if ((str_starts_with($line, '#') === false)) {
-                preg_match("/([^#]+)\=(.*)/", $line, $matches);
+                // preg_match("/([^#]+)\=(.*)/", $line, $matches);
+                preg_match("/([A-Z_]+)\=(.*)/", $line, $matches);
                 if (isset($matches[2]) && trim($matches[2]) != '') {
                     $key = trim($matches[1]);
                     $value = trim($matches[2]);

@@ -33,3 +33,5 @@ $apiPrefix = __env('API_PREFIX', 'api');
 
 Route::get($apiPrefix . '/post', ['Api\Post@index', 'api.post.index']);
 Route::get($apiPrefix . '/post/detail/{id?}', ['Api\Post@detail', 'api.post.detail']);
+
+Route::post($apiPrefix . '/user/login', ['Api\User@login', 'api.user.login']);

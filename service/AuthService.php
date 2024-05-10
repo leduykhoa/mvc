@@ -30,10 +30,14 @@
 namespace App\Service;
 
 use App\Lib\Register;
+use App\Lib\Jwt;
 
 class AuthService extends AbstractService
 {
     private static $instance;
+    private static $passwordAlgos;
+    private static $passwordOptions;
+    private static $apiTimeExpired;
     private $guards;
 
     public function __construct()
@@ -47,12 +51,43 @@ class AuthService extends AbstractService
         if (!isset(self::$instance)) {
             try {
                 $obj = self::class;
+                $guards = require(PATH_CONFIG . DS . 'auth.php');
+                self::$passwordAlgos = $guards['password_algos'];
+                self::$passwordOptions = $guards['password_options'];
+                self::$apiTimeExpired = $guards['api_time_expired'];
                 self::$instance = new $obj();
             } catch (\Exception $ex) {
                 die($ex->getMessage());
             }
         }
         return self::$instance;
+    }
+
+    public static function passwordHash($password, $algo = null, $options = [])
+    {
+        if (is_null($algo) || $algo == '') {
+            $algo = self::$passwordAlgos;
+        }
+        if (is_null($options) || $options == '') {
+            $options = self::$passwordOptions;
+        }
+        return password_hash($password, $algo, $options);
+    }
+
+    public static function passwordVerify($password, $hash)
+    {
+        return password_verify($password, $hash);
+    }
+
+    public static function jwtRender($payload)
+    {
+        $currentTime = \time();
+        $payload = array_merge([
+            'iat' => $currentTime,
+            'exp' => $currentTime + self::$apiTimeExpired,
+        ], $payload);
+
+        return Jwt::encode($payload);
     }
 
     public function check($guard = '')
