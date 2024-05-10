@@ -29,6 +29,7 @@
 
 namespace App\Controllers\Api;
 
+use App\Lib\Jwt;
 use App\Model\BaseModel;
 
 class PostController extends ApiController
@@ -40,10 +41,29 @@ class PostController extends ApiController
 
     public function index()
     {
-        $obj = new BaseModel(plural('blog_post'));
-        $post = $obj->find();
-        $data = ['list' => $post];
-        $this->render($data);
+        try {
+            // echo '<pre>';
+            // echo $this->getBearerToken();
+            // echo '<br/>';
+            // print_r($_SERVER);
+            $bearerToken = $this->getBearerToken();
+            $payload = Jwt::decode($bearerToken);
+            if ($payload ) {
+                $obj = new BaseModel(plural('blog_post'));
+                $post = $obj->find();
+                $data = [
+                    // 'payload' => $payload,
+                    'list' => $post,
+                ];
+                $this->render($data);
+            }
+        } catch (\Exception $exc) {
+            $data = [
+                'success' => 0,
+                'message' => $exc->getMessage(),
+            ];
+            $this->render($data);
+        }
     }
 
     public function detail($id)

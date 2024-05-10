@@ -1,56 +1,92 @@
 {
 	"info": {
-		"_postman_id": "f475f104-b5a3-4c29-a0b3-4288f67d75ed",
-		"name": "PHP MVC Skeleton",
+		"_postman_id": "1a85abb4-0438-4bf5-a972-0c8e5d99ec67",
+		"name": "PHP-MVC-Skeleton",
 		"description": "PHP MVC Skeleton base on PHP language\n\n",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
-			"name": "Post list",
-			"request": {
-				"method": "GET",
-				"header": [],
-				"url": {
-					"raw": "{{baseUrl}}post",
-					"host": [
-						"{{baseUrl}}post"
-					]
+			"name": "User",
+			"item": [
+				{
+					"name": "User login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"",
+									"pm.test(\"Your test name\", function () {",
+									"    var jsonData = pm.response.json();",
+									"    pm.globals.set(\"token\", jsonData.token);",
+									"});",
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{baseUrl}}user/login",
+							"host": [
+								"{{baseUrl}}user"
+							],
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		},
 		{
-			"name": "User login",
-			"request": {
-				"method": "POST",
-				"header": [
-					{
-						"key": "Content-Type",
-						"value": "application/json",
-						"type": "text"
-					}
-				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n    \"email\": \"{{email}}\",\n    \"password\": \"{{password}}\"\n}",
-					"options": {
-						"raw": {
-							"language": "json"
+			"name": "Blog",
+			"item": [
+				{
+					"name": "Post list",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "{{token}}",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}post",
+							"host": [
+								"{{baseUrl}}post"
+							]
 						}
-					}
-				},
-				"url": {
-					"raw": "{{baseUrl}}user/login",
-					"host": [
-						"{{baseUrl}}user"
-					],
-					"path": [
-						"login"
-					]
+					},
+					"response": []
 				}
-			},
-			"response": []
+			]
 		}
 	]
 }

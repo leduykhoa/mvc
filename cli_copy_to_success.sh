@@ -41,6 +41,7 @@ cp -rf ./package-lock.json $path/$name/
 cp -rf ./package.json $path/$name/
 cp -rf ./PHP-MVC-Skeleton.jmeter.jmx $path/$name/
 cp -rf ./PHP-MVC-Skeleton.postman_collection.json $path/$name/
+cp -rf ./PHP-MVC-Skeleton.postman_environment.json $path/$name/
 cp -rf ./pluralize.js $path/$name/
 cp -rf ./README.md $path/$name/
 cp -rf ./render_table_file_custom.sql $path/$name/
