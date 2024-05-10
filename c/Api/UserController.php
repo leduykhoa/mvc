@@ -70,6 +70,7 @@ class UserController extends ApiController
                 if (isset($user) && $user !== false && AuthService::passwordVerify(request('password'), $user->password)) {
                     $user->password = NULL;
                     $payload = [
+                        'id' => $user->id,
                         'full_name' => $user->full_name,
                         'first_name' => $user->first_name,
                         'last_name' => $user->last_name,
