@@ -67,7 +67,7 @@ class UserController extends FrontendController
                     'id' => Utils::genUuid(),
                     'full_name' => request('full_name'),
                     'email' => request('email'),
-                    'password' => md5(request('password')),
+                    'password' => AuthService::passwordHash(request('password')),
                 ];
                 $result = $obj->insert(['data' => $dataSave]);
                 if ($result === true) {
@@ -103,11 +103,10 @@ class UserController extends FrontendController
             $obj = new BaseModel(Pluralize::plural('user'));
             $user = $obj->findOne([
                 'conditions' => [
-                    'email' => request('email'),
-                    'password' => md5(request('password')),
+                    'email' => request('email')
                 ]
             ]);
-            if (isset($user)) {
+            if (isset($user) && $user !== false && AuthService::passwordVerify(request('password'), $user->password)) {
                 $user->password = NULL;
                 $this->authService->auth($user);
                 Session::flash(Session::SUCCESS, __('Login successfully'));
