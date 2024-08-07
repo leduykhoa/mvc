@@ -29,3 +29,5 @@ yarn-error.log
 /storage/core/cache
 /storage/core/session
 /storage/log
+
+/docker/nginx.conf
