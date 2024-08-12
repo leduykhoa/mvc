@@ -44,3 +44,6 @@ Route::post('logout', ['Frontend\User@logout', 'user.logout.post']);
 Route::get('post', ['Frontend\Post@index', 'post.index']);
 Route::get('post/detail/{id?}', ['Frontend\Post@detail', 'post.detail']);
 // Route::get('post/detail/{id?}/{abc?}', ['Post@detail', 'post.detail']);
+
+Route::get('enterprise', ['Frontend\Enterprise@index', 'enterprise.index']);
+Route::get('enterprise/detail/{id?}', ['Frontend\Enterprise@detail', 'enterprise.detail']);
