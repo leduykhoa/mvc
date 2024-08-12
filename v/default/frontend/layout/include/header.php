@@ -66,6 +66,11 @@ $auth = AuthService::getInstance();
                                     <?php __e('Blog'); ?>
                                 </a>
                             </li>
+                            <li>
+                                <a href="/enterprise" class="block md:px-4 transition hover:text-primary">
+                                    <?php __e('Enterprise'); ?>
+                                </a>
+                            </li>
                             <?php if ($auth->check()) : ?>
                                 <li>
                                     <a href="/account" class="block md:px-4 transition hover:text-primary">
