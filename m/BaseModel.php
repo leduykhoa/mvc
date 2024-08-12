@@ -51,9 +51,28 @@ class BaseModel
         if (isset($params['fetch_type']) && $params['fetch_type'] != '') {
             $fetchType = $params['fetch_type'];
         }
+        $order = [];
+        if (isset($params['orders']) && is_array($params['orders'])) {
+            $orders = $params['orders'];
+            foreach ($orders as $key => $value) {
+                $str = '';
+                if (strtoupper($value) == 'DESC') {
+                    $str .= $key . ' DESC';
+                } elseif ($value == '' || strtoupper($value) == 'ASC') {
+                    $str .= $key . ' ASC';
+                }
+                $order[] = $str;
+            }
+        }
+        // ===================================================================================================================================
+        if (count($order)) {
+            $order = ' ORDER BY ' . implode(', ', $order);
+        } else {
+            $order = '';
+        }
         // ===================================================================================================================================
         $db = DB::getInstance();
-        $query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table;
+        $query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . ' ' . $order;
         $req = $db->query($query);
         return $req->fetchAll($fetchType);
     }
@@ -102,6 +121,20 @@ class BaseModel
                 $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
             }
         }
+        $order = [];
+        if (isset($params['orders']) && is_array($params['orders'])) {
+            $orders = $params['orders'];
+            foreach ($orders as $key => $value) {
+                $str = '';
+                if (strtoupper($value) == 'DESC') {
+                    $str .= $key . ' DESC';
+                } elseif ($value == '' || strtoupper($value) == 'ASC') {
+                    $str .= $key . ' ASC';
+                }
+
+                $order[] = $str;
+            }
+        }
         // ===================================================================================================================================
         if (count($where)) {
             $where = ' WHERE ' . implode(' ', $where);
@@ -109,8 +142,14 @@ class BaseModel
             $where = '';
         }
         // ===================================================================================================================================
+        if (count($order)) {
+            $order = ' ORDER BY ' . implode(', ', $order);
+        } else {
+            $order = '';
+        }
+        // ===================================================================================================================================
         $db = DB::getInstance();
-        $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where . ' LIMIT ' . $limit;
+        $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where . ' ' . $order . ' LIMIT ' . $limit;
         $stmt = $db->prepare($sql);
         $stmt->execute($dataFilter);
         return $stmt->fetchAll($fetchType);
@@ -156,6 +195,20 @@ class BaseModel
                 $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
             }
         }
+        $order = [];
+        if (isset($params['orders']) && is_array($params['orders'])) {
+            $orders = $params['orders'];
+            foreach ($orders as $key => $value) {
+                $str = '';
+                if (strtoupper($value) == 'DESC') {
+                    $str .= $key . ' DESC';
+                } elseif ($value == '' || strtoupper($value) == 'ASC') {
+                    $str .= $key . ' ASC';
+                }
+
+                $order[] = $str;
+            }
+        }
         // ===================================================================================================================================
         if (count($where)) {
             $where = ' WHERE ' . implode(' ', $where);
@@ -163,8 +216,14 @@ class BaseModel
             $where = '';
         }
         // ===================================================================================================================================
+        if (count($order)) {
+            $order = ' ORDER BY ' . implode(', ', $order);
+        } else {
+            $order = '';
+        }
+        // ===================================================================================================================================
         $db = DB::getInstance();
-        $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where;
+        $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where . ' ' . $order;
         $stmt = $db->prepare($sql);
         $stmt->execute($dataFilter);
         return $stmt->fetch($fetchType);
