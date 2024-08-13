@@ -84,8 +84,13 @@ define('DIR_ROUTE', 'route');
 define('DIR_SERVICE', 'service');
 define('DIR_MIDDLEWARE', 'middleware');
 
+define('DIR_DATABASE', 'database');
+define('DIR_DATABASE_FACTORY', 'factories');
+define('DIR_DATABASE_MIGRATION', 'migrations');
+define('DIR_DATABASE_SEEDER', 'seeders');
+
 define('DIR_STORAGE', 'storage');
-define('DIR_LOG', 'log');
+define('DIR_STORAGE_LOG', 'log');
 define('DIR_STORAGE_CORE', 'core');
 define('DIR_STORAGE_CACHE', 'cache');
 define('DIR_STORAGE_SESSION', 'session');
@@ -100,8 +105,13 @@ define('PATH_ROUTE', BP . DS . DIR_ROUTE);
 define('PATH_SERVICE', BP . DS . DIR_SERVICE);
 define('PATH_MIDDLEWARE', BP . DS . DIR_MIDDLEWARE);
 
+define('PATH_DATABASE', BP . DS . DIR_DATABASE);
+define('PATH_DATABASE_FACTORY', PATH_DATABASE . DS . DIR_DATABASE_FACTORY);
+define('PATH_DATABASE_MIGRATION', PATH_DATABASE . DS . DIR_DATABASE_MIGRATION);
+define('PATH_DATABASE_SEEDER', PATH_DATABASE . DS . DIR_DATABASE_SEEDER);
+
 define('PATH_STORAGE', BP . DS . DIR_STORAGE);
-define('PATH_LOG', PATH_STORAGE . DS . DIR_LOG);
+define('PATH_STORAGE_LOG', PATH_STORAGE . DS . DIR_STORAGE_LOG);
 define('PATH_STORAGE_CORE', PATH_STORAGE . DS . DIR_STORAGE_CORE);
 define('PATH_STORAGE_CACHE', PATH_STORAGE_CORE . DS . DIR_STORAGE_CACHE);
 define('PATH_STORAGE_SESSION', PATH_STORAGE_CORE . DS . DIR_STORAGE_SESSION);
@@ -265,7 +275,7 @@ function request($key, $default = NULL)
     if (isPost()) {
         $data = file_get_contents('php://input');
         $data = json_decode($data, true);
-        if(!is_array($data)) {
+        if (!is_array($data)) {
             $data = [];
         }
         $data = array_merge($_POST, $data);
