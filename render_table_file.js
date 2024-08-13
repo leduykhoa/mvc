@@ -31,7 +31,7 @@
 
 const fs = require(`fs`);
 const pluralize = require(`./pluralize.js`);
-const schemaTableFile = `./render_table_file.sql`;
+const schemaTableFile = `./database/migrations/render_table_file.sql`;
 const dateRunTime = new Date();
 
 let data = fs.readFileSync(`./render_table_file.json`);

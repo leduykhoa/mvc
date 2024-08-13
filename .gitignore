@@ -18,6 +18,7 @@ yarn-error.log
 /.idea
 /.vscode
 /mysql
+/000_data_html
 
 /public/css
 /public/js
