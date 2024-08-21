@@ -30,11 +30,14 @@
 ?>
 <ul>
     <li>
-        <?php __e('Tiêu đề:');?>
-        <?php __e($post->name);?>
+        <?php __e('Tiêu đề:'); ?>
+        <?php __e($post->name); ?>
     </li>
     <li>
-        <?php __e('Nội dung:');?>
-        <?php __e($post->content);?>
+        <?php __e('Nội dung:'); ?>
+        <?php $items = explode("\n=====\n", $post->description); ?>
+        <?php foreach ($items as $item): ?>
+            <?php __e($item); ?>
+        <?php endforeach ?>
     </li>
 </ul>

@@ -39,6 +39,7 @@ if (__env('APP_DEBUG', true) === true) {
     header("Cache-Control: no-cache, must-revalidate");
     header("Expires: Wed, 06 June 1990 06:06:06 GMT");
 }
+date_default_timezone_set(__env('APP_TIMEZONE', 'UTC'));
 // ===================================================================================================================================
 Register::set('app.url.base',  __env('APP_URL_BASE', 'https://web-fast.com'));
 Register::set('app.name',  __env('APP_NAME', 'PHP MVC Skeleton'));

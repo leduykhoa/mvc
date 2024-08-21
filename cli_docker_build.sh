@@ -3,6 +3,7 @@ echo "Bash version ${BASH_VERSION}..."
 
 # ./cli_docker_build.sh
 # ./cli_docker_build.sh 5.6 1 9099 mvc-enterprise-
+# ./cli_docker_build.sh 7.0 1 9099 mvc-enterprise-
 # docker exec -it mvc-docker-php /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"
 # docker exec -it mvc-enterprise-php /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"
 
@@ -23,6 +24,7 @@ DOCKER_PREFIX=${4:-'mvc-docker-'}
 DOCKER_NETWORK=${5:-'php_dev_network'}
 
 MYSQL_VERSION='5.7'
+MYSQL_VERSION='8.0'
 MYSQL_PASSWORD='1234567'
 MYSQL_DATABASE='mvc'
 MYSQL_USER='mvc'
@@ -72,7 +74,8 @@ if [ "$DOCKER_MYSQL_REPLACE" == "1" ]; then
         -e MYSQL_ALLOW_EMPTY_PASSWORD='no' \
         -e MYSQL_HOST='0.0.0.0' \
         -t mysql:${MYSQL_VERSION} \
-        --lower_case_table_names=1 --sql_mode='ON' --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        --lower_case_table_names=1 --sql_mode='ON' --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+        
     sleep 26
     docker exec -i ${DOCKER_PREFIX}mysql chmod -R 777 /var/lib/mysql*
     # -v ./render_table_file.sql:/apt/render_table_file.sql \

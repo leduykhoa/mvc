@@ -213,8 +213,7 @@
     ],
     [
         "blog_category///__///__///Bảng lưu thông tin về danh mục bài viết",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "slug///string///(255)///NULL///NULL///__///slug",
         "name///string///(255)///NOT_NULL///__///__///Tên danh mục",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
@@ -234,8 +233,7 @@
     ],
     [
         "blog_post///__///__///Bảng lưu thông tin về bài viết",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "slug///string///(255)///NULL///NULL///->unique()///slug",
         "name///string///(255)///NOT_NULL///__///__///Tên",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
@@ -261,15 +259,13 @@
     ],
     [
         "blog_post_category///__///__///Bảng lưu thông tin mối quan hệ bài viết và danh mục",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "post_id///uuid///__///NOT_NULL///__///__///Id bài viết",
         "category_id///uuid///__///NOT_NULL///__///__///Id danh mục"
     ],
     [
         "blog_post_comment///__///__///Bảng lưu thông tin về nhận xét bài viết bài viết",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NOT_NULL///__///__///Tên",
         "comment///text///__///NULL///NULL///__///comment",
         "gallery///text///__///NULL///NULL///__///Gallery",
@@ -285,8 +281,7 @@
     ],
     [
         "oauth///__///__///Bảng lưu thông tin tài khoản khai thác dữ liệu hệ thống",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(100)///NOT_NULL///__///->unique()///Tên cho tài khoản",
         "consumer_key///string///(100)///NOT_NULL///__///__///Khóa công khai tài khoản",
         "consumer_secret///string///(255)///NOT_NULL///__///__///Khóa bí mật tài khoản",
@@ -299,8 +294,7 @@
     ],
     [
         "industry///__///__///Dm_NganhHang/Danh mục ngành hàng",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "level_first///string///(1)///NULL///NULL///__///Cấp 1",
         "level_second///string///(2)///NULL///NULL///__///Cấp 2",
         "level_third///string///(3)///NULL///NULL///__///Cấp 3",
@@ -348,8 +342,7 @@
     ],
     [
         "enterprise_category///__///__///Dm_ToChuc_HoSo/Danh mục doanh nghiệp",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NOT_NULL///__///__///Tên danh mục",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
         "description///text///__///NULL///NULL///__///Mô tả",
@@ -387,8 +380,7 @@
     ],
     [
         "enterprise///__///__///Bảng lưu thông tin về doanh nghiệp",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "slug///string///(255)///NULL///NULL///__///slug",
         "name///string///(255)///NOT_NULL///__///__///Tên",
@@ -463,30 +455,26 @@
     ],
     [
         "enterprise_category_link///__///__///Mối quan hệ doanh nghiệp và danh mục",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "enterprise_id///uuid///__///NOT_NULL///__///__///Id doanh nghiệp",
         "category_id///uuid///__///NULL///NULL///__///Id danh mục doanh nghiệp"
     ],
     [
         "enterprise_field_of_activity///__///__///Mối quan hệ Doanh nghiệp/Lĩnh vực hoạt động",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "field_of_activity_id///integer///__///NOT_NULL///__///__///Id lĩnh vực hoạt động",
         "enterprise_id///uuid///__///NOT_NULL///__///__///Id doanh nghiệp",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
         "enterprise_industry///__///__///Mối quan hệ Doanh nghiệp/Các ngành",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "enterprise_id///uuid///__///NOT_NULL///__///__///Id doanh nghiệp",
         "industry_id///uuid///__///NOT_NULL///__///__///Id ngành"
     ],
     [
         "enterprise_profile///__///__///Bảng lưu thông tin về hồ sơ doanh nghiệp",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NOT_NULL///__///__///Tên hồ sơ",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
         "description///text///__///NULL///NULL///__///Mô tả",
@@ -502,8 +490,7 @@
     ],
     [
         "location///__///__///Bảng lưu thông tin vị trí/địa điểm của doanh nghiệp",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "name///string///(255)///NOT_NULL///__///__///Tên",
         "image///uuid///__///NULL///NULL///__///Ảnh",
@@ -532,16 +519,14 @@
     ],
     [
         "location_staff///__///__///Mối quan hệ vị trí/địa điểm và nhân viên",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "location_id///integer///__///NOT_NULL///__///__///Id vị trí",
         "staff_id///uuid///__///NOT_NULL///__///__///Id nhân viên",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
         "department///__///__///Bảng lưu thông tin phòng ban",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "name///string///(255)///NOT_NULL///__///__///Tên",
         "image///uuid///__///NULL///NULL///__///Ảnh",
@@ -563,8 +548,7 @@
     ],
     [
         "staff///__///__///Bảng lưu thông tin nhân viên",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "username///string///(100)///NULL///NULL///__///Tài khoản",
         "name///string///(100)///NULL///NULL///__///Tên tài khoản",
@@ -600,15 +584,13 @@
     ],
     [
         "staff_role_permission///__///__///",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "staff_id///uuid///__///NOT_NULL///__///__///Id nhân viên",
         "role_permission_id///uuid///__///NULL///NULL///__///Id role"
     ],
     [
         "file///__///__///Bảng lưu thông tin về  tập tin sử dụng",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "file///string///(255)///NOT_NULL///__///__///Đường dẫn file",
         "thumbnail///string///(255)///NULL///NULL///__///Đường dẫn file ảnh tối ưu",
         "type///enum///['image','document','video', 'audio']///NOT_NULL///'image'///__///Loại file",
@@ -624,8 +606,7 @@
     ],
     [
         "document///__///__///Bảng lưu thông tin về tài liệu, chứng nhận, hợp đồng, văn bản, hợp quy, quy chuẩn...,",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NOT_NULL///__///__///Tên tài liệu",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
         "description///text///__///NULL///NULL///__///Mô tả",
@@ -649,8 +630,7 @@
     ],
     [
         "agriculture_ingredient_category///__///__///Danh mục thuốc bảo vệ thực vật/Thuốc thú y/Phân bón/Thức ăn chăn nuôi(Nguyên vật liệu sản xuất NN)",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(50)///NULL///NULL///__///Mã",
         "name///string///(255)///NOT_NULL///__///__///Tên danh mục thuốc bảo vệ thực vật/Thuốc thú y/Phân bón/Thức ăn chăn nuôi",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn danh mục thuốc bảo vệ thực vật/Thuốc thú y/Phân bón/Thức ăn chăn nuôi",
@@ -666,8 +646,7 @@
     ],
     [
         "agriculture_ingredient///__///__///Thuốc bảo vệ thực vật/Thuốc thú y/Phân bón/Thức ăn chăn nuôi(Nguyên vật liệu sản xuất NN)",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "type///enum///['pesticides','veterinary_medicine','fertilizer','animal_feed']///NOT_NULL///'pesticides'///__///pesticides.Thuốc bảo vệ thực vật/veterinary_medicine.Thuốc thú y/fertilizer.Phân bón/animal_feed.Thức ăn chăn nuôi",
         "code///string///(50)///NULL///NULL///__///Mã",
         "name///string///(255)///NOT_NULL///__///__///Tên thuốc bảo vệ thực vật/Thuốc thú y/Phân bón/Thức ăn chăn nuôi",
@@ -683,15 +662,13 @@
     ],
     [
         "agriculture_ingredient_category_link///__///__///Hồ sơ/Mối quan hệ giữa danh mục và sản phẩm nông nghiệp",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "ingredient_id///uuid///__///NOT_NULL///__///__///Id sản phẩm nông nghiệp",
         "category_id///uuid///__///NULL///NULL///__///Id danh mục sản phẩm nông nghiệp"
     ],
     [
         "agriculture_product_category///__///__///Hồ sơ/Danh mục sản phẩm nông nghiệp",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(50)///NULL///NULL///__///Mã",
         "name///string///(255)///NOT_NULL///__///__///Tên danh mục sản phẩm nông nghiệp",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn danh mục sản phẩm nông nghiệp",
@@ -707,8 +684,7 @@
     ],
     [
         "agriculture_product///__///__///Hồ sơ/Sản phẩm nông nghiệp",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(50)///NULL///NULL///__///Mã",
         "name///string///(255)///NOT_NULL///__///__///Tên sản phẩm nông nghiệp",
         "science_name///string///(255)///NULL///NULL///__///Tên khoa hoc",
@@ -732,15 +708,13 @@
     ],
     [
         "agriculture_product_category_link///__///__///Hồ sơ/Mối quan hệ giữa danh mục và sản phẩm nông nghiệp",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "product_id///uuid///__///NOT_NULL///__///__///Id sản phẩm nông nghiệp",
         "category_id///uuid///__///NULL///NULL///__///Id danh mục sản phẩm nông nghiệp"
     ],
     [
         "pandemic_category///__///__///Bảng lưu thông tin danh mục hồ sơ dịch bệnh",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NOT_NULL///__///__///Tên danh mục hồ sơ dịch bệnh",
         "description_short///string///(255)///NULL///NULL///__///Mô tả",
         "description///text///__///NULL///NULL///__///Mô tả",
@@ -755,8 +729,7 @@
     ],
     [
         "pandemic///__///__///Bảng lưu thông tin hồ sơ dịch bệnh",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "image///uuid///__///NULL///NULL///__///Ảnh",
         "thumbnail///uuid///__///NULL///NULL///__///thumbnail",
         "gallery///text///__///NULL///NULL///__///Gallery",
@@ -774,15 +747,13 @@
     ],
     [
         "pandemic_category_link///__///__///Mối quan hệ giữa danh mục và hồ sơ dịch bệnh",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "pandemic_id///uuid///__///NOT_NULL///__///__///Id hồ sơ dịch bệnh",
         "category_id///uuid///__///NULL///NULL///__///Id danh mục hồ sơ dịch bệnh"
     ],
     [
         "natural_event///__///__///Sự kiện thiên tai, dịch bệnh, thảm họa/Sự kiện tự nhiên",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NOT_NULL///__///__///Tên",
         "image///uuid///__///NULL///NULL///__///Ảnh",
         "thumbnail///uuid///__///NULL///NULL///__///thumbnail",
@@ -803,8 +774,7 @@
     ],
     [
         "plan///__///__///LenhSanXuat/Lệnh sản xuất/Kế hoach sản xuất",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã lệnh sản xuất",
         "name///string///(255)///NOT_NULL///__///__///Tên lệnh sản xuất",
         "image///uuid///__///NULL///NULL///__///Ảnh",
@@ -829,29 +799,25 @@
     ],
     [
         "plan_product///__///__///Các sản phẩm của kế hoạch",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "plan_id///uuid///__///NOT_NULL///__///__///Id kế hoạch",
         "product_id///uuid///__///NULL///NULL///__///Id sản phẩm"
     ],
     [
         "plan_order///__///__///Các đơn hàng của kế hoạch",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "plan_id///uuid///__///NOT_NULL///__///__///Id kế hoạch",
         "order_id///uuid///__///NULL///NULL///__///Id đơn hàng"
     ],
     [
         "plan_location///__///__///Các vùng canh tác/nuôi trồng/sản xuất/đánh bắt của kế hoạch",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "plan_id///uuid///__///NOT_NULL///__///__///Id kế hoạch",
         "location_id///uuid///__///NULL///NULL///__///Id địa điểm"
     ],
     [
         "plan_staff///__///__///Vai trò của các nhân viên trong kế hoạch",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "plan_id///uuid///__///NOT_NULL///__///__///Id kế hoạch",
         "staff_id///uuid///__///NULL///NULL///__///Id nhân viên",
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
@@ -859,8 +825,7 @@
     ],
     [
         "category///__///__///Bảng lưu thông tin về danh mục",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NOT_NULL///__///__///Tên danh mục",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
         "description///text///__///NULL///NULL///__///Mô tả",
@@ -878,8 +843,7 @@
     ],
     [
         "product///__///__///Bảng lưu thông tin về sản phẩm",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "slug///string///(255)///NULL///NULL///__///slug",
         "sku///string///(100)///NULL///NULL///__///Sku",
@@ -913,15 +877,13 @@
     ],
     [
         "product_category///__///__///Bảng lưu thông tin mối quan hệ sản phẩm và danh mục",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "product_id///uuid///__///NOT_NULL///__///__///Id sản phẩm",
         "category_id///uuid///__///NOT_NULL///__///__///Id danh mục"
     ],
     [
         "product_material///__///__///Bảng lưu thông tin về quan hệ sản phẩm và nguyên liệu đầu vào/Tổng hợp sản phẩm",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NULL///NULL///__///Tên",
         "notes///string///(255)///NULL///NULL///__///__",
         "product_id///uuid///__///NOT_NULL///__///__///Id sản phẩm",
@@ -930,8 +892,7 @@
     ],
     [
         "product_qr_code_index///__///__///Bảng lưu thông tin về chỉ số index cho product và mã đinh danh",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "product_id///uuid///__///NOT_NULL///__///__///Id sản phẩm",
         "number///bigInteger///__///NOT_NULL///1///__///Mã nhảy",
         "year///integer///__///NULL///2023///__///Giành cho sản phẩm chưa xác định/doanh nghiệp chưa xác định",
@@ -940,8 +901,7 @@
     ],
     [
         "product_package///__///__///Bảng lưu thông tin về lô sản phẩm",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã lô sản phẩm",
         "name///string///(255)///NOT_NULL///__///__///Tên lô sản phẩm",
         "image///uuid///__///NULL///NULL///__///Ảnh",
@@ -971,8 +931,7 @@
     ],
     [
         "order///__///__///Bảng lưu thông tin về đơn hàng",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã đơn hàng",
         "name///string///(255)///NULL///NULL///__///Tên đơn hàng",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
@@ -999,8 +958,7 @@
     ],
     [
         "order_item///__///__///Bảng lưu thông tin về chi tiết đơn hàng",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "order_id///uuid///__///NULL///NULL///__///Id đơn hàng",
         "product_id///uuid///__///NULL///NULL///__///Id sản phẩm",
         "package_id///uuid///__///NULL///NULL///__///Id lô sản phẩm",
@@ -1013,8 +971,7 @@
     ],
     [
         "transfer///__///__///Bảng lưu thông tin về sự di chuyển sản phẩm trong hệ thống",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã đơn hàng",
         "name///string///(255)///NULL///NULL///__///Tên đơn hàng",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
@@ -1035,8 +992,7 @@
     ],
     [
         "transfer_item///__///__///Bảng lưu thông tin về chi tiết sự di chuyển sản phẩm trong hệ thống",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "product_id///uuid///__///NULL///NULL///__///Id sản phẩm",
         "package_id///uuid///__///NULL///NULL///__///Id lô sản phẩm",
         "qty///integer///__///NOT_NULL///__///__///Số lượng sản phẩm",
@@ -1046,8 +1002,7 @@
     ],
     [
         "qr_code///__///__///Bảng lưu thông tin về qr code",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "public///string///(24)///__///__///->unique()///__",
         "secret///string///(24)///NULL///NULL///__///Tem bí mật",
         "serial///string///(50)///__///__///__///__",
@@ -1067,8 +1022,7 @@
     ],
     [
         "qr_code_package///__///__///Bảng lưu thông tin về qr code package",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NOT_NULL///__///__///Tên lô mã",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn lô mã",
         "description///text///__///NULL///NULL///__///Mô tả lô mã",
@@ -1091,8 +1045,7 @@
     ],
     [
         "qr_code_material///__///__///Bảng lưu quan hệ về qr code và nguyên liệu",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "qr_code_id///uuid///__///NOT_NULL///__///__///Id qr code",
         "product_material_id///uuid///__///NOT_NULL///__///__///Id nguyên liệu",
         "qr_code_reference///string///(30)///NULL///NULL///__///Qr Code tham chiếu",
@@ -1108,8 +1061,7 @@
     ],
     [
         "gs1_gln///__///__///Bảng lưu thông tin về mã gln/GTIN-13",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NULL///NULL///__///Tên",
         "document///text///__///NULL///NULL///__///Document",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
@@ -1133,8 +1085,7 @@
     ],
     [
         "gs1_sscc///__///__///Bảng lưu thông tin về mã sscc",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "sscc///string///(18)///NOT_NULL///__///->unique()///Mã sscc",
         "image///string///(255)///NULL///NULL///__///Ảnh",
         "thumbnail///string///(255)///NULL///NULL///__///thumbnail",
@@ -1157,8 +1108,7 @@
     ],
     [
         "gs1_grai_prefix///__///__///GRAI-Prefix/Loại tài sản công ty",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "grai_prefix_index///string///(50)///__///'65|65|65|65|65|64'///__///GRAI-Prefix",
         "grai_prefix///string///(13)///NOT_NULL///__///->unique()///Tiền tố mã grai(GTIN-13)",
         "name///string///(255)///NULL///NULL///__///Tên",
@@ -1175,8 +1125,7 @@
     ],
     [
         "gs1_grai///__///__///Bảng lưu thông tin về mã grai/base on GTIN-13 + X1 thay đổi X16",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "grai///string///(30)///NOT_NULL///__///->unique()///Mã grai",
         "image///string///(255)///NULL///NULL///__///Ảnh",
         "thumbnail///string///(255)///NULL///NULL///__///thumbnail",
@@ -1199,8 +1148,7 @@
     ],
     [
         "gs1_giai///__///__///Bảng lưu thông tin về mã giai",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "giai///string///(30)///NOT_NULL///__///->unique()///Mã giai",
         "image///string///(255)///NULL///NULL///__///Ảnh",
         "thumbnail///string///(255)///NULL///NULL///__///thumbnail",
@@ -1223,8 +1171,7 @@
     ],
     [
         "gs1_epcis///__///__///Bảng lưu thông tin truy vẫn nguồn gốc",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NULL///NULL///__///Tên",
         "link///string///(255)///NULL///NULL///__///Link mô tả chi tiết",
         "type///enum///['product-make','package-make','history', 'import', 'export', 'transfer', 'order', 'ship', 'plan', 'other']///NOT_NULL///'plan'///__///Đối tượng áp dụng",
@@ -1258,8 +1205,7 @@
     ],
     [
         "data_sync///__///__///Bảng lưu thông tin dữ liệu được đồng bộ",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "name///string///(255)///NULL///NULL///__///Tên",
         "name_english///string///(255)///NULL///NULL///__///Tên tiếng Anh",
@@ -1291,8 +1237,7 @@
     ],
     [
         "contract_type///__///__///Bảng lưu thông tin loại hợp đồng",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NULL///NULL///__///Tên loại hợp đồng",
         "description///text///__///NULL///NULL///__///Mô tả",
         "notes///text///__///NULL///NULL///__///__",
@@ -1305,8 +1250,7 @@
     ],
     [
         "contract///__///__///Bảng lưu thông tin về hợp đồng",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "name///string///(255)///NOT_NULL///__///__///Tên",
         "image///uuid///__///NULL///NULL///__///Ảnh",
@@ -1326,8 +1270,7 @@
     ],
     [
         "system_history///__///__///Bảng lưu thông tin lịch sử thay đổi",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "name///string///(255)///NULL///NULL///__///Tên",
         "type///string///(255)///NULL///NULL///__///Loại",
@@ -1347,8 +1290,7 @@
     ],
     [
         "network///__///__///Bảng lưu thông tin mạng lưới",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "name///string///(255)///NULL///NULL///__///Tên",
         "type///string///(255)///NULL///NULL///__///Loại",
@@ -1369,8 +1311,7 @@
     ],
     [
         "procedure///__///__///Bảng lưu thông tin quy trình",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "name///string///(255)///NULL///NULL///__///Tên",
         "image///string///(255)///NULL///NULL///__///Ảnh",
@@ -1390,8 +1331,7 @@
     ],
     [
         "procedure_step///__///__///Bảng lưu thông tin các bước của quy trình",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NULL///NULL///__///Tên",
         "title///string///(255)///NULL///NULL///__///Tiêu đề",
         "description///text///__///NULL///NULL///__///Mô tả",
@@ -1406,8 +1346,7 @@
     ],
     [
         "procedure_job///__///__///Bảng lưu thông tin các công việc",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NULL///NULL///__///Tên",
         "title///string///(255)///NULL///NULL///__///Tiêu đề",
         "description///text///__///NULL///NULL///__///Mô tả",
@@ -1422,8 +1361,7 @@
     ],
     [
         "production_process///__///__///Bảng lưu thông tin quy trình sản xuất",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NULL///NULL///__///Tên",
         "image///string///(255)///NULL///NULL///__///Ảnh",
         "thumbnail///string///(255)///NULL///NULL///__///thumbnail",
@@ -1441,8 +1379,7 @@
     ],
     [
         "production_process_step///__///__///Bảng lưu thông tin các bước của quy trình sản xuất",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "name///string///(255)///NULL///NULL///__///Tên",
         "title///string///(255)///NULL///NULL///__///Tiêu đề",
         "description///text///__///NULL///NULL///__///Mô tả",
@@ -1451,8 +1388,7 @@
     ],
     [
         "meta_data_reference///__///__///Bảng lưu thông tin data tham chiếu của thông tin quản lý",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "slug///string///(100)///NULL///NULL///__///slug",
         "namespace///string///(100)///NULL///NULL///__///namespace",
@@ -1473,8 +1409,7 @@
     ],
     [
         "meta_data_category///__///__///Bảng lưu thông tin danh mục thông tin quản lý",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "slug///string///(100)///NULL///NULL///__///slug",
         "namespace///string///(100)///NULL///NULL///__///namespace",
@@ -1510,8 +1445,7 @@
     ],
     [
         "meta_data///__///__///Bảng lưu thông tin hệ thống cần quản lý",
-        "id///uuid///__///__///__///->unique()///__",
-        "id///primary///__///__///__///__///__",
+        "id///uuid///__///__///__///primary///__",
         "code///string///(100)///NULL///NULL///__///Mã",
         "slug///string///(100)///NULL///NULL///__///slug",
         "namespace///string///(100)///NULL///NULL///__///namespace",
