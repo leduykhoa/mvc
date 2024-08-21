@@ -302,7 +302,7 @@ CREATE TABLE `blog_posts` (
       `thumbnail` varchar(255) NULL DEFAULT NULL  COMMENT 'thumbnail' ,
       `gallery` text NULL DEFAULT NULL  COMMENT 'Gallery' ,
       `content` text NULL DEFAULT NULL  COMMENT 'Nội dung' ,
-      `seo_title` varchar(255) NOT NULL   COMMENT 'Seo title' ,
+      `seo_title` varchar(255) NULL   COMMENT 'Seo title' ,
       `seo_keyword` varchar(255) NULL DEFAULT NULL  COMMENT 'Seo keyword' ,
       `seo_description` text NULL DEFAULT NULL  COMMENT 'Seo mô tả' ,
       `seo_image` varchar(255) NULL DEFAULT NULL  COMMENT 'Seo image' ,
@@ -1859,19 +1859,21 @@ ALTER TABLE`blog_types`
 ALTER TABLE`blog_types`
                 MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE`blog_categories`
-                ADD UNIQUE KEY`blog_categories_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`blog_posts`
-                ADD UNIQUE KEY`blog_posts_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
+ALTER TABLE`blog_posts`
+                ADD UNIQUE KEY`blog_posts_slug_unique`(`slug`);
 ALTER TABLE`blog_post_categories`
-                ADD UNIQUE KEY`blog_post_categories_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`blog_post_comments`
-                ADD UNIQUE KEY`blog_post_comments_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`oauths`
-                ADD UNIQUE KEY`oauths_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`oauths`
                 ADD UNIQUE KEY`oauths_name_unique`(`name`);
 ALTER TABLE`industries`
-                ADD UNIQUE KEY`industries_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`field_of_activities`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`field_of_activities`
@@ -1885,7 +1887,7 @@ ALTER TABLE`manage_departments`
 ALTER TABLE`manage_departments`
                 MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE`enterprise_categories`
-                ADD UNIQUE KEY`enterprise_categories_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`enterprise_types`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`enterprise_types`
@@ -1899,139 +1901,139 @@ ALTER TABLE`enterprise_packages`
 ALTER TABLE`enterprise_packages`
                 MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE`enterprises`
-                ADD UNIQUE KEY`enterprises_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`enterprises`
                 ADD UNIQUE KEY`enterprises_tax_code_unique`(`tax_code`);
 ALTER TABLE`enterprise_category_links`
-                ADD UNIQUE KEY`enterprise_category_links_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`enterprise_field_of_activities`
-                ADD UNIQUE KEY`enterprise_field_of_activities_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`enterprise_industries`
-                ADD UNIQUE KEY`enterprise_industries_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`enterprise_profiles`
-                ADD UNIQUE KEY`enterprise_profiles_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`locations`
-                ADD UNIQUE KEY`locations_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`location_staff`
-                ADD UNIQUE KEY`location_staff_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`departments`
-                ADD UNIQUE KEY`departments_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`staff`
-                ADD UNIQUE KEY`staff_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`staff_role_permissions`
-                ADD UNIQUE KEY`staff_role_permissions_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`files`
-                ADD UNIQUE KEY`files_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`documents`
-                ADD UNIQUE KEY`documents_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`agriculture_ingredient_categories`
-                ADD UNIQUE KEY`agriculture_ingredient_categories_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`agriculture_ingredients`
-                ADD UNIQUE KEY`agriculture_ingredients_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`agriculture_ingredient_category_links`
-                ADD UNIQUE KEY`agriculture_ingredient_category_links_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`agriculture_product_categories`
-                ADD UNIQUE KEY`agriculture_product_categories_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`agriculture_products`
-                ADD UNIQUE KEY`agriculture_products_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`agriculture_product_category_links`
-                ADD UNIQUE KEY`agriculture_product_category_links_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`pandemic_categories`
-                ADD UNIQUE KEY`pandemic_categories_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`pandemics`
-                ADD UNIQUE KEY`pandemics_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`pandemic_category_links`
-                ADD UNIQUE KEY`pandemic_category_links_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`natural_events`
-                ADD UNIQUE KEY`natural_events_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`plans`
-                ADD UNIQUE KEY`plans_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`plan_products`
-                ADD UNIQUE KEY`plan_products_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`plan_orders`
-                ADD UNIQUE KEY`plan_orders_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`plan_locations`
-                ADD UNIQUE KEY`plan_locations_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`plan_staff`
-                ADD UNIQUE KEY`plan_staff_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`categories`
-                ADD UNIQUE KEY`categories_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`products`
-                ADD UNIQUE KEY`products_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`product_categories`
-                ADD UNIQUE KEY`product_categories_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`product_materials`
-                ADD UNIQUE KEY`product_materials_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`product_qr_code_indices`
-                ADD UNIQUE KEY`product_qr_code_indices_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`product_packages`
-                ADD UNIQUE KEY`product_packages_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`orders`
-                ADD UNIQUE KEY`orders_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`order_items`
-                ADD UNIQUE KEY`order_items_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`transfers`
-                ADD UNIQUE KEY`transfers_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`transfer_items`
-                ADD UNIQUE KEY`transfer_items_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`qr_codes`
-                ADD UNIQUE KEY`qr_codes_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`qr_codes`
                 ADD UNIQUE KEY`qr_codes_public_unique`(`public`);
 ALTER TABLE`qr_code_packages`
-                ADD UNIQUE KEY`qr_code_packages_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`qr_code_materials`
-                ADD UNIQUE KEY`qr_code_materials_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`gs1_countries`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`gs1_countries`
                 MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE`gs1_glns`
-                ADD UNIQUE KEY`gs1_glns_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`gs1_ssccs`
-                ADD UNIQUE KEY`gs1_ssccs_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`gs1_ssccs`
                 ADD UNIQUE KEY`gs1_ssccs_sscc_unique`(`sscc`);
 ALTER TABLE`gs1_grai_prefixes`
-                ADD UNIQUE KEY`gs1_grai_prefixes_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`gs1_grai_prefixes`
                 ADD UNIQUE KEY`gs1_grai_prefixes_grai_prefix_unique`(`grai_prefix`);
 ALTER TABLE`gs1_grais`
-                ADD UNIQUE KEY`gs1_grais_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`gs1_grais`
                 ADD UNIQUE KEY`gs1_grais_grai_unique`(`grai`);
 ALTER TABLE`gs1_giais`
-                ADD UNIQUE KEY`gs1_giais_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`gs1_giais`
                 ADD UNIQUE KEY`gs1_giais_giai_unique`(`giai`);
 ALTER TABLE`gs1_epcis`
-                ADD UNIQUE KEY`gs1_epcis_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`data_syncs`
-                ADD UNIQUE KEY`data_syncs_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`contract_types`
-                ADD UNIQUE KEY`contract_types_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`contracts`
-                ADD UNIQUE KEY`contracts_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`system_histories`
-                ADD UNIQUE KEY`system_histories_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`networks`
-                ADD UNIQUE KEY`networks_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`procedures`
-                ADD UNIQUE KEY`procedures_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`procedure_steps`
-                ADD UNIQUE KEY`procedure_steps_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`procedure_jobs`
-                ADD UNIQUE KEY`procedure_jobs_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`production_processes`
-                ADD UNIQUE KEY`production_processes_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`production_process_steps`
-                ADD UNIQUE KEY`production_process_steps_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`meta_data_references`
-                ADD UNIQUE KEY`meta_data_references_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`meta_data_categories`
-                ADD UNIQUE KEY`meta_data_categories_id_unique`(`id`);
+                ADD PRIMARY KEY (`id`);
 ALTER TABLE`meta_data`
-                ADD UNIQUE KEY`meta_data_id_unique`(`id`); 
+                ADD PRIMARY KEY (`id`); 
 
 SET FOREIGN_KEY_CHECKS=1;
 COMMIT;

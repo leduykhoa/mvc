@@ -11,8 +11,8 @@ class DatabaseSeeder extends CmdController
      */
     private function call($className)
     {
-        include_once(PATH_DATABASE_SEEDER . DS . $className .'.php');
-        $kClass = 'App\Database\Seeders\\' .$className ;
+        include_once(PATH_DATABASE_SEEDER . DS . $className . '.php');
+        $kClass = 'App\Database\Seeders\\' . $className;
         $kClass = new $kClass();
         $kClass->run();
     }
@@ -33,7 +33,7 @@ class DatabaseSeeder extends CmdController
             $this->call('DataCountryVnSeeder');
             $this->call('CountrySeeder');
             // $this->call('Gs1CountrySeeder');
-            $this->call('NewsSeeder');
+            // $this->call('NewsSeeder');
 
             // $this->call(IndustrySeeder::class);
             // $this->call(EnterpriseTypeSeeder::class);

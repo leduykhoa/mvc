@@ -19,6 +19,7 @@ yarn-error.log
 /.vscode
 /mysql
 /000_data_html
+/test_back
 
 /public/css
 /public/js
