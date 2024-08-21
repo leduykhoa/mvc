@@ -43,7 +43,18 @@
           <?php echo $enterprise->name; ?>
         </a>
         <br />
-        <?php echo $enterprise->description; ?>
+        <?php $items = explode("\n=====\n", $enterprise->description); ?>
+        <?php foreach ($items as $item): ?>
+          <?php $lines = explode("///", $item); ?>
+          <?php if (count($lines) > 1): ?>
+            <strong><?php __e($lines[0]); ?></strong>
+            <?php __e($lines[1]); ?>
+          <?php else: ?>
+            <?php __e($lines[0]); ?>
+          <?php endif ?>
+          <br />
+          <br />
+        <?php endforeach ?>
       </div>
     </div>
   <?php endforeach ?>

@@ -30,14 +30,17 @@
 namespace App\Model;
 
 use App\Lib\DB;
+use App\Lib\Utils;
 
 class BaseModel
 {
     public $table;
+    public $id;
 
-    function __construct($table)
+    function __construct($table, $id = 'id')
     {
         $this->table = $table;
+        $this->id = $id;
     }
 
     public function all($params = [])
@@ -70,11 +73,26 @@ class BaseModel
         } else {
             $order = '';
         }
+        // // ===================================================================================================================================
+        // $db = DB::getInstance();
+        // $query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . ' ' . $order;
+        // $req = $db->query($query);
+        // return $req->fetchAll($fetchType);
+
         // ===================================================================================================================================
-        $db = DB::getInstance();
-        $query = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . ' ' . $order;
-        $req = $db->query($query);
-        return $req->fetchAll($fetchType);
+        try {
+            $db = DB::getInstance();
+            $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . ' ' . $order;
+            $stmt = $db->prepare($sql);
+            $stmt->execute();
+            return $stmt->fetchAll($fetchType);
+        } catch (\PDOException $e) {
+            if (__env('APP_DEBUG', true) === true) {
+                throw $e;
+            }
+            return false;
+        }
+        return false;
     }
 
     public function find($params = [])
@@ -147,12 +165,21 @@ class BaseModel
         } else {
             $order = '';
         }
+
         // ===================================================================================================================================
-        $db = DB::getInstance();
-        $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where . ' ' . $order . ' LIMIT ' . $limit;
-        $stmt = $db->prepare($sql);
-        $stmt->execute($dataFilter);
-        return $stmt->fetchAll($fetchType);
+        try {
+            $db = DB::getInstance();
+            $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where . ' ' . $order . ' LIMIT ' . $limit;
+            $stmt = $db->prepare($sql);
+            $stmt->execute($dataFilter);
+            return $stmt->fetchAll($fetchType);
+        } catch (\PDOException $e) {
+            if (__env('APP_DEBUG', true) === true) {
+                throw $e;
+            }
+            return false;
+        }
+        return false;
     }
 
     public function findOne($params = [])
@@ -222,11 +249,19 @@ class BaseModel
             $order = '';
         }
         // ===================================================================================================================================
-        $db = DB::getInstance();
-        $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where . ' ' . $order;
-        $stmt = $db->prepare($sql);
-        $stmt->execute($dataFilter);
-        return $stmt->fetch($fetchType);
+        try {
+            $db = DB::getInstance();
+            $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where . ' ' . $order;
+            $stmt = $db->prepare($sql);
+            $stmt->execute($dataFilter);
+            return $stmt->fetch($fetchType);
+        } catch (\PDOException $e) {
+            if (__env('APP_DEBUG', true) === true) {
+                throw $e;
+            }
+            return false;
+        }
+        return false;
     }
 
     // public function findOne($params = [])
@@ -314,15 +349,15 @@ class BaseModel
     public function insert($params = [])
     {
         // ===================================================================================================================================
-        $data = [];
+        $dataSave = [];
         if (isset($params['data']) && is_array($params['data'])) {
-            $data = $params['data'];
+            $dataSave = $params['data'];
         }
         // ===================================================================================================================================
         $listFields = [];
         $listFieldReplaces = [];
         $listValues = [];
-        foreach ($data as $field => $value) {
+        foreach ($dataSave as $field => $value) {
             $listFields[] = $field;
             $listFieldReplaces[] = ':' . $field;
             $listValues[] = $value;
@@ -330,12 +365,16 @@ class BaseModel
         // ===================================================================================================================================
         try {
             $db = DB::getInstance();
-            $sql = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $listFields) . ') VALUES  (' . implode(', ', $listFieldReplaces) . ')';
-            return $db->prepare($sql)->execute($data);
+            $sql = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $listFields) . ') VALUES (' . implode(', ', $listFieldReplaces) . ')';
+            $stmt = $db->prepare($sql);
+            $stmt->execute($dataSave);
         } catch (\PDOException $e) {
-            die($e->getMessage());
+            if (__env('APP_DEBUG', true) === true) {
+                throw $e;
+            }
             return false;
         }
+        return true;
     }
 
     public function insertGetId($params = [])
@@ -349,23 +388,45 @@ class BaseModel
         $listFields = [];
         $listFieldReplaces = [];
         $listValues = [];
-        foreach ($data as $field => $value) {
-            $listFields[] = $field;
-            $listFieldReplaces[] = ':' . $field;
-            $listValues[] = $value;
-        }
         // ===================================================================================================================================
         try {
+            $idReturn = '';
             $db = DB::getInstance();
-            $sql = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $listFields) . ') VALUES  (' . implode(', ', $listFieldReplaces) . ')';
-            $stm = $db->prepare($sql);
-            $stm->execute($data);
+            if (!isset($data[$this->id]) || $data[$this->id] == '') {
+                $select = $db->query('SHOW COLUMNS FROM ' . $this->table . ' WHERE field = \'' . $this->id . '\'');
+                $meta = $select->fetch();
+                if (strpos($meta->Key, 'PRI') >= 0 && strpos($meta->Type, 'char(36)') >= 0 && strpos($meta->Extra, 'auto_increment') === false) {
+                    $idReturn = Utils::genUuid();
+                    $data[$this->id] = $idReturn;
+                }
+            } else {
+                $idReturn = $data[$this->id];
+            }
+            // ===================================================================================================================================
+            foreach ($data as $field => $value) {
+                $listFields[] = $field;
+                $listFieldReplaces[] = ':' . $field;
+                $listValues[] = $value;
+            }
+            // ===================================================================================================================================
+
+            $sql = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $listFields) . ') VALUES (' . implode(', ', $listFieldReplaces) . ')';
+            $stmt = $db->prepare($sql);
+            $stmt->execute($data);
+
             $lastId = $db->lastInsertId();
-            return $lastId;
+            if ($lastId) {
+                return $lastId;
+            }
+            return $idReturn;
         } catch (\PDOException $e) {
-            die($e->getMessage());
+            if (__env('APP_DEBUG', true) === true) {
+                // echo $e->getMessage();
+                throw $e;
+            }
             return false;
         }
+        return false;
     }
 
     public function inserts($params = [])
@@ -386,11 +447,11 @@ class BaseModel
             $listFields[] = $field;
             $listFieldReplaces[] = '?';
         }
-        // ===================================================================================================================================
-        $db = DB::getInstance();
-        $sql = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $listFields) . ') VALUES  (' . implode(', ', $listFieldReplaces) . ')';
-        $stmt = $db->prepare($sql);
+        // ===================================================================================================================================        
         try {
+            $db = DB::getInstance();
+            $sql = 'INSERT INTO ' . $this->table . ' (' . implode(', ', $listFields) . ') VALUES (' . implode(', ', $listFieldReplaces) . ')';
+            $stmt = $db->prepare($sql);
             $db->beginTransaction();
             foreach ($data as $row) {
                 $stmt->execute($row);
@@ -398,7 +459,10 @@ class BaseModel
             $db->commit();
         } catch (\Exception $e) {
             $db->rollback();
-            throw $e;
+            if (__env('APP_DEBUG', true) === true) {
+                throw $e;
+            }
+            return false;
         }
         return true;
     }
@@ -455,10 +519,18 @@ class BaseModel
             $where = '';
         }
 
-        // ===================================================================================================================================
-        $db = DB::getInstance();
-        $sql = 'UPDATE ' . $this->table . ' SET ' . implode(', ', $dataKeys) . $where;
-        $stmt = $db->prepare($sql);
-        return $stmt->execute($dataSave);
+        // ===================================================================================================================================     
+        try {
+            $db = DB::getInstance();
+            $sql = 'UPDATE ' . $this->table . ' SET ' . implode(', ', $dataKeys) . $where;
+            $stmt = $db->prepare($sql);
+            $stmt->execute($dataSave);
+        } catch (\Exception $e) {
+            if (__env('APP_DEBUG', true) === true) {
+                throw $e;
+            }
+            return false;
+        }
+        return true;
     }
 }

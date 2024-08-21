@@ -67,7 +67,8 @@ function toSlug(str) {
 }
 
 const con = mysql.createConnection({
-    host: `mvc-docker-mysql`,
+    // host: `mvc-docker-mysql`,
+    host: `mvc-enterprise-mysql`,
     user: `root`,
     password: `1234567`,
     database: `mvc`

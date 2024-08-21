@@ -40,6 +40,38 @@ if (!isset($argv[0]) || $argv[0] == '') {
     die('Controller name empty');
 }
 $controllerName = $argv[0];
+
+if ($controllerName == 'migration') {
+    $appPath = [
+        PATH_DATABASE,
+        PATH_DATABASE_FACTORY,
+        PATH_DATABASE_MIGRATION,
+        PATH_DATABASE_SEEDER
+    ];
+    $appPath = implode(PS, $appPath);
+    set_include_path($appPath . PS . get_include_path());
+    include_once(PATH_DATABASE_MIGRATION . DS . 'DatabaseMigration.php');
+    $kClass = 'App\Database\Migrations\DatabaseMigration';
+    $kClass = new $kClass;
+    $kClass->run();
+    exit();
+}elseif ($controllerName == 'seeder') {
+    // Include controller and run
+    include_once(PATH_CONTROLLER . DS . 'Cmd' . DS . 'CmdController.php');
+    $appPath = [
+        PATH_DATABASE,
+        PATH_DATABASE_FACTORY,
+        PATH_DATABASE_MIGRATION,
+        PATH_DATABASE_SEEDER
+    ];
+    $appPath = implode(PS, $appPath);
+    set_include_path($appPath . PS . get_include_path());
+    include_once(PATH_DATABASE_SEEDER . DS . 'DatabaseSeeder.php');
+    $kClass = 'App\Database\Seeders\DatabaseSeeder';
+    $kClass = new $kClass;
+    $kClass->run();
+    exit();
+}
 if (!isset($argv[1]) || $argv[1] == '') {
     die('Method name empty');
 }
@@ -50,8 +82,8 @@ array_shift($argv);
 // Include controller and run
 include_once(PATH_CONTROLLER . DS . 'Cmd' . DS . 'CmdController.php');
 include_once(PATH_CONTROLLER . DS . 'Cmd' . DS . ucwords(str_replace("\\", DS, $controllerName)) . 'Controller.php');
-$klass = 'App\Controllers\\Cmd\\' . ucwords($controllerName) . 'Controller';
-$controller = new $klass;
+$kClass = 'App\Controllers\\Cmd\\' . ucwords($controllerName) . 'Controller';
+$controller = new $kClass;
 call_user_func_array([$controller, $methodName], $argv);
 exit();
 implode('&', $argv);

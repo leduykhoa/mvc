@@ -2,7 +2,10 @@
 echo "Bash version ${BASH_VERSION}..."
 
 # ./cli_docker_build.sh
+# ./cli_docker_build.sh 5.6 1 9099 mvc-enterprise-
+# ./cli_docker_build.sh 7.0 1 9099 mvc-enterprise-
 # docker exec -it mvc-docker-php /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"
+# docker exec -it mvc-enterprise-php /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"
 
 # - PHP_VERSION=5.6
 # - PHP_VERSION=7.0
@@ -21,6 +24,7 @@ DOCKER_PREFIX=${4:-'mvc-docker-'}
 DOCKER_NETWORK=${5:-'php_dev_network'}
 
 MYSQL_VERSION='5.7'
+MYSQL_VERSION='8.0'
 MYSQL_PASSWORD='1234567'
 MYSQL_DATABASE='mvc'
 MYSQL_USER='mvc'
@@ -63,8 +67,6 @@ if [ "$DOCKER_MYSQL_REPLACE" == "1" ]; then
         --name ${DOCKER_PREFIX}mysql -d \
         -h ${DOCKER_PREFIX}mysql \
         -v ./mysql:/var/lib/mysql/ \
-        -v ./render_table_file.sql:/apt/render_table_file.sql \
-        -v ./render_table_file_custom.sql:/apt/render_table_file_custom.sql \
         -e MYSQL_ROOT_PASSWORD=${MYSQL_PASSWORD} \
         -e MYSQL_DATABASE=${MYSQL_DATABASE} \
         -e MYSQL_USER=${MYSQL_USER} \
@@ -72,10 +74,14 @@ if [ "$DOCKER_MYSQL_REPLACE" == "1" ]; then
         -e MYSQL_ALLOW_EMPTY_PASSWORD='no' \
         -e MYSQL_HOST='0.0.0.0' \
         -t mysql:${MYSQL_VERSION} \
-        --lower_case_table_names=1 --sql_mode='ON' --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+        --lower_case_table_names=1 --sql_mode='ON' --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
+        
     sleep 26
-    docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} <render_table_file.sql
-    docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} <render_table_file_custom.sql
+    docker exec -i ${DOCKER_PREFIX}mysql chmod -R 777 /var/lib/mysql*
+    # -v ./render_table_file.sql:/apt/render_table_file.sql \
+    # -v ./render_table_file_custom.sql:/apt/render_table_file_custom.sql \
+    # docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} <render_table_file.sql
+    # docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} <render_table_file_custom.sql
 fi
 docker start ${DOCKER_PREFIX}mysql
 
@@ -105,7 +111,7 @@ if [ "$DOCKER_MYSQL_REPLACE" == "1" ]; then
     if [ ! -d ./node_modules ]; then
         docker exec -i ${DOCKER_PREFIX}php npm i
     fi
-    docker exec -i ${DOCKER_PREFIX}php npm run news
+    # docker exec -i ${DOCKER_PREFIX}php npm run news
 fi
 # ===================================================================================================================================
 # docker stop ${DOCKER_PREFIX}nginx

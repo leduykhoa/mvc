@@ -31,7 +31,8 @@
 
 const fs = require(`fs`);
 const pluralize = require(`./pluralize.js`);
-const schemaTableFile = `./render_table_file.sql`;
+const schemaTableFile = `./database/migrations/render_table_file.sql`;
+const schemaTableFileTrigger = `./database/migrations/render_table_file_trigger.sql`;
 const dateRunTime = new Date();
 
 let data = fs.readFileSync(`./render_table_file.json`);
@@ -72,6 +73,7 @@ function pluralNouns(str, type = `table`) {
 }
 // ===================================================================================================================================
 let alters = [];
+let triggers = [];
 tableListData = JSON.parse(data.toString()).map((item) => {
     const classNameTemp = item.shift().split(`\/\/\/`);
     const tableName = pluralNouns(`${classNameTemp[0]}`);
@@ -93,8 +95,27 @@ tableListData = JSON.parse(data.toString()).map((item) => {
         let fieldParamText = `${fieldParam}`;
 
 
-        if (fieldName == `id` && fieldType == `primary`) {
-            return ``;
+        if (fieldType == `uuid` && fieldMore == `primary`) {
+            // let lineStr = `ALTER TABLE\`${tableName}\`\n                ADD PRIMARY KEY (\`${fieldName}\`);`;
+            // if (fieldName == `id` && fieldType == `uuid`) {
+            //     lineStr=`ALTER TABLE\`${tableName}\`\n                ADD PRIMARY KEY (\`${fieldName}\`) DEFAULT 'UUID()';`;
+            // }
+            // alters.push(lineStr);
+            fieldType = `char`;
+            fieldParamText = `(36)`;
+            fieldNullable = `NOT NULL`;
+            fieldDefaultValue = `DEFAULT (UUID())`;
+            fieldDefaultValue = ``;
+            alters.push(`ALTER TABLE\`${tableName}\`\n                ADD PRIMARY KEY (\`${fieldName}\`);`);
+
+            triggers.push(`\nDROP TRIGGER IF EXISTS ${tableName}_before_insert;
+CREATE TRIGGER ${tableName}_before_insert BEFORE INSERT ON ${tableName} 
+  FOR EACH ROW BEGIN
+    IF NEW.id IS NULL THEN
+      SET NEW.id=UUID();
+    END IF;
+  END;\n`);
+            // return ``;
         } else if (fieldType == `string`) {
             fieldType = `varchar`;
         } else if (fieldType == `uuid`) {
@@ -163,6 +184,19 @@ COMMIT;`;
 fs.writeFile(
     `${schemaTableFile}`,
     `${dataSave} ${tableListData.join(`\n\n`)} \n\n ${alters.join(`\n`)} ${dataSaveEnd}`,
+    (err) => {
+        if (err) {
+            console.log(``);
+            console.error(err);
+            console.log(``);
+        }
+    },
+);
+
+// ===================================================================================================================================
+fs.writeFile(
+    `${schemaTableFileTrigger}`,
+    `${dataSave} \n\n ${triggers.join(`\n`)} ${dataSaveEnd}`,
     (err) => {
         if (err) {
             console.log(``);

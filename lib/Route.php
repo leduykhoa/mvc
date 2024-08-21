@@ -236,8 +236,8 @@ class Route
 
         // Include controller and run
         include_once(PATH_CONTROLLER . DS . ucwords(str_replace("\\", DS, $controller)) . 'Controller.php');
-        $klass = 'App\Controllers\\' . ucwords($controller) . 'Controller';
-        $controller = new $klass;
+        $kClass = 'App\Controllers\\' . ucwords($controller) . 'Controller';
+        $controller = new $kClass;
         call_user_func_array([$controller, $action], $params);
         exit();
     }
