@@ -128,7 +128,7 @@ $paths[] = PATH_LIBRARY;
 $paths[] = PATH_PUBLIC;
 $paths[] = PATH_ROUTE;
 $paths[] = PATH_SERVICE;
-$paths[] = DIR_MIDDLEWARE;
+$paths[] = PATH_MIDDLEWARE;
 
 $paths = getIncludeLoop($paths);
 $appPath = implode(PS, $paths);
