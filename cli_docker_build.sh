@@ -75,7 +75,7 @@ if [ "$DOCKER_MYSQL_REPLACE" == "1" ]; then
         -e MYSQL_HOST='0.0.0.0' \
         -t mysql:${MYSQL_VERSION} \
         --lower_case_table_names=1 --sql_mode='ON' --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci --default-authentication-plugin=mysql_native_password
-        
+
     sleep 26
     docker exec -i ${DOCKER_PREFIX}mysql chmod -R 777 /var/lib/mysql*
     # -v ./render_table_file.sql:/apt/render_table_file.sql \

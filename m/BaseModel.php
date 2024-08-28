@@ -124,7 +124,9 @@ class BaseModel
                     $str .= ((is_array($value) && isset($value[2]) && $value[2] != '' && $value[2] != 0) ? strtoupper($value[2]) : ' AND ');
                 }
                 $valueP = NULL;
-                if (is_array($value)) {
+                if (trim(strtolower($value)) == 'is null') {
+                    $valueP = NULL;
+                } elseif (is_array($value)) {
                     $valueP = (string) $value[0];
                     if (gettype($value[0]) == 'integer' || gettype($value[0]) == 'double' || gettype($value[0]) == 'float' || gettype($value[0]) == 'boolean') {
                         $valueP = $value[0];
@@ -135,8 +137,12 @@ class BaseModel
                         $valueP = $value;
                     }
                 }
-                $dataFilter[$key] = $valueP;
-                $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
+                if (!is_null($valueP)) {
+                    $dataFilter[$key] = $valueP;
+                    $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
+                } else {
+                    $where[] = $str . $key . ' IS NULL ';
+                }
             }
         }
         $order = [];
@@ -182,6 +188,77 @@ class BaseModel
         return false;
     }
 
+    public function count($params = [])
+    {
+        $dataFilter = [];
+        // ===================================================================================================================================
+        $columns = ['COUNT(*) as count'];
+        $fetchType = \PDO::FETCH_OBJ;
+        if (isset($params['fetch_type']) && $params['fetch_type'] != '') {
+            $fetchType = $params['fetch_type'];
+        }
+        // ===================================================================================================================================    
+        $counter = 0;
+        $where = [];
+        $conditions = [];
+        if (isset($params['conditions']) && is_array($params['conditions'])) {
+            $conditions = $params['conditions'];
+
+            foreach ($conditions as $key => $value) {
+                $str = '';
+                if ($counter++ > 0) {
+                    $str .= ((is_array($value) && isset($value[2]) && $value[2] != '' && $value[2] != 0) ? strtoupper($value[2]) : ' AND ');
+                }
+                $valueP = NULL;
+                if (trim(strtolower($value)) == 'is null') {
+                    $valueP = NULL;
+                } elseif (is_array($value)) {
+                    $valueP = (string) $value[0];
+                    if (gettype($value[0]) == 'integer' || gettype($value[0]) == 'double' || gettype($value[0]) == 'float' || gettype($value[0]) == 'boolean') {
+                        $valueP = $value[0];
+                    }
+                } else {
+                    $valueP =  (string) $value;
+                    if (gettype($value) == 'integer' || gettype($value) == 'double' || gettype($value) == 'float' || gettype($value) == 'boolean') {
+                        $valueP = $value;
+                    }
+                }
+                if (!is_null($valueP)) {
+                    $dataFilter[$key] = $valueP;
+                    $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
+                } else {
+                    $where[] = $str . $key . ' IS NULL ';
+                }
+            }
+        }
+
+        // ===================================================================================================================================
+        if (count($where)) {
+            $where = ' WHERE ' . implode(' ', $where);
+        } else {
+            $where = '';
+        }
+
+        // ===================================================================================================================================
+        try {
+            $db = DB::getInstance();
+            $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where;
+            $stmt = $db->prepare($sql);
+            $stmt->execute($dataFilter);
+            $result = $stmt->fetchAll($fetchType);
+            if(isset($result) && count($result) && isset($result[0]->count)){
+                return $result[0]->count;
+            }
+            return false;
+        } catch (\PDOException $e) {
+            if (__env('APP_DEBUG', true) === true) {
+                throw $e;
+            }
+            return false;
+        }
+        return false;
+    }
+
     public function findOne($params = [])
     {
         $dataFilter = [];
@@ -207,7 +284,9 @@ class BaseModel
                     $str .= ((is_array($value) && isset($value[2]) && $value[2] != '' && $value[2] != 0) ? strtoupper($value[2]) : ' AND ');
                 }
                 $valueP = NULL;
-                if (is_array($value)) {
+                if (trim(strtolower($value)) == 'is null') {
+                    $valueP = NULL;
+                } elseif (is_array($value)) {
                     $valueP = (string) $value[0];
                     if (gettype($value[0]) == 'integer' || gettype($value[0]) == 'double' || gettype($value[0]) == 'float' || gettype($value[0]) == 'boolean') {
                         $valueP = $value[0];
@@ -218,8 +297,12 @@ class BaseModel
                         $valueP = $value;
                     }
                 }
-                $dataFilter[$key] = $valueP;
-                $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
+                if (!is_null($valueP)) {
+                    $dataFilter[$key] = $valueP;
+                    $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
+                } else {
+                    $where[] = $str . $key . ' IS NULL ';
+                }
             }
         }
         $order = [];
@@ -478,7 +561,9 @@ class BaseModel
             foreach ($data as $key => $value) {
                 $dataKeys[] = $key . '=:' . $key;
                 $valueP = '\'' . $value . '\'';
-                if (gettype($value) == 'integer' || gettype($value) == 'double' || gettype($value) == 'float' || gettype($value) == 'boolean') {
+                if (trim(strtolower($value)) == 'null') {
+                    $dataSave[$key] = NULL;
+                } else if (gettype($value) == 'integer' || gettype($value) == 'double' || gettype($value) == 'float' || gettype($value) == 'boolean') {
                     $valueP = $value;
                 }
                 $dataSave[$key] = $valueP;
@@ -493,11 +578,16 @@ class BaseModel
 
             foreach ($conditions as $key => $value) {
                 $str = '';
+                // if ($counter++ > 0) {
+                //     $str .= (isset($value) && isset($value[2]) ? strtoupper($value[2]) : ' AND ');
+                // }
                 if ($counter++ > 0) {
-                    $str .= (isset($value[2]) ? strtoupper($value[2]) : ' AND ');
+                    $str .= ((is_array($value) && isset($value[2]) && $value[2] != '' && $value[2] != 0) ? strtoupper($value[2]) : ' AND ');
                 }
                 $valueP = NULL;
-                if (is_array($value)) {
+                if (trim(strtolower($value)) == 'is null') {
+                    $valueP = NULL;
+                } elseif (is_array($value)) {
                     $valueP = (string) $value[0];
                     if (gettype($value[0]) == 'integer' || gettype($value[0]) == 'double' || gettype($value[0]) == 'float' || gettype($value[0]) == 'boolean') {
                         $valueP = $value[0];
@@ -508,8 +598,12 @@ class BaseModel
                         $valueP = $value;
                     }
                 }
-                $dataSave[$key] = $valueP;
-                $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
+                if (!is_null($valueP)) {
+                    $dataSave[$key] = $valueP;
+                    $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
+                } else {
+                    $where[] = $str . $key . ' IS NULL ';
+                }
             }
         }
         // ===================================================================================================================================
