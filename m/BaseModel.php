@@ -188,6 +188,77 @@ class BaseModel
         return false;
     }
 
+    public function count($params = [])
+    {
+        $dataFilter = [];
+        // ===================================================================================================================================
+        $columns = ['COUNT(*) as count'];
+        $fetchType = \PDO::FETCH_OBJ;
+        if (isset($params['fetch_type']) && $params['fetch_type'] != '') {
+            $fetchType = $params['fetch_type'];
+        }
+        // ===================================================================================================================================    
+        $counter = 0;
+        $where = [];
+        $conditions = [];
+        if (isset($params['conditions']) && is_array($params['conditions'])) {
+            $conditions = $params['conditions'];
+
+            foreach ($conditions as $key => $value) {
+                $str = '';
+                if ($counter++ > 0) {
+                    $str .= ((is_array($value) && isset($value[2]) && $value[2] != '' && $value[2] != 0) ? strtoupper($value[2]) : ' AND ');
+                }
+                $valueP = NULL;
+                if (trim(strtolower($value)) == 'is null') {
+                    $valueP = NULL;
+                } elseif (is_array($value)) {
+                    $valueP = (string) $value[0];
+                    if (gettype($value[0]) == 'integer' || gettype($value[0]) == 'double' || gettype($value[0]) == 'float' || gettype($value[0]) == 'boolean') {
+                        $valueP = $value[0];
+                    }
+                } else {
+                    $valueP =  (string) $value;
+                    if (gettype($value) == 'integer' || gettype($value) == 'double' || gettype($value) == 'float' || gettype($value) == 'boolean') {
+                        $valueP = $value;
+                    }
+                }
+                if (!is_null($valueP)) {
+                    $dataFilter[$key] = $valueP;
+                    $where[] = $str . $key . (is_array($value) && isset($value[1]) ? $value[1] : '=') . ':' . $key;
+                } else {
+                    $where[] = $str . $key . ' IS NULL ';
+                }
+            }
+        }
+
+        // ===================================================================================================================================
+        if (count($where)) {
+            $where = ' WHERE ' . implode(' ', $where);
+        } else {
+            $where = '';
+        }
+
+        // ===================================================================================================================================
+        try {
+            $db = DB::getInstance();
+            $sql = 'SELECT ' . implode(', ', $columns) . ' FROM ' . $this->table . $where;
+            $stmt = $db->prepare($sql);
+            $stmt->execute($dataFilter);
+            $result = $stmt->fetchAll($fetchType);
+            if(isset($result) && count($result) && isset($result[0]->count)){
+                return $result[0]->count;
+            }
+            return false;
+        } catch (\PDOException $e) {
+            if (__env('APP_DEBUG', true) === true) {
+                throw $e;
+            }
+            return false;
+        }
+        return false;
+    }
+
     public function findOne($params = [])
     {
         $dataFilter = [];
