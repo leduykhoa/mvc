@@ -55,7 +55,7 @@ if ($controllerName == 'migration') {
     $kClass = new $kClass;
     $kClass->run();
     exit();
-}elseif ($controllerName == 'seeder') {
+} elseif ($controllerName == 'seeder') {
     // Include controller and run
     include_once(PATH_CONTROLLER . DS . 'Cmd' . DS . 'CmdController.php');
     $appPath = [
