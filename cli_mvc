@@ -37,7 +37,7 @@ array_shift($argv);
 $controllerName = '';
 $methodName = '';
 if (!isset($argv[0]) || $argv[0] == '') {
-    die ("\nController name empty!\n");
+    die("\nController name empty!\n");
 }
 $controllerName = $argv[0];
 // ===================================================================================================================================
@@ -76,7 +76,7 @@ if ($controllerName == 'structure') {
     exit();
 }
 if (!isset($argv[1]) || $argv[1] == '') {
-    die ("\nMethod name empty!\n");
+    die("\nMethod name empty!\n");
 }
 $methodName = $argv[1];
 array_shift($argv);

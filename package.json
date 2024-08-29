@@ -10,7 +10,7 @@
     "copy-image": "cp -rf ./v/default/frontend/assets/images ./public/assets",
     "copy-image-backend": "cp -rf ./v/default/backend/assets/images ./public/backend-assets",
     "languages": "node ./languages",
-    "table": "node ./database/database_structure",
+    "create_database_structure": "node ./database/database_structure",
     "mysql_chmod": "sudo chmod -R 777 ./mysql*",
     "docker_5.6": "./cli_docker_build.sh 5.6",
     "docker_7.0": "./cli_docker_build.sh 7.0",
