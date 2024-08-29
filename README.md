@@ -22,10 +22,10 @@ Before initializing Docker, please delete/chmod 777 the ```./mysql``` folder
 - ```npm run docker_8.3```
 
 ## Database
- - Edit ```./render_table_file.json```
- - For create structure table ```npm run table```
- - For import structure table ```docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} < render_table_file.sql```
- - For import data example(posts) ```npm run news```
+ - For edit database structure ```./database/database_structure.json```
+ - For create database structure ```npm run create_database_structure```
+ - For import database structure ```./cli_mvc structure```
+ - For make database seeder ```./cli_mvc seeder```
 
 ## Style/css/script/images
  - Style ./v/default/[package]/assets/
@@ -48,7 +48,8 @@ Before initializing Docker, please delete/chmod 777 the ```./mysql``` folder
  - Make docker ```npm run docker_5.6 1```
  - Make data example: 
     - Go to docker php ```docker exec -it mvc-docker-php /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"``` 
-    - And then run script create database example ```npm run news```
+    - And then run script import database structure```./cli_mvc structure```
+    - And then run script make database seeder```./cli_mvc seeder```
  - Make assets file ```npm run build``` and ```npm run build-backend```
  - Try ```http://0.0.0.0:9090```
 
