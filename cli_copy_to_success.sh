@@ -48,8 +48,6 @@ cp -rf ./PHP-MVC-Skeleton.postman_environment.json $path/$name/
 cp -rf ./pluralize.js $path/$name/
 cp -rf ./postcss.config.js $path/$name/
 cp -rf ./README.md $path/$name/
-cp -rf ./render_table_file.js $path/$name/
-cp -rf ./render_table_file.json $path/$name/
 cp -rf ./tailwind.config.js $path/$name/
 cp -rf ./vite.config.backend.js $path/$name/
 cp -rf ./vite.config.js $path/$name/

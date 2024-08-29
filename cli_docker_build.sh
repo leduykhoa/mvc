@@ -2,6 +2,8 @@
 echo "Bash version ${BASH_VERSION}..."
 
 # ./cli_docker_build.sh
+# ./cli_docker_build.sh 5.6 1 9090
+# ./cli_docker_build.sh 7.0 1 9090
 # ./cli_docker_build.sh 5.6 1 9099 mvc-enterprise-
 # ./cli_docker_build.sh 7.0 1 9099 mvc-enterprise-
 # docker exec -it mvc-docker-php /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"
@@ -78,10 +80,10 @@ if [ "$DOCKER_MYSQL_REPLACE" == "1" ]; then
         
     sleep 26
     docker exec -i ${DOCKER_PREFIX}mysql chmod -R 777 /var/lib/mysql*
-    # -v ./render_table_file.sql:/apt/render_table_file.sql \
-    # -v ./render_table_file_custom.sql:/apt/render_table_file_custom.sql \
-    # docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} <render_table_file.sql
-    # docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} <render_table_file_custom.sql
+    # -v ./database_structure.sql:/apt/database_structure.sql \
+    # -v ./database_structure_custom.sql:/apt/database_structure_custom.sql \
+    # docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} <database_structure.sql
+    # docker exec -i ${DOCKER_PREFIX}mysql mysql -uroot -p${MYSQL_PASSWORD} ${MYSQL_DATABASE} <database_structure_custom.sql
 fi
 docker start ${DOCKER_PREFIX}mysql
 

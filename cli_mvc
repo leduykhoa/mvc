@@ -37,11 +37,12 @@ array_shift($argv);
 $controllerName = '';
 $methodName = '';
 if (!isset($argv[0]) || $argv[0] == '') {
-    die('Controller name empty');
+    die ("\nController name empty!\n");
 }
 $controllerName = $argv[0];
-
-if ($controllerName == 'migration') {
+// ===================================================================================================================================
+// For make structure
+if ($controllerName == 'structure') {
     $appPath = [
         PATH_DATABASE,
         PATH_DATABASE_FACTORY,
@@ -50,12 +51,14 @@ if ($controllerName == 'migration') {
     ];
     $appPath = implode(PS, $appPath);
     set_include_path($appPath . PS . get_include_path());
-    include_once(PATH_DATABASE_MIGRATION . DS . 'DatabaseMigration.php');
-    $kClass = 'App\Database\Migrations\DatabaseMigration';
+    include_once(PATH_DATABASE_MIGRATION . DS . 'DatabaseStructure.php');
+    $kClass = 'App\Database\Migrations\DatabaseStructure';
     $kClass = new $kClass;
     $kClass->run();
     exit();
-}elseif ($controllerName == 'seeder') {
+    // ===================================================================================================================================
+    // For make seeder
+} elseif ($controllerName == 'seeder') {
     // Include controller and run
     include_once(PATH_CONTROLLER . DS . 'Cmd' . DS . 'CmdController.php');
     $appPath = [
@@ -73,7 +76,7 @@ if ($controllerName == 'migration') {
     exit();
 }
 if (!isset($argv[1]) || $argv[1] == '') {
-    die('Method name empty');
+    die ("\nMethod name empty!\n");
 }
 $methodName = $argv[1];
 array_shift($argv);

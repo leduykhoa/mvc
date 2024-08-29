@@ -148,8 +148,8 @@ require_once('ApiController.php');
 require_once('BaseModel.php');
 require_once('AbstractService.php');
 require_once('AuthService.php');
-require_once('web.php');
-require_once('admin.php');
+require_once('frontend.php');
+require_once('backend.php');
 require_once('api.php');
 Language::getInstance();
 // ===================================================================================================================================
