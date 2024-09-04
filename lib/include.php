@@ -143,7 +143,7 @@ require_once('app.php');
 require_once('middleware.php');
 require_once('BaseController.php');
 require_once('FrontendController.php');
-require_once('AdminController.php');
+require_once('BackendController.php');
 require_once('ApiController.php');
 require_once('BaseModel.php');
 require_once('AbstractService.php');

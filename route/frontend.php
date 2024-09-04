@@ -34,12 +34,12 @@ Route::get('contact', ['Frontend\Contact@index', 'contact.index']);
 Route::post('contact', ['Frontend\Contact@index', 'contact.store']);
 Route::get('about', ['Frontend\About@index', 'about.index']);
 
-Route::get('account', ['Frontend\User@account', 'user.account']);
+Route::get('user', ['Frontend\User@user', 'user.user']);
 Route::get('register', ['Frontend\User@register', 'user.register']);
-Route::post('register-post', ['Frontend\User@registerPost', 'user.register.post']);
+Route::post('register-post', ['Frontend\User@store', 'user.store']);
 Route::get('login', ['Frontend\User@login', 'user.login']);
-Route::post('login-post', ['Frontend\User@loginPost', 'user.login.post']);
-Route::post('logout', ['Frontend\User@logout', 'user.logout.post']);
+Route::post('login-post', ['Frontend\User@loginPost', 'user.login-post']);
+Route::post('logout', ['Frontend\User@logout', 'user.logout']);
 
 Route::get('post', ['Frontend\Post@index', 'post.index']);
 Route::get('post/detail/{id?}', ['Frontend\Post@detail', 'post.detail']);

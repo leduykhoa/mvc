@@ -32,7 +32,7 @@
         <div class="flex flex-wrap justify-center">
             <div class="w-full px-4">
                 <div class="mx-auto max-w-[666px] py-10 px-6 dark:bg-dark sm:p-[30px] border rounded-md bg-dark">
-                    <form action="/register-post" method="POST">
+                    <form action="/user/store" method="POST">
                         <h3 class="h3 text-center">
                             <?php __e('Create your account'); ?>
                         </h3>

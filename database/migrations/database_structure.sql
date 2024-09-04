@@ -4,21 +4,57 @@ SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
 SET time_zone = "+00:00";
 
- CREATE TABLE `settings` (
-      `id` int NOT NULL   ,
-      `key` varchar(200) NOT NULL   ,
-      `value` text NOT NULL   ,
+ CREATE TABLE `core_websites` (
+      `id` smallint NOT NULL   ,
+      `code` varchar(32) NOT NULL   ,
+      `name` varchar(100) NOT NULL   ,
+      `position` tinyint NULL   ,
+      `default_group_id` tinyint NOT NULL DEFAULT 1  COMMENT 'Default Group Id' ,
+      `is_default` boolean NOT NULL DEFAULT true  ,
       `is_active` boolean NOT NULL DEFAULT true  ,
+      `deleted_at` timestamp NULL DEFAULT NULL,
+      `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
+      `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time update'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu thông tin core_website';
+
+CREATE TABLE `core_store_groups` (
+      `id` smallint NOT NULL   ,
+      `name` varchar(100) NOT NULL   ,
+      `position` tinyint NULL   ,
+      `default_store_id` tinyint NOT NULL DEFAULT 1  COMMENT 'Default store Id' ,
+      `website_id` tinyint NOT NULL DEFAULT 1  COMMENT 'Default Group Id' ,
+      `is_active` boolean NOT NULL DEFAULT true  ,
+      `deleted_at` timestamp NULL DEFAULT NULL,
+      `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
+      `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time update'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu thông tin core_store_group';
+
+CREATE TABLE `core_stores` (
+      `id` smallint NOT NULL   ,
+      `code` varchar(32) NOT NULL   ,
+      `name` varchar(100) NOT NULL   ,
+      `group_id` tinyint NOT NULL DEFAULT 1  COMMENT 'Group Store Id' ,
+      `is_active` boolean NOT NULL DEFAULT true  ,
+      `deleted_at` timestamp NULL DEFAULT NULL,
+      `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
+      `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time update'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu thông tin core_store';
+
+CREATE TABLE `settings` (
+      `id` int NOT NULL   ,
+      `key` varchar(100) NOT NULL   ,
+      `value` text NOT NULL   ,
       `website_id` tinyint NOT NULL DEFAULT 1  COMMENT 'Website Id' ,
       `group_id` tinyint NOT NULL DEFAULT 1  COMMENT 'Group Store Id' ,
-      `store_id` tinyint NOT NULL DEFAULT 1  COMMENT 'Store Order' ,
+      `store_id` tinyint NOT NULL DEFAULT 1  COMMENT 'Store Id' ,
+      `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
       `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time update'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu thông tin cấu hình chung hệ thống';
 
 CREATE TABLE `menus` (
-      `id` int NOT NULL   ,
+      `id` smallint NOT NULL   ,
       `name` varchar(200) NOT NULL   ,
       `title` varchar(255) NOT NULL   ,
       `is_active` boolean NOT NULL DEFAULT true  ,
@@ -41,18 +77,43 @@ CREATE TABLE `menu_items` (
       `type` varchar(10) NULL DEFAULT NULL  ,
       `permission` varchar(100) NULL DEFAULT NULL  ,
       `parent` integer NULL DEFAULT NULL  ,
-      `menu_id` integer NOT NULL   ,
+      `menu_id` tinyint NOT NULL   ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
       `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time update'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu thông tin menu item';
 
+CREATE TABLE `hashtags` (
+      `id` char(36) NOT NULL   ,
+      `hashtag` varchar(50) NOT NULL   ,
+      `type` varchar(20) NULL DEFAULT NULL  ,
+      `description` varchar(255) NULL DEFAULT NULL  COMMENT 'Miêu tả' ,
+      `notes` text NULL DEFAULT NULL  ,
+      `is_active` boolean NOT NULL DEFAULT true  ,
+      `deleted_at` timestamp NULL DEFAULT NULL,
+      `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
+      `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time update'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu thông tin các hashtag hệ thống';
+
+CREATE TABLE `system_types` (
+      `id` smallint NOT NULL   ,
+      `key` varchar(50) NOT NULL   ,
+      `name` varchar(255) NOT NULL   ,
+      `description` varchar(255) NULL DEFAULT NULL  COMMENT 'Miêu tả' ,
+      `notes` text NULL DEFAULT NULL  ,
+      `is_active` boolean NOT NULL DEFAULT true  ,
+      `deleted_at` timestamp NULL DEFAULT NULL,
+      `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
+      `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time update'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu thông tin các loại đối tượng tham gia vào hệ thống';
+
 CREATE TABLE `permissions` (
-      `id` int UNSIGNED NOT NULL   COMMENT 'Id quyền của hệ thống' ,
+      `id` int NOT NULL   COMMENT 'Id quyền của hệ thống' ,
       `key` varchar(50) NOT NULL DEFAULT 'default'  COMMENT 'key quyền của hệ thống' ,
       `name` varchar(100) NOT NULL DEFAULT 'default'  COMMENT 'Tên quyền của hệ thống' ,
       `description` varchar(255) NULL DEFAULT NULL  COMMENT 'Miêu tả quyền của hệ thống' ,
+      `system_type_id` tinyint NOT NULL   COMMENT 'Loại đối tượng hệ thống' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -60,17 +121,15 @@ CREATE TABLE `permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu các quyền của hệ thống';
 
 CREATE TABLE `roles` (
-      `id` int UNSIGNED NOT NULL   COMMENT 'Id các vai trò của hệ thống' ,
+      `id` int NOT NULL   COMMENT 'Id các vai trò của hệ thống' ,
       `key` varchar(50) NOT NULL DEFAULT 'default'  COMMENT 'key các vai trò của hệ thống' ,
       `name` varchar(255) NOT NULL DEFAULT 'default'  COMMENT 'Tên các vai trò của hệ thống' ,
       `description` varchar(255) NULL DEFAULT NULL  COMMENT 'Miêu tả vai trò của hệ thống' ,
-      `type` enum('system','manage','enterprise','user','supply') NOT NULL DEFAULT 'user'  COMMENT 'Loại vai trò' ,
       `notes` text NULL DEFAULT NULL  ,
       `position` integer NULL DEFAULT NULL  ,
+      `system_type_id` tinyint NOT NULL   COMMENT 'Loại đối tượng hệ thống' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_system` boolean NOT NULL DEFAULT true  ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -79,7 +138,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu các vai trò của hệ thống';
 
 CREATE TABLE `role_permissions` (
-      `id` int UNSIGNED NOT NULL   COMMENT 'Id quan hệ vai trò và quyền' ,
+      `id` int NOT NULL   COMMENT 'Id quan hệ vai trò và quyền' ,
       `role_id` integer NOT NULL   COMMENT 'Id vai trò của hệ thống' ,
       `permission_id` integer NOT NULL   COMMENT 'Id quyền của hệ thống' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
@@ -89,15 +148,13 @@ CREATE TABLE `role_permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu các quan hệ vai trò và quyền';
 
 CREATE TABLE `role_permission_specials` (
-      `id` int UNSIGNED NOT NULL   COMMENT 'Id nhóm hệ thống quản trị' ,
+      `id` int NOT NULL   COMMENT 'Id nhóm hệ thống quản trị' ,
       `user_id` char(36) NOT NULL   COMMENT 'Id người dùng hệ thống' ,
       `permission_id` integer NOT NULL   COMMENT 'Id quyền của hệ thống' ,
       `type` enum('allow','deny') NOT NULL DEFAULT 'allow'  COMMENT 'Cho phép hay không' ,
       `notes` text NULL DEFAULT NULL  ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -105,20 +162,18 @@ CREATE TABLE `role_permission_specials` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu các quyền riêng biệt cho từng user';
 
 CREATE TABLE `role_groups` (
-      `id` int UNSIGNED NOT NULL   COMMENT 'Id nhóm hệ thống quản trị' ,
+      `id` int NOT NULL   COMMENT 'Id nhóm hệ thống quản trị' ,
       `key` varchar(50) NOT NULL DEFAULT 'default'  COMMENT 'key nhóm hệ thống quản trị' ,
       `name` varchar(255) NOT NULL DEFAULT 'default'  COMMENT 'Tên nhóm hệ thống quản trị' ,
       `description_short` varchar(255) NULL DEFAULT NULL  COMMENT 'Mô tả ngắn' ,
       `description` text NULL DEFAULT NULL  COMMENT 'Mô tả nhóm hệ thống quản trị' ,
-      `type` enum('system','manage','enterprise','user','supply') NOT NULL DEFAULT 'user'  COMMENT 'Loại nhóm' ,
       `notes` text NULL DEFAULT NULL  ,
       `position` integer NULL DEFAULT NULL  ,
       `parent` integer NULL DEFAULT NULL  COMMENT 'Tên nhóm hệ thống quản trị cha' ,
       `param` varchar(100) NULL DEFAULT NULL  COMMENT 'Tham số thêm' ,
+      `system_type_id` tinyint NOT NULL   COMMENT 'Loại đối tượng hệ thống' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_system` boolean NOT NULL DEFAULT true  ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -127,7 +182,7 @@ CREATE TABLE `role_groups` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu các nhóm hệ thống quản trị';
 
 CREATE TABLE `role_group_roles` (
-      `id` int UNSIGNED NOT NULL   COMMENT 'Id quan hệ nhóm hệ thống quản trị và vai trò' ,
+      `id` int NOT NULL   COMMENT 'Id quan hệ nhóm hệ thống quản trị và vai trò' ,
       `role_group_id` integer NOT NULL   COMMENT 'Id nhóm hệ thống quản trị' ,
       `role_id` integer NOT NULL   COMMENT 'Id vai trò của hệ thống' ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -136,7 +191,7 @@ CREATE TABLE `role_group_roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu các quan hệ nhóm hệ thống quản trị và vai trò';
 
 CREATE TABLE `role_group_users` (
-      `id` bigint UNSIGNED NOT NULL   COMMENT 'Id quan hệ nhóm vai trò và user hệ thống' ,
+      `id` bigint NOT NULL   COMMENT 'Id quan hệ nhóm vai trò và user hệ thống' ,
       `user_id` char(36) NOT NULL   COMMENT 'Id người dùng hệ thống' ,
       `role_group_id` integer NOT NULL   COMMENT 'Id nhóm hệ thống quản trị' ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -154,24 +209,23 @@ CREATE TABLE `users` (
       `last_name` varchar(255) NULL DEFAULT NULL  COMMENT 'Họ' ,
       `password` varchar(100) NULL DEFAULT NULL  COMMENT 'Mật khẩu' ,
       `password_old` text NULL DEFAULT NULL  COMMENT 'Mật khẩu' ,
-      `image` char(36) NULL DEFAULT NULL  COMMENT 'Ảnh' ,
-      `thumbnail` char(36) NULL DEFAULT NULL  COMMENT 'thumbnail' ,
       `email` varchar(100) NULL DEFAULT NULL  COMMENT 'Email' ,
       `phone` varchar(50) NULL DEFAULT NULL  COMMENT 'Điện thoại' ,
       `address` varchar(255) NULL DEFAULT NULL  COMMENT 'Địa chỉ' ,
       `gender` enum('male','female','other') NULL DEFAULT NULL  COMMENT 'Giới tính' ,
-      `position` enum('boss','manager','deputy','staff', 'other') NULL DEFAULT NULL  COMMENT 'Chức vụ' ,
+      `image` char(36) NULL DEFAULT NULL  COMMENT 'Ảnh' ,
+      `thumbnail` char(36) NULL DEFAULT NULL  COMMENT 'thumbnail' ,
+      `gallery` text NULL DEFAULT NULL  COMMENT 'Gallery' ,
+      `document` text NULL DEFAULT NULL  COMMENT 'Document' ,
+      `position_title` varchar(100) NULL DEFAULT NULL  COMMENT 'Chức vụ' ,
       `position_text` varchar(100) NULL DEFAULT NULL  COMMENT 'Chức vụ' ,
       `description_short` varchar(255) NULL DEFAULT NULL  COMMENT 'Mô tả ngắn' ,
       `description` text NULL DEFAULT NULL  COMMENT 'Mô tả' ,
       `notes` text NULL DEFAULT NULL  ,
       `remember_token` boolean NOT NULL DEFAULT true  ,
-      `gallery` text NULL DEFAULT NULL  COMMENT 'Gallery' ,
-      `document` text NULL DEFAULT NULL  COMMENT 'Document' ,
+      `system_type_id` tinyint NOT NULL   COMMENT 'Loại đối tượng hệ thống' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_protected` boolean NOT NULL DEFAULT false  COMMENT 'Thông tin về hồ sơ user được bảo vệ' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -289,13 +343,12 @@ CREATE TABLE `blog_types` (
       `description` text NULL DEFAULT NULL  COMMENT 'Mô tả' ,
       `notes` text NULL DEFAULT NULL  ,
       `position` integer NULL DEFAULT NULL  ,
+      `param` varchar(100) NULL DEFAULT NULL  COMMENT 'Tham số thêm' ,
       `has_category` boolean NOT NULL DEFAULT true  ,
       `show_menu` boolean NOT NULL DEFAULT true  ,
       `show_comment` boolean NOT NULL DEFAULT true  ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -317,8 +370,6 @@ CREATE TABLE `blog_categories` (
       `type_id` integer NULL DEFAULT NULL  ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -346,8 +397,6 @@ CREATE TABLE `blog_posts` (
       `type_id` integer NULL DEFAULT NULL  ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -374,8 +423,6 @@ CREATE TABLE `blog_post_comments` (
       `user_approve` char(36) NULL DEFAULT NULL  COMMENT 'Người duyệt' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -576,8 +623,6 @@ CREATE TABLE `enterprises` (
       `is_confirm` boolean NOT NULL DEFAULT false  COMMENT 'Trạng thái xác nhận' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `user_render_gcp` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo mã gcp' ,
       `user_confirm` char(36) NULL DEFAULT NULL  COMMENT 'Nguời duyệt' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
@@ -625,8 +670,6 @@ CREATE TABLE `enterprise_profiles` (
       `document` text NULL DEFAULT NULL  COMMENT 'Document' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -657,8 +700,6 @@ CREATE TABLE `locations` (
       `id_reference` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến cổng quốc gia' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -692,8 +733,6 @@ CREATE TABLE `departments` (
       `document` text NULL DEFAULT NULL  COMMENT 'Document' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -730,8 +769,6 @@ CREATE TABLE `staff` (
       `document` text NULL DEFAULT NULL  COMMENT 'Document' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_protected` boolean NOT NULL DEFAULT false  COMMENT 'Thông tin về hồ sơ nhân viên được bảo vệ' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -759,8 +796,6 @@ CREATE TABLE `files` (
       `is_temp` boolean NOT NULL DEFAULT false  COMMENT 'Xác định là file tam hay không/Đối với file editor' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -786,8 +821,6 @@ CREATE TABLE `documents` (
       `file` text NULL DEFAULT NULL  COMMENT 'Document' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -805,8 +838,6 @@ CREATE TABLE `agriculture_ingredient_categories` (
       `type` enum('pesticides','veterinary_medicine','fertilizer','animal_feed') NOT NULL DEFAULT 'pesticides'  COMMENT 'pesticides.Thuốc bảo vệ thực vật/veterinary_medicine.Thuốc thú y/fertilizer.Phân bón/animal_feed.Thức ăn chăn nuôi' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -824,8 +855,6 @@ CREATE TABLE `agriculture_ingredients` (
       `wiki` varchar(255) NULL DEFAULT NULL  COMMENT 'Link trên Wiki' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -852,8 +881,6 @@ CREATE TABLE `agriculture_product_categories` (
       `parent` char(36) NULL DEFAULT NULL  COMMENT 'Danh mục cha' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -879,8 +906,6 @@ CREATE TABLE `agriculture_products` (
       `id_reference` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến cổng quốc gia' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -906,8 +931,6 @@ CREATE TABLE `pandemic_categories` (
       `type` enum('plant','animal') NOT NULL DEFAULT 'animal'  COMMENT 'Thực vật hay động vật' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -927,8 +950,6 @@ CREATE TABLE `pandemics` (
       `type` enum('plant','animal') NOT NULL DEFAULT 'animal'  COMMENT 'Thực vật hay động vật' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -960,8 +981,6 @@ CREATE TABLE `natural_events` (
       `qr_code_id` char(36) NULL DEFAULT NULL  COMMENT 'Id qr_code' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -987,8 +1006,6 @@ CREATE TABLE `plans` (
       `staff_id` char(36) NULL DEFAULT NULL  COMMENT 'Người lên kế hoạch' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `id_reference` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến cổng quốc gia' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1047,8 +1064,6 @@ CREATE TABLE `categories` (
       `can_select` boolean NOT NULL DEFAULT true  ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -1084,8 +1099,6 @@ CREATE TABLE `products` (
       `id_reference` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến cổng quốc gia' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -1150,8 +1163,6 @@ CREATE TABLE `product_packages` (
       `product_id` char(36) NOT NULL   COMMENT 'Id sản phẩm' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -1180,8 +1191,6 @@ CREATE TABLE `orders` (
       `document_id` char(36) NULL DEFAULT NULL  COMMENT 'Tham chiếu tới hợp đồng' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -1220,8 +1229,6 @@ CREATE TABLE `transfers` (
       `status` enum('new','done', 'cancel') NULL DEFAULT 'new'  COMMENT 'Trạng thái' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -1255,8 +1262,6 @@ CREATE TABLE `qr_codes` (
       `scanned_time` datetime NULL DEFAULT NULL  ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `qr_code_package_id` char(36) NOT NULL   COMMENT 'Id Qr Code Package' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1282,8 +1287,6 @@ CREATE TABLE `qr_code_packages` (
       `enterprise_id` char(36) NOT NULL   COMMENT 'Id doanh nghiệp' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -1355,8 +1358,6 @@ CREATE TABLE `gs1_ssccs` (
       `id_reference` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến cổng quốc gia' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `reason_for_not_using` varchar(255) NULL DEFAULT NULL  COMMENT 'Lý do hủy' ,
       `status` boolean NOT NULL DEFAULT true  ,
       `is_active` boolean NOT NULL DEFAULT true  ,
@@ -1377,8 +1378,6 @@ CREATE TABLE `gs1_grai_prefixes` (
       `enterprise_id` char(36) NOT NULL   COMMENT 'Id doanh nghiệp' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -1401,8 +1400,6 @@ CREATE TABLE `gs1_grais` (
       `id_reference` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến cổng quốc gia' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `reason_for_not_using` varchar(255) NULL DEFAULT NULL  COMMENT 'Lý do hủy' ,
       `status` boolean NOT NULL DEFAULT true  ,
       `is_active` boolean NOT NULL DEFAULT true  ,
@@ -1427,8 +1424,6 @@ CREATE TABLE `gs1_giais` (
       `id_reference` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến cổng quốc gia' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `reason_for_not_using` varchar(255) NULL DEFAULT NULL  COMMENT 'Lý do hủy' ,
       `status` boolean NOT NULL DEFAULT true  ,
       `is_active` boolean NOT NULL DEFAULT true  ,
@@ -1466,8 +1461,6 @@ CREATE TABLE `gs1_epcis` (
       `id_reference` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến cổng quốc gia' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -1501,8 +1494,6 @@ CREATE TABLE `data_syncs` (
       `notes` text NULL DEFAULT NULL  ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -1517,8 +1508,6 @@ CREATE TABLE `contract_types` (
       `enterprise_id` char(36) NOT NULL   COMMENT 'Id doanh nghiệp' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -1540,8 +1529,6 @@ CREATE TABLE `contracts` (
       `enterprise_id` char(36) NULL DEFAULT NULL  COMMENT 'Id doanh nghiệp' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -1587,8 +1574,6 @@ CREATE TABLE `networks` (
       `notes` text NULL DEFAULT NULL  ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
@@ -1609,8 +1594,6 @@ CREATE TABLE `procedures` (
       `enterprise_id` char(36) NOT NULL   COMMENT 'Id doanh nghiệp' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `id_reference` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến cổng quốc gia' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1627,8 +1610,6 @@ CREATE TABLE `procedure_steps` (
       `procedure_id` char(36) NOT NULL   COMMENT 'Id quy trình' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `id_reference` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến cổng quốc gia' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1645,8 +1626,6 @@ CREATE TABLE `procedure_jobs` (
       `procedure_step_id` char(36) NOT NULL   COMMENT 'Id bước quy trình' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `id_reference` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến cổng quốc gia' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1666,8 +1645,6 @@ CREATE TABLE `production_processes` (
       `enterprise_id` char(36) NOT NULL   COMMENT 'Id doanh nghiệp' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `id_reference` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến cổng quốc gia' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1702,8 +1679,6 @@ CREATE TABLE `meta_data_references` (
       `notes` text NULL DEFAULT NULL  ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `approved` boolean NOT NULL DEFAULT false  ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
@@ -1739,8 +1714,6 @@ CREATE TABLE `meta_data_categories` (
       `reference_id` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến bảng tham chiếu' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `show_on_menu` boolean NOT NULL DEFAULT false  ,
       `approved` boolean NOT NULL DEFAULT false  ,
       `is_data` boolean NOT NULL DEFAULT false  ,
@@ -1799,42 +1772,66 @@ CREATE TABLE `meta_data` (
       `reference_id` char(36) NULL DEFAULT NULL  COMMENT 'Id tham chiếu đến bảng tham chiếu' ,
       `user_create` char(36) NULL DEFAULT NULL  COMMENT 'Người tạo' ,
       `user_update` char(36) NULL DEFAULT NULL  COMMENT 'Người sửa cuối' ,
-      `staff_create` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo' ,
-      `staff_update` char(36) NULL DEFAULT NULL  COMMENT 'Nhân viên tạo sửa cuối' ,
       `is_active` boolean NOT NULL DEFAULT true  ,
       `deleted_at` timestamp NULL DEFAULT NULL,
       `created_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time create',
       `updated_at` timestamp NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Time update'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci  COMMENT='Bảng lưu thông tin hệ thống cần quản lý'; 
 
- ALTER TABLE`settings`
+ ALTER TABLE`core_websites`
+                ADD PRIMARY KEY (`id`);
+ALTER TABLE`core_websites`
+                MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE`core_websites`
+                ADD UNIQUE (`code`);
+ALTER TABLE`core_store_groups`
+                ADD PRIMARY KEY (`id`);
+ALTER TABLE`core_store_groups`
+                MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE`core_stores`
+                ADD PRIMARY KEY (`id`);
+ALTER TABLE`core_stores`
+                MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE`core_stores`
+                ADD UNIQUE (`code`);
+ALTER TABLE`settings`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`settings`
                 MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE`settings`
-                ADD UNIQUE KEY`settings_key_unique`(`key`);
+                ADD UNIQUE (`key`);
 ALTER TABLE`menus`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`menus`
-                MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+                MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE`menus`
-                ADD UNIQUE KEY`menus_name_unique`(`name`);
+                ADD UNIQUE (`name`);
 ALTER TABLE`menu_items`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`menu_items`
                 MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE`hashtags`
+                ADD PRIMARY KEY (`id`);
+ALTER TABLE`hashtags`
+                ADD UNIQUE (`hashtag`);
+ALTER TABLE`system_types`
+                ADD PRIMARY KEY (`id`);
+ALTER TABLE`system_types`
+                MODIFY `id` smallint UNSIGNED NOT NULL AUTO_INCREMENT;
+ALTER TABLE`system_types`
+                ADD UNIQUE (`key`);
 ALTER TABLE`permissions`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`permissions`
                 MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE`permissions`
-                ADD UNIQUE KEY`permissions_key_unique`(`key`);
+                ADD UNIQUE (`key`);
 ALTER TABLE`roles`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`roles`
                 MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE`roles`
-                ADD UNIQUE KEY`roles_key_unique`(`key`);
+                ADD UNIQUE (`key`);
 ALTER TABLE`role_permissions`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`role_permissions`
@@ -1848,7 +1845,7 @@ ALTER TABLE`role_groups`
 ALTER TABLE`role_groups`
                 MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE`role_groups`
-                ADD UNIQUE KEY`role_groups_name_unique`(`name`);
+                ADD UNIQUE (`name`);
 ALTER TABLE`role_group_roles`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`role_group_roles`
@@ -1864,13 +1861,13 @@ ALTER TABLE`countries`
 ALTER TABLE`countries`
                 MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
 ALTER TABLE`countries`
-                ADD UNIQUE KEY`countries_code_unique`(`code`);
+                ADD UNIQUE (`code`);
 ALTER TABLE`countries`
-                ADD UNIQUE KEY`countries_iso2_code_unique`(`iso2_code`);
+                ADD UNIQUE (`iso2_code`);
 ALTER TABLE`countries`
-                ADD UNIQUE KEY`countries_iso3_code_unique`(`iso3_code`);
+                ADD UNIQUE (`iso3_code`);
 ALTER TABLE`countries`
-                ADD UNIQUE KEY`countries_name_unique`(`name`);
+                ADD UNIQUE (`name`);
 ALTER TABLE`country_units`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`country_units`
@@ -1900,7 +1897,7 @@ ALTER TABLE`blog_categories`
 ALTER TABLE`blog_posts`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`blog_posts`
-                ADD UNIQUE KEY`blog_posts_slug_unique`(`slug`);
+                ADD UNIQUE (`slug`);
 ALTER TABLE`blog_post_categories`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`blog_post_comments`
@@ -1908,7 +1905,7 @@ ALTER TABLE`blog_post_comments`
 ALTER TABLE`oauths`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`oauths`
-                ADD UNIQUE KEY`oauths_name_unique`(`name`);
+                ADD UNIQUE (`name`);
 ALTER TABLE`industries`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`field_of_activities`
@@ -1940,7 +1937,7 @@ ALTER TABLE`enterprise_packages`
 ALTER TABLE`enterprises`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`enterprises`
-                ADD UNIQUE KEY`enterprises_tax_code_unique`(`tax_code`);
+                ADD UNIQUE (`tax_code`);
 ALTER TABLE`enterprise_category_links`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`enterprise_field_of_activities`
@@ -2016,7 +2013,7 @@ ALTER TABLE`transfer_items`
 ALTER TABLE`qr_codes`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`qr_codes`
-                ADD UNIQUE KEY`qr_codes_public_unique`(`public`);
+                ADD UNIQUE (`public`);
 ALTER TABLE`qr_code_packages`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`qr_code_materials`
@@ -2030,19 +2027,19 @@ ALTER TABLE`gs1_glns`
 ALTER TABLE`gs1_ssccs`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`gs1_ssccs`
-                ADD UNIQUE KEY`gs1_ssccs_sscc_unique`(`sscc`);
+                ADD UNIQUE (`sscc`);
 ALTER TABLE`gs1_grai_prefixes`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`gs1_grai_prefixes`
-                ADD UNIQUE KEY`gs1_grai_prefixes_grai_prefix_unique`(`grai_prefix`);
+                ADD UNIQUE (`grai_prefix`);
 ALTER TABLE`gs1_grais`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`gs1_grais`
-                ADD UNIQUE KEY`gs1_grais_grai_unique`(`grai`);
+                ADD UNIQUE (`grai`);
 ALTER TABLE`gs1_giais`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`gs1_giais`
-                ADD UNIQUE KEY`gs1_giais_giai_unique`(`giai`);
+                ADD UNIQUE (`giai`);
 ALTER TABLE`gs1_epcis`
                 ADD PRIMARY KEY (`id`);
 ALTER TABLE`data_syncs`

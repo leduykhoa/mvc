@@ -5,7 +5,7 @@
  *  ...............(¯'•.(¯'•.......((.....((
  *  ................(¯''•(¯'•...((.)..(. ' /)
  *  .................(¯''•.(¯'((.)....|\_/
- *  .....,,,~”¯¯¯''¯(_.'(_.)......|
+ *  .....,,,~”¯¯¯''¯(_,'(_.)......|
  *  ...(((./...........................)__
  *  ..((((.\......),,...........(...../__'\
  *  ..))))..\ . .//...¯¯¯¯¯¯¯' \.../... / /
@@ -23,24 +23,21 @@
  *  Website: https://web-fast.com
  *  Telegram: https://t.me/leduykhoa
  *  GitHub: https://github.com/leduykhoa
- *  Date: 2024/04/06
- *  Time: 15:44:37
+ *  Date: 2024/08/29
+ *  Time: 14:49:58
  */
 
-namespace App\Controllers\Backend;
-
-use App\Service\AuthService;
-
-class DashboardController extends BackendController
-{
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
-    public function index()
-    {
-        $data = [];
-        $this->render('backend/dashboard/index', $data);
-    }
-}
+?>
+<section class="overflow-hidden pt-[26px] pb-16 md:pb-20 lg:pt-[48px] lg:pb-28">
+    <div class="container mx-auto">
+        <div class="flex flex-wrap justify-center">
+            <div class="w-full px-4">
+                <h1 class="text-2xl	uppercase"><?php __e('Admin information'); ?></h1>
+                <?php __e('Full name'); ?>: <?php echo $user->full_name; ?><br />
+                <?php __e('First name'); ?>: <?php echo $user->first_name; ?><br />
+                <?php __e('Last name'); ?>: <?php echo $user->last_name; ?><br />
+                <?php __e('Email'); ?>: <?php echo $user->email; ?><br />
+            </div>
+        </div>
+    </div>
+</section>

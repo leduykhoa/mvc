@@ -28,9 +28,11 @@
  */
 
 use App\Lib\Register;
+use App\Lib\Utils;
 use App\Service\AuthService;
 
 $auth = AuthService::getInstance();
+$backendPrefix = Utils::backendPrefix();
 ?>
 <header>
     <div class="container mx-auto">
@@ -73,7 +75,7 @@ $auth = AuthService::getInstance();
                             </li>
                             <?php if ($auth->check()) : ?>
                                 <li>
-                                    <a href="/account" class="block md:px-4 transition hover:text-primary">
+                                    <a href="/user" class="block md:px-4 transition hover:text-primary">
                                         <?php __e('Account'); ?>
                                     </a>
                                 </li>
@@ -94,6 +96,28 @@ $auth = AuthService::getInstance();
                                 <li>
                                     <a href="/login" class="block md:px-4 transition hover:text-primary">
                                         <?php __e('Login'); ?>
+                                    </a>
+                                </li>
+                            <?php endif ?>
+
+                            <?php if ($auth->check(BACKEND)) : ?>
+                                <li>
+                                    <a href="/<?php echo $backendPrefix;?>/user" class="block md:px-4 transition hover:text-primary">
+                                        <?php __e('Account'); ?>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="/<?php echo $backendPrefix;?>/logout" class="block md:px-4 transition hover:text-primary" onclick="event.preventDefault();
+                                                 document.getElementById('logout-form').submit();">
+                                        <?php __e('Logout'); ?>
+                                    </a>
+                                    <form id="logout-form" action="/<?php echo $backendPrefix;?>/logout" method="POST" class="d-none">
+                                    </form>
+                                </li>
+                            <?php else : ?>
+                                <li>
+                                    <a href="/<?php echo $backendPrefix;?>/login" class="block md:px-4 transition hover:text-primary">
+                                        <?php __e('Login admin'); ?>
                                     </a>
                                 </li>
                             <?php endif ?>

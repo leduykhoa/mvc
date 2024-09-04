@@ -4,6 +4,7 @@ echo "Bash version ${BASH_VERSION}..."
 # ./cli_docker_build.sh
 # ./cli_docker_build.sh 5.6 1 9090
 # ./cli_docker_build.sh 7.0 1 9090
+# ./cli_docker_build.sh 7.0 0 9090
 # ./cli_docker_build.sh 5.6 1 9099 mvc-enterprise-
 # ./cli_docker_build.sh 7.0 1 9099 mvc-enterprise-
 # docker exec -it mvc-docker-php /bin/sh -c "[ -e /bin/bash ] && /bin/bash || /bin/sh"

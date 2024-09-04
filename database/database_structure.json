@@ -1,18 +1,45 @@
 [
     [
+        "core_website///__///__///Bảng lưu thông tin core_website",
+        "id///smallIncrements///__///__///__///__///__",
+        "code///string///(32)///NOT_NULL///__///UNIQUE///__",
+        "name///string///(100)///NOT_NULL///__///__///__",
+        "position///smallInteger///NULL///NULL///__///__///__",
+        "default_group_id///smallInteger///__///NOT_NULL///1///__///Default Group Id",
+        "is_default///boolean///__///__///true///__///__",
+        "is_active///boolean///__///__///true///__///__"
+    ],
+    [
+        "core_store_group///__///__///Bảng lưu thông tin core_store_group",
+        "id///smallIncrements///__///__///__///__///__",
+        "name///string///(100)///NOT_NULL///__///__///__",
+        "position///smallInteger///NULL///NULL///__///__///__",
+        "default_store_id///smallInteger///__///NOT_NULL///1///__///Default store Id",
+        "website_id///smallInteger///__///NOT_NULL///1///__///Default Group Id",
+        "is_active///boolean///__///__///true///__///__"
+    ],
+    [
+        "core_store///__///__///Bảng lưu thông tin core_store",
+        "id///smallIncrements///__///__///__///__///__",
+        "code///string///(32)///NOT_NULL///__///UNIQUE///__",
+        "name///string///(100)///NOT_NULL///__///__///__",
+        "group_id///smallInteger///__///NOT_NULL///1///__///Group Store Id",
+        "is_active///boolean///__///__///true///__///__"
+    ],
+    [
         "setting///__///__///Bảng lưu thông tin cấu hình chung hệ thống",
         "id///increments///__///__///__///__///__",
-        "key///string///(200)///NOT_NULL///__///->unique()///__",
+        "key///string///(100)///NOT_NULL///__///UNIQUE///__",
         "value///text///__///__///__///__///__",
-        "is_active///boolean///__///__///true///__///__",
         "website_id///smallInteger///__///NOT_NULL///1///__///Website Id",
         "group_id///smallInteger///__///NOT_NULL///1///__///Group Store Id",
-        "store_id///smallInteger///__///NOT_NULL///1///__///Store Order"
+        "store_id///smallInteger///__///NOT_NULL///1///__///Store Id",
+        "is_active///boolean///__///__///true///__///__"
     ],
     [
         "menu///__///__///Bảng lưu thông tin menu",
-        "id///increments///__///__///__///__///__",
-        "name///string///(200)///NOT_NULL///__///->unique()///__",
+        "id///smallIncrements///__///__///__///__///__",
+        "name///string///(200)///NOT_NULL///__///UNIQUE///__",
         "title///string///(255)///NOT_NULL///__///__///__",
         "is_active///boolean///__///__///true///__///__"
     ],
@@ -31,81 +58,94 @@
         "type///string///(10)///NULL///NULL///__///__",
         "permission///string///(100)///NULL///NULL///__///__",
         "parent///integer///__///NULL///NULL///__///__",
-        "menu_id///integer///__///NOT_NULL///__///__///__",
+        "menu_id///smallInteger///__///NOT_NULL///__///__///__",
+        "is_active///boolean///__///__///true///__///__"
+    ],
+    [
+        "hashtag///__///__///Bảng lưu thông tin các hashtag hệ thống",
+        "id///uuid///__///__///__///primary///__",
+        "hashtag///string///(50)///NOT_NULL///__///UNIQUE///__",
+        "type///string///(20)///NULL///NULL///__///__",
+        "description///string///(255)///NULL///NULL///__///Miêu tả",
+        "notes///text///__///NULL///NULL///__///__",
+        "is_active///boolean///__///__///true///__///__"
+    ],
+    [
+        "system_type///__///__///Bảng lưu thông tin các loại đối tượng tham gia vào hệ thống",
+        "id///smallIncrements///__///__///__///__///__",
+        "key///string///(50)///NOT_NULL///__///UNIQUE///__",
+        "name///string///(255)///NOT_NULL///__///__///__",
+        "description///string///(255)///NULL///NULL///__///Miêu tả",
+        "notes///text///__///NULL///NULL///__///__",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
         "permission///__///__///Bảng lưu các quyền của hệ thống",
-        "id///increments///__///__///__///->unsigned()///Id quyền của hệ thống",
-        "key///string///(50)///NOT_NULL///'default'///->unique()///key quyền của hệ thống",
+        "id///increments///__///__///__///unsigned///Id quyền của hệ thống",
+        "key///string///(50)///NOT_NULL///'default'///UNIQUE///key quyền của hệ thống",
         "name///string///(100)///NOT_NULL///'default'///__///Tên quyền của hệ thống",
         "description///string///(255)///NULL///NULL///__///Miêu tả quyền của hệ thống",
+        "system_type_id///smallInteger///__///NOT_NULL///__///__///Loại đối tượng hệ thống",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
         "role///__///__///Bảng lưu các vai trò của hệ thống",
-        "id///increments///__///__///__///->unsigned()///Id các vai trò của hệ thống",
-        "key///string///(50)///NOT_NULL///'default'///->unique()///key các vai trò của hệ thống",
+        "id///increments///__///__///__///unsigned///Id các vai trò của hệ thống",
+        "key///string///(50)///NOT_NULL///'default'///UNIQUE///key các vai trò của hệ thống",
         "name///string///(255)///NOT_NULL///'default'///__///Tên các vai trò của hệ thống",
         "description///string///(255)///NULL///NULL///__///Miêu tả vai trò của hệ thống",
-        "type///enum///['system','manage','enterprise','user','supply']///NOT_NULL///'user'///__///Loại vai trò",
         "notes///text///__///NULL///NULL///__///__",
         "position///integer///__///NULL///NULL///__///__",
+        "system_type_id///smallInteger///__///NOT_NULL///__///__///Loại đối tượng hệ thống",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_system///boolean///__///__///true///__///__",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
         "role_permission///__///__///Bảng lưu các quan hệ vai trò và quyền",
-        "id///increments///__///__///__///->unsigned()///Id quan hệ vai trò và quyền",
+        "id///increments///__///__///__///unsigned///Id quan hệ vai trò và quyền",
         "role_id///integer///__///NOT_NULL///__///__///Id vai trò của hệ thống",
         "permission_id///integer///__///NOT_NULL///__///__///Id quyền của hệ thống",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
         "role_permission_special///__///__///Bảng lưu các quyền riêng biệt cho từng user",
-        "id///increments///__///__///__///->unsigned()///Id nhóm hệ thống quản trị",
+        "id///increments///__///__///__///unsigned///Id nhóm hệ thống quản trị",
         "user_id///uuid///__///NOT_NULL///__///__///Id người dùng hệ thống",
         "permission_id///integer///__///NOT_NULL///__///__///Id quyền của hệ thống",
         "type///enum///['allow','deny']///NOT_NULL///'allow'///__///Cho phép hay không",
         "notes///text///__///NULL///NULL///__///__",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
         "role_group///__///__///Bảng lưu các nhóm hệ thống quản trị",
-        "id///increments///__///__///__///->unsigned()///Id nhóm hệ thống quản trị",
+        "id///increments///__///__///__///unsigned///Id nhóm hệ thống quản trị",
         "key///string///(50)///NOT_NULL///'default'///__///key nhóm hệ thống quản trị",
-        "name///string///(255)///NOT_NULL///'default'///->unique()///Tên nhóm hệ thống quản trị",
+        "name///string///(255)///NOT_NULL///'default'///UNIQUE///Tên nhóm hệ thống quản trị",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
         "description///text///__///NULL///NULL///__///Mô tả nhóm hệ thống quản trị",
-        "type///enum///['system','manage','enterprise','user','supply']///NOT_NULL///'user'///__///Loại nhóm",
         "notes///text///__///NULL///NULL///__///__",
         "position///integer///__///NULL///NULL///__///__",
         "parent///integer///__///NULL///NULL///__///Tên nhóm hệ thống quản trị cha",
         "param///string///(100)///NULL///NULL///__///Tham số thêm",
+        "system_type_id///smallInteger///__///NOT_NULL///__///__///Loại đối tượng hệ thống",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_system///boolean///__///__///true///__///__",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
         "role_group_role///__///__///Bảng lưu các quan hệ nhóm hệ thống quản trị và vai trò",
-        "id///increments///__///__///__///->unsigned()///Id quan hệ nhóm hệ thống quản trị và vai trò",
+        "id///increments///__///__///__///unsigned///Id quan hệ nhóm hệ thống quản trị và vai trò",
         "role_group_id///integer///__///NOT_NULL///__///__///Id nhóm hệ thống quản trị",
         "role_id///integer///__///NOT_NULL///__///__///Id vai trò của hệ thống"
     ],
     [
         "role_group_user///__///__///Bảng lưu các quan hệ nhóm vai trò và user hệ thống",
-        "id///bigIncrements///__///__///__///->unsigned()///Id quan hệ nhóm vai trò và user hệ thống",
+        "id///bigIncrements///__///__///__///unsigned///Id quan hệ nhóm vai trò và user hệ thống",
         "user_id///uuid///__///NOT_NULL///__///__///Id người dùng hệ thống",
         "role_group_id///integer///__///NOT_NULL///__///__///Id nhóm hệ thống quản trị"
     ],
@@ -120,34 +160,33 @@
         "last_name///string///(255)///NULL///NULL///__///Họ",
         "password///string///(100)///NULL///NULL///__///Mật khẩu",
         "password_old///text///__///NULL///NULL///__///Mật khẩu",
-        "image///uuid///__///NULL///NULL///__///Ảnh",
-        "thumbnail///uuid///__///NULL///NULL///__///thumbnail",
         "email///string///(100)///NULL///NULL///__///Email",
         "phone///string///(50)///NULL///NULL///__///Điện thoại",
         "address///string///(255)///NULL///NULL///__///Địa chỉ",
         "gender///enum///['male','female','other']///NULL///NULL///__///Giới tính",
-        "position///enum///['boss','manager','deputy','staff', 'other']///NULL///NULL///__///Chức vụ",
+        "image///uuid///__///NULL///NULL///__///Ảnh",
+        "thumbnail///uuid///__///NULL///NULL///__///thumbnail",
+        "gallery///text///__///NULL///NULL///__///Gallery",
+        "document///text///__///NULL///NULL///__///Document",
+        "position_title///string///(100)///NULL///NULL///__///Chức vụ",
         "position_text///string///(100)///NULL///NULL///__///Chức vụ",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
         "description///text///__///NULL///NULL///__///Mô tả",
         "notes///text///__///NULL///NULL///__///__",
         "remember_token///boolean///__///__///true///__///__",
-        "gallery///text///__///NULL///NULL///__///Gallery",
-        "document///text///__///NULL///NULL///__///Document",
+        "system_type_id///smallInteger///__///NOT_NULL///__///__///Loại đối tượng hệ thống",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_protected///boolean///__///__///false///__///Thông tin về hồ sơ user được bảo vệ",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
         "country///__///__///Bảng lưu thông tin về các nước",
         "id///increments///__///__///__///__///__",
-        "code///string///(2)///NOT_NULL///__///->unique()///Mã nước",
-        "iso2_code///string///(2)///NOT_NULL///__///->unique()///Country ISO-2 format",
-        "iso3_code///string///(3)///NOT_NULL///__///->unique()///Country ISO-3 format",
-        "name///string///(100)///NULL///__///->unique()///Tên nước",
+        "code///string///(2)///NOT_NULL///__///UNIQUE///Mã nước",
+        "iso2_code///string///(2)///NOT_NULL///__///UNIQUE///Country ISO-2 format",
+        "iso3_code///string///(3)///NOT_NULL///__///UNIQUE///Country ISO-3 format",
+        "name///string///(100)///NULL///__///UNIQUE///Tên nước",
         "year///string///(4)///NULL///NULL///__///Năm thành lập",
         "domain///string///(10)///NULL///NULL///__///Tên domain",
         "notes///text///__///NULL///NULL///__///__",
@@ -234,13 +273,12 @@
         "description///text///__///NULL///NULL///__///Mô tả",
         "notes///text///__///NULL///NULL///__///__",
         "position///integer///__///NULL///NULL///__///__",
+        "param///string///(100)///NULL///NULL///__///Tham số thêm",
         "has_category///boolean///__///__///true///__///__",
         "show_menu///boolean///__///__///true///__///__",
         "show_comment///boolean///__///__///true///__///__",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -259,14 +297,12 @@
         "type_id///integer///__///NULL///NULL///__///__",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
         "blog_post///__///__///Bảng lưu thông tin về bài viết",
         "id///uuid///__///__///__///primary///__",
-        "slug///string///(255)///NULL///NULL///->unique()///slug",
+        "slug///string///(255)///NULL///NULL///UNIQUE///slug",
         "name///string///(255)///NOT_NULL///__///__///Tên",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
         "description///text///__///NULL///NULL///__///Mô tả",
@@ -285,8 +321,6 @@
         "type_id///integer///__///NULL///NULL///__///__",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -307,14 +341,12 @@
         "user_approve///uuid///__///NULL///NULL///__///Người duyệt",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
         "oauth///__///__///Bảng lưu thông tin tài khoản khai thác dữ liệu hệ thống",
         "id///uuid///__///__///__///primary///__",
-        "name///string///(100)///NOT_NULL///__///->unique()///Tên cho tài khoản",
+        "name///string///(100)///NOT_NULL///__///UNIQUE///Tên cho tài khoản",
         "consumer_key///string///(100)///NOT_NULL///__///__///Khóa công khai tài khoản",
         "consumer_secret///string///(255)///NOT_NULL///__///__///Khóa bí mật tài khoản",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
@@ -418,7 +450,7 @@
         "name///string///(255)///NOT_NULL///__///__///Tên",
         "name_short///string///(100)///NULL///NULL///__///Tên viết ngắn",
         "name_english///string///(255)///NULL///NULL///__///Tên tiếng Anh",
-        "tax_code///string///(15)///NOT_NULL///__///->unique()///Mã số thuế",
+        "tax_code///string///(15)///NOT_NULL///__///UNIQUE///Mã số thuế",
         "business_license///string///(20)///NULL///NULL///__///Mã số kinh doanh/Mã số doanh nghiệp",
         "date_business_license///timestamp///__///NULL///NULL///__///Ngày đăng ký Mã số kinh doanh/Mã số doanh nghiệp",
         "phone///string///(20)///NULL///NULL///__///Điện thoại",
@@ -479,8 +511,6 @@
         "is_confirm///boolean///__///__///false///__///Trạng thái xác nhận",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "user_render_gcp///uuid///__///NULL///NULL///__///Người tạo mã gcp",
         "user_confirm///uuid///__///NULL///NULL///__///Nguời duyệt",
         "is_active///boolean///__///__///true///__///__"
@@ -516,8 +546,6 @@
         "document///text///__///NULL///NULL///__///Document",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -545,8 +573,6 @@
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -574,8 +600,6 @@
         "document///text///__///NULL///NULL///__///Document",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -609,8 +633,6 @@
         "document///text///__///NULL///NULL///__///Document",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_protected///boolean///__///__///false///__///Thông tin về hồ sơ nhân viên được bảo vệ",
         "is_active///boolean///__///__///true///__///__"
     ],
@@ -632,8 +654,6 @@
         "is_temp///boolean///__///__///false///__///Xác định là file tam hay không/Đối với file editor",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -656,8 +676,6 @@
         "file///text///__///NULL///NULL///__///Document",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -672,8 +690,6 @@
         "type///enum///['pesticides','veterinary_medicine','fertilizer','animal_feed']///NOT_NULL///'pesticides'///__///pesticides.Thuốc bảo vệ thực vật/veterinary_medicine.Thuốc thú y/fertilizer.Phân bón/animal_feed.Thức ăn chăn nuôi",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -688,8 +704,6 @@
         "wiki///string///(255)///NULL///NULL///__///Link trên Wiki",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -710,8 +724,6 @@
         "parent///uuid///__///NULL///NULL///__///Danh mục cha",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -734,8 +746,6 @@
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -755,8 +765,6 @@
         "type///enum///['plant','animal']///NOT_NULL///'animal'///__///Thực vật hay động vật",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -773,8 +781,6 @@
         "type///enum///['plant','animal']///NOT_NULL///'animal'///__///Thực vật hay động vật",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -800,8 +806,6 @@
         "qr_code_id///uuid///__///NULL///NULL///__///Id qr_code",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -824,8 +828,6 @@
         "staff_id///uuid///__///NULL///NULL///__///Người lên kế hoạch",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
         "is_active///boolean///__///__///true///__///__"
     ],
@@ -869,8 +871,6 @@
         "can_select///boolean///__///__///true///__///__",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -903,8 +903,6 @@
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -957,8 +955,6 @@
         "product_id///uuid///__///NOT_NULL///__///__///Id sản phẩm",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -984,8 +980,6 @@
         "document_id///uuid///__///NULL///NULL///__///Tham chiếu tới hợp đồng",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -1018,8 +1012,6 @@
         "status///enum///['new','done', 'cancel']///NULL///'new'///__///Trạng thái",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -1035,7 +1027,7 @@
     [
         "qr_code///__///__///Bảng lưu thông tin về qr code",
         "id///uuid///__///__///__///primary///__",
-        "public///string///(24)///__///__///->unique()///__",
+        "public///string///(24)///__///__///UNIQUE///__",
         "secret///string///(24)///NULL///NULL///__///Tem bí mật",
         "serial///string///(50)///__///__///__///__",
         "notes///text///__///NULL///NULL///__///__",
@@ -1047,8 +1039,6 @@
         "scanned_time///datetime///__///NULL///NULL///__///__",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "qr_code_package_id///uuid///__///NOT_NULL///__///__///Id Qr Code Package",
         "is_active///boolean///__///__///true///__///__"
     ],
@@ -1071,8 +1061,6 @@
         "enterprise_id///uuid///__///__///__///__///Id doanh nghiệp",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -1118,7 +1106,7 @@
     [
         "gs1_sscc///__///__///Bảng lưu thông tin về mã sscc",
         "id///uuid///__///__///__///primary///__",
-        "sscc///string///(18)///NOT_NULL///__///->unique()///Mã sscc",
+        "sscc///string///(18)///NOT_NULL///__///UNIQUE///Mã sscc",
         "image///string///(255)///NULL///NULL///__///Ảnh",
         "thumbnail///string///(255)///NULL///NULL///__///thumbnail",
         "gallery///text///__///NULL///NULL///__///Gallery",
@@ -1132,8 +1120,6 @@
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "reason_for_not_using///string///(255)///NULL///NULL///__///Lý do hủy",
         "status///boolean///__///__///true///__///__",
         "is_active///boolean///__///__///true///__///__"
@@ -1142,7 +1128,7 @@
         "gs1_grai_prefix///__///__///GRAI-Prefix/Loại tài sản công ty",
         "id///uuid///__///__///__///primary///__",
         "grai_prefix_index///string///(50)///__///'65|65|65|65|65|64'///__///GRAI-Prefix",
-        "grai_prefix///string///(13)///NOT_NULL///__///->unique()///Tiền tố mã grai(GTIN-13)",
+        "grai_prefix///string///(13)///NOT_NULL///__///UNIQUE///Tiền tố mã grai(GTIN-13)",
         "name///string///(255)///NULL///NULL///__///Tên",
         "description_short///string///(255)///NULL///NULL///__///Mô tả ngắn",
         "description///text///__///NULL///NULL///__///Mô tả",
@@ -1151,14 +1137,12 @@
         "enterprise_id///uuid///__///NOT_NULL///__///__///Id doanh nghiệp",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
         "gs1_grai///__///__///Bảng lưu thông tin về mã grai/base on GTIN-13 + X1 thay đổi X16",
         "id///uuid///__///__///__///primary///__",
-        "grai///string///(30)///NOT_NULL///__///->unique()///Mã grai",
+        "grai///string///(30)///NOT_NULL///__///UNIQUE///Mã grai",
         "image///string///(255)///NULL///NULL///__///Ảnh",
         "thumbnail///string///(255)///NULL///NULL///__///thumbnail",
         "gallery///text///__///NULL///NULL///__///Gallery",
@@ -1172,8 +1156,6 @@
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "reason_for_not_using///string///(255)///NULL///NULL///__///Lý do hủy",
         "status///boolean///__///__///true///__///__",
         "is_active///boolean///__///__///true///__///__"
@@ -1181,7 +1163,7 @@
     [
         "gs1_giai///__///__///Bảng lưu thông tin về mã giai",
         "id///uuid///__///__///__///primary///__",
-        "giai///string///(30)///NOT_NULL///__///->unique()///Mã giai",
+        "giai///string///(30)///NOT_NULL///__///UNIQUE///Mã giai",
         "image///string///(255)///NULL///NULL///__///Ảnh",
         "thumbnail///string///(255)///NULL///NULL///__///thumbnail",
         "gallery///text///__///NULL///NULL///__///Gallery",
@@ -1195,8 +1177,6 @@
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "reason_for_not_using///string///(255)///NULL///NULL///__///Lý do hủy",
         "status///boolean///__///__///true///__///__",
         "is_active///boolean///__///__///true///__///__"
@@ -1231,8 +1211,6 @@
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -1263,8 +1241,6 @@
         "notes///text///__///NULL///NULL///__///__",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -1276,8 +1252,6 @@
         "enterprise_id///uuid///__///NOT_NULL///__///__///Id doanh nghiệp",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -1296,8 +1270,6 @@
         "enterprise_id///uuid///__///NULL///NULL///__///Id doanh nghiệp",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -1337,8 +1309,6 @@
         "notes///text///__///NULL///NULL///__///__",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ],
     [
@@ -1356,8 +1326,6 @@
         "enterprise_id///uuid///__///NOT_NULL///__///__///Id doanh nghiệp",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
         "is_active///boolean///__///__///true///__///__"
     ],
@@ -1371,8 +1339,6 @@
         "procedure_id///uuid///__///NOT_NULL///__///__///Id quy trình",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
         "is_active///boolean///__///__///true///__///__"
     ],
@@ -1386,8 +1352,6 @@
         "procedure_step_id///uuid///__///NOT_NULL///__///__///Id bước quy trình",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
         "is_active///boolean///__///__///true///__///__"
     ],
@@ -1404,8 +1368,6 @@
         "enterprise_id///uuid///__///NOT_NULL///__///__///Id doanh nghiệp",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "id_reference///uuid///__///NULL///NULL///__///Id tham chiếu đến cổng quốc gia",
         "is_active///boolean///__///__///true///__///__"
     ],
@@ -1434,8 +1396,6 @@
         "notes///text///__///NULL///NULL///__///__",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "approved///boolean///__///__///false///__///__",
         "is_active///boolean///__///__///true///__///__"
     ],
@@ -1468,8 +1428,6 @@
         "reference_id///uuid///__///NULL///NULL///__///Id tham chiếu đến bảng tham chiếu",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "show_on_menu///boolean///__///__///false///__///__",
         "approved///boolean///__///__///false///__///__",
         "is_data///boolean///__///__///false///__///__",
@@ -1525,8 +1483,6 @@
         "reference_id///uuid///__///NULL///NULL///__///Id tham chiếu đến bảng tham chiếu",
         "user_create///uuid///__///NULL///NULL///__///Người tạo",
         "user_update///uuid///__///NULL///NULL///__///Người sửa cuối",
-        "staff_create///uuid///__///NULL///NULL///__///Nhân viên tạo",
-        "staff_update///uuid///__///NULL///NULL///__///Nhân viên tạo sửa cuối",
         "is_active///boolean///__///__///true///__///__"
     ]
 ]

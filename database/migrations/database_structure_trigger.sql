@@ -7,6 +7,15 @@ SET time_zone = "+00:00";
  
 
  
+DROP TRIGGER IF EXISTS hashtags_before_insert;
+CREATE TRIGGER hashtags_before_insert BEFORE INSERT ON hashtags 
+  FOR EACH ROW BEGIN
+    IF NEW.id IS NULL THEN
+      SET NEW.id=UUID();
+    END IF;
+  END;
+
+
 DROP TRIGGER IF EXISTS users_before_insert;
 CREATE TRIGGER users_before_insert BEFORE INSERT ON users 
   FOR EACH ROW BEGIN
