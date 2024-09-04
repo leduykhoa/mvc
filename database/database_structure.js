@@ -82,6 +82,7 @@ tableListData = JSON.parse(data.toString()).map((item) => {
     const tableDesc = `${classNameTemp[3] ? `${classNameTemp[3]}` : ``}`;
     let tableFields = item.map((field) => {
         let table;
+        // console.log(field);
         field = field.split(`\/\/\/`);
         let fieldName = ((field[0]) ? `${field[0]}` : ``);
         let fieldType = ((field[1]) ? `${field[1]}` : ``);
@@ -93,7 +94,20 @@ tableListData = JSON.parse(data.toString()).map((item) => {
         let fieldDescText = ((field[6] && field[6] == `__`) ? `` : `${field[6]}`);
         let fieldMoreText = ``;
         let fieldParamText = `${fieldParam}`;
+        fieldMore = `${fieldMore}`.trim().toLowerCase();
+        if (fieldMore.indexOf(`unique`) >= 0) {
+            fieldMore = `${fieldMore}`.replace(`unique`, ``);
+            alters.push(`ALTER TABLE\`${tableName}\`\n                ADD UNIQUE (\`${fieldName}\`);`);
+        }
 
+        if (fieldMore.indexOf(`unsigned`) >= 0) {
+            fieldParamText = `${fieldParamText} UNSIGNED`;
+        };
+
+        // if (fieldMore.indexOf(`unique`) >= 0) {
+        //     // fieldParamText = `${fieldParamText} UNIQUE`;
+        //     alters.push(`ALTER TABLE\`${tableName}\`\n                ADD UNIQUE KEY\`${tableName}_${fieldName}_unique\`(\`${fieldName}\`);`);
+        // };
 
         if (fieldType == `uuid` && fieldMore == `primary`) {
             // let lineStr = `ALTER TABLE\`${tableName}\`\n                ADD PRIMARY KEY (\`${fieldName}\`);`;
@@ -150,15 +164,6 @@ CREATE TRIGGER ${tableName}_before_insert BEFORE INSERT ON ${tableName}
             alters.push(`ALTER TABLE\`${tableName}\`\n                MODIFY \`${fieldName}\` int UNSIGNED NOT NULL AUTO_INCREMENT;`);
         } else if (fieldType == `enum`) {
             fieldParamText = fieldParam.replace(`[`, `(`).replace(`]`, `)`);
-        };
-
-        if (fieldMore.indexOf(`unsigned`) >= 0) {
-            fieldParamText = `${fieldParamText} UNSIGNED`;
-        };
-
-        if (fieldMore.indexOf(`unique`) >= 0) {
-            // fieldParamText = `${fieldParamText} UNIQUE`;
-            alters.push(`ALTER TABLE\`${tableName}\`\n                ADD UNIQUE KEY\`${tableName}_${fieldName}_unique\`(\`${fieldName}\`);`);
         };
 
         return `      \`${fieldName}\` ${fieldType}${fieldParamText} ${fieldNullable} ${fieldDefaultValue} ${fieldMoreText} ${fieldDesc}`;

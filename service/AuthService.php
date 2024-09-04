@@ -93,7 +93,7 @@ class AuthService extends AbstractService
     public function check($guard = '')
     {
         if ($guard == '') {
-            $guard = Register::get('guard.default');
+            $guard = Register::get('guard.frontend');
         }
         if ($this->getSession($guard . '_auth')) {
             return true;
@@ -104,7 +104,7 @@ class AuthService extends AbstractService
     public function auth($user, $guard = '')
     {
         if ($guard == '') {
-            $guard = Register::get('guard.default');
+            $guard = Register::get('guard.frontend');
         }
         return $this->setSession($guard . '_auth', $user);
     }
@@ -112,7 +112,7 @@ class AuthService extends AbstractService
     public function user($guard = '')
     {
         if ($guard == '') {
-            $guard = Register::get('guard.default');
+            $guard = Register::get('guard.frontend');
         }
         $result = $this->getSession($guard . '_auth');
         return is_null($result) ? false : $result;
@@ -121,7 +121,7 @@ class AuthService extends AbstractService
     public function getGuard($guard = '')
     {
         if ($guard == '') {
-            $guard = Register::get('guard.default');
+            $guard = Register::get('guard.frontend');
         }
         if (isset($this->guards[$guard])) {
             return $this->guards[$guard];
@@ -132,7 +132,7 @@ class AuthService extends AbstractService
     public function logout($guard = '')
     {
         if ($guard == '') {
-            $guard = Register::get('guard.default');
+            $guard = Register::get('guard.frontend');
         }
         return $this->destroySession($guard . '_auth');
     }

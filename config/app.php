@@ -48,7 +48,7 @@ Register::set('app.debug',  __env('APP_DEBUG', true));
 Register::set('app.url',  __env('APP_URL', 'https://web-fast.com'));
 Register::set('app.asset',  __env('APP_ASSET', 'https://web-fast.com'));
 Register::set('language.code', 'vi');
-Register::set('guard.default', 'web');
+Register::set('guard.frontend', FRONTEND);
 // ===================================================================================================================================
 PageViewer::set('theme', _DEFAULT);
 PageViewer::set('layout', 'frontend' . DS . 'layout' . DS . 'default');

@@ -27,7 +27,7 @@
  *  Time: 10:25:39
  */
 
-namespace App\Controllers\Frontend;
+namespace App\Controllers\Backend;
 
 use App\Lib\PageViewer;
 use App\Lib\Pluralize;
@@ -36,9 +36,8 @@ use App\Lib\Utils;
 use App\Model\BaseModel;
 use App\Service\AuthService;
 
-class UserController extends FrontendController
+class UserController extends BackendController
 {
-
     private $fieldName = 'email';
 
     public function __construct()
@@ -46,54 +45,11 @@ class UserController extends FrontendController
         parent::__construct();
     }
 
-    public function register()
-    {
-        PageViewer::set('layout', 'frontend' . DS . 'layout' . DS . 'simple');
-        $data = [];
-        $this->render('frontend/user/register', $data);
-    }
-
-    public function registerPost()
-    {
-        $data = [];
-        if (isPost() == true) {
-            $data['validate'] = $this->validate([
-                'full_name' => 'required',
-                'email' => 'required|email',
-                'password' => 'required|min:6',
-                'repassword' => 'required|same:password',
-            ]);
-
-            if ($data['validate'] === true) {
-                $obj = new BaseModel(Pluralize::plural('user'));
-                $dataSave = [
-                    // 'id' => Utils::genUuid(),
-                    'full_name' => request('full_name'),
-                    'email' => request('email'),
-                    'password' => AuthService::passwordHash(request('password')),
-                ];
-                $result = $obj->insert(['data' => $dataSave]);
-                if ($result === true) {
-                    Session::flash(Session::SUCCESS, 'Register successfully');
-                    header('Location: /');
-                    return true;
-                }
-            } else {
-                $warning = [];
-                foreach ($data['validate'] as $item) {
-                    $warning[] = $item[4];
-                }
-                Session::flash(Session::WARNING, $warning);
-            }
-            header('Location: /register');
-        }
-    }
-
     public function login()
     {
-        PageViewer::set('layout', 'frontend' . DS . 'layout' . DS . 'simple');
+        PageViewer::set('layout', 'backend' . DS . 'layout' . DS . 'simple');
         $data = [];
-        $this->render('frontend/user/login', $data);
+        $this->render('backend/user/login', $data);
     }
 
     public function loginPost()
@@ -113,11 +69,11 @@ class UserController extends FrontendController
                 $user->password = NULL;
                 $this->authService->auth($user);
                 Session::flash(Session::SUCCESS, __('Login successfully'));
-                header('Location: /');
+                header('Location: /' . $this->backendPrefix . '/dashboard');
                 return true;
             }
             Session::flash(Session::ERROR, __('Login failed'));
-            header('Location: /login');
+            header('Location: /' . $this->backendPrefix . '/login');
             return true;
         }
         header('HTTP/1.0 404 Not Found');
@@ -128,7 +84,7 @@ class UserController extends FrontendController
         if (isPost()) {
             $this->authService->logout();
             Session::flash(Session::SUCCESS, __('Logout successfully'));
-            header('Location: /');
+            header('Location: /' . $this->backendPrefix . '/login');
             return true;
         }
         header('HTTP/1.0 404 Not Found');
@@ -138,9 +94,9 @@ class UserController extends FrontendController
     {
         $user = $this->authService->user();
         if (!$user) {
-            header('Location: /login');
+            header('Location: /' . $this->backendPrefix . '/user');
             return true;
         }
-        $this->render('frontend/user/user', ['user' => $user]);
+        $this->render('backend/user/user', ['user' => $user]);
     }
 }

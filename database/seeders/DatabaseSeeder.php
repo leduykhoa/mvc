@@ -32,6 +32,7 @@ class DatabaseSeeder extends CmdController
 
             $this->call('DataCountryVnSeeder');
             $this->call('CountrySeeder');
+            $this->call('UserSeeder');
             // $this->call('Gs1CountrySeeder');
             // $this->call('NewsSeeder');
 

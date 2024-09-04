@@ -31,11 +31,15 @@ namespace App\Controllers\Backend;
 
 use App\Controllers\BaseController;
 use App\Lib\PageViewer;
+use App\Lib\Utils;
 
-class AdminController extends BaseController
+class BackendController extends BaseController
 {
+    protected $backendPrefix;
+
     public function __construct()
     {
+        $this->backendPrefix = Utils::backendPrefix();
         PageViewer::set('layout', 'backend' . DS . 'layout' . DS . 'default');
         parent::__construct();
     }

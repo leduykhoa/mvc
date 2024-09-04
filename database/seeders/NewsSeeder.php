@@ -23,7 +23,6 @@ class NewsSeeder
                 try {
                     $obj = new BaseModel(plural('blog_post'));
                     $dataSave = [
-                        'id' => Utils::genUuid(),
                         'name' => $item->title,
                         'description' => $item->description,
                         'image' => isset($item->image) ? $item->image : null,

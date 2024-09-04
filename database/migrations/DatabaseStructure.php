@@ -14,7 +14,7 @@ class DatabaseStructure
     {
         //
         try {
-            echo ("\Make database structure - start!\n");
+            echo ("\nMake database structure - start!\n");
             $tableStructure = PATH_DATABASE_MIGRATION . DS . 'database_structure.sql';
             $tableStructureTrigger = PATH_DATABASE_MIGRATION . DS . 'database_structure_trigger.sql';
             $tableStructureCustom = PATH_DATABASE_MIGRATION . DS . 'database_structure_custom.sql';
@@ -30,9 +30,15 @@ class DatabaseStructure
                     $db->query('TRUNCATE TABLE `' . $table . '`')->execute();
                 }
                 echo ("\nMake database structure - TRUNCATE - finish!\n");
-                $db->exec(file_get_contents($tableStructure));
-                $db->exec(file_get_contents($tableStructureTrigger));
-                $db->exec(file_get_contents($tableStructureCustom));
+                $result = $db->exec(file_get_contents($tableStructure));
+                echo ("\n");
+                print_r($result);
+                $result = $db->exec(file_get_contents($tableStructureTrigger));
+                echo ("\n");
+                print_r($result);
+                $result = $db->exec(file_get_contents($tableStructureCustom));
+                echo ("\n");
+                print_r($result);
 
                 $db->query('SET FOREIGN_KEY_CHECKS = 1;');
                 echo ("\nMake database structure - finish!\n");

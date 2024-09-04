@@ -50,6 +50,10 @@ class Utils
         return self::$instance;
     }
 
+    public static function backendPrefix()
+    {
+        return __env('BACKEND_PREFIX', 'myadmin');
+    }
     public static function genUuid()
     {
         return sprintf(

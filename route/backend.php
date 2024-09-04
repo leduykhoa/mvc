@@ -28,7 +28,19 @@
  */
 
 use App\Lib\Route;
+use App\Lib\Utils;
 
-$backendPrefix = __env('BACKEND_PREFIX', 'myadmin');
+$backendPrefix = Utils::backendPrefix();
 
 Route::get($backendPrefix . '/dashboard', ['Backend\Dashboard@index', 'backend.dashboard']);
+
+Route::get($backendPrefix . '/user', ['Backend\User@user', 'backend.user.user']);
+Route::get($backendPrefix . '/login', ['Backend\User@login', 'backend.user.login']);
+Route::post($backendPrefix . '/login-post', ['Backend\User@loginPost', 'backend.user.login-post']);
+Route::post($backendPrefix . '/user/logout', ['Backend\User@logout', 'backend.user.logout']);
+
+Route::get($backendPrefix . '/setting', ['Backend\Setting@index', 'backend.setting.index']);
+Route::get($backendPrefix . '/setting/create', ['Backend\Setting@create', 'backend.setting.create']);
+Route::post($backendPrefix . '/setting/store', ['Backend\Setting@store', 'backend.setting.store']);
+Route::get($backendPrefix . '/setting/edit/{id?}', ['Backend\Setting@edit', 'backend.setting.edit']);
+Route::get($backendPrefix . '/setting/update/{id?}', ['Backend\Setting@update', 'backend.setting.update']);
