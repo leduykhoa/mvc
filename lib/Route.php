@@ -190,7 +190,7 @@ class Route
         try {
             // code...
             $uri = $_SERVER['REQUEST_URI'];
-            if (strpos('?', $uri) > 0) {
+            if (strpos('?', $uri) >= 0) {
                 $uri = explode('?', $uri);
                 $uri = $uri[0];
             }
